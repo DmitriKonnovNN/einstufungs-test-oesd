@@ -23,7 +23,10 @@ import java.util.stream.Stream;
 @AllArgsConstructor
 public class ETAntwortenPruefer {
 
-
+    private final BiPredicate<Integer,Integer> erreicht = (schwelle,richtig) -> richtig > schwelle;
+    private final BiPredicate<Integer,Integer> knappErreicht = (schwelle,richtig) -> richtig.equals(schwelle);
+    private final BiPredicate<Integer,Integer> nichtErreicht = (schwelle,richtig) -> richtig < schwelle && richtig > 0;
+    private final BiPredicate<Integer,Integer> keineRichtig = (schwelle,richtig) -> richtig == 0;
     private final MindestSchwelleRepo mindestSchwelleRepo;
 
     private void evaluate (ETErgebnisseDto ergebnisseDto, ETAufgabe aufgabe){
@@ -33,7 +36,8 @@ public class ETAntwortenPruefer {
         ergebnisseDto.getNiveauZurZahlRichtiger().put(aufgabe.getAufgabenNiveau(),count);
 
     }
-    private void evaluate2 (ETErgebnisseDto ergebnisseDto, List<ETMindestschwelle> mindestSchwellen){
+
+    private Map<ETAufgabenNiveau,ETSchwellenErgebnis> evaluate2 (ETErgebnisseDto ergebnisseDto, List<ETMindestschwelle> mindestSchwellen){
 
         var entrySetErgebnisse = ergebnisseDto.getNiveauZurZahlRichtiger().entrySet();
 
@@ -42,9 +46,7 @@ public class ETAntwortenPruefer {
         Map <ETAufgabenNiveau,ETSchwellenErgebnis> ergebnisMap = Collections.synchronizedMap(new HashMap<>());
         //Map <ETAufgabenNiveau,ETSchwellenErgebnis> ergebnisMap = new ConcurrentHashMap<>();
 
-        BiPredicate<Integer,Integer> erreicht = (schwelle,richtig) -> richtig > schwelle;
-        BiPredicate<Integer,Integer> knappErreicht = (schwelle,richtig) -> richtig.equals(schwelle);
-        BiPredicate<Integer,Integer> nichtErreicht = (schwelle,richtig) -> richtig < schwelle && richtig > 0;
+
 
         BiFunction<Integer, Integer, ETSchwellenErgebnis> evaluateLevel = (richtig,mindestSchwelle) -> {
 
@@ -72,7 +74,52 @@ public class ETAntwortenPruefer {
             ergebnisMap.put(niveau,list.get(0));
 
         } );
+        return ergebnisMap;
+    }
 
+    private void defineMaxLevel (ETErgebnisseDto ergebnisseDto, Map<ETAufgabenNiveau,ETSchwellenErgebnis> erreichteNiveausMap) {
+        List <ETAufgabenNiveau> sortedNiveaus = erreichteNiveausMap.keySet().stream().sorted().collect(Collectors.toList());
+        boolean keineRichtig = false;
+        boolean nichtErreicht = false;
+        ETAufgabenNiveau aktuellErreicht = ETAufgabenNiveau.A0;
+        for (ETAufgabenNiveau sortedNiveau : sortedNiveaus) {
+            if (!keineRichtig && !nichtErreicht) {
+                if (erreichteNiveausMap.get(sortedNiveau).equals(ETSchwellenErgebnis.KEINE_RICHTIG)) {
+                    keineRichtig = true;
+                    nichtErreicht = true;
+                    continue;
+                }
+                if (erreichteNiveausMap.get(sortedNiveau).equals(ETSchwellenErgebnis.NICHT_ERREICHT)) {
+                    nichtErreicht = true;
+                    continue;
+                }
+                if (erreichteNiveausMap.get(sortedNiveau).equals(ETSchwellenErgebnis.KNAPP_ERREICHT)) {
+                    aktuellErreicht = sortedNiveau;
+                    continue;
+                }
+                if (erreichteNiveausMap.get(sortedNiveau).equals(ETSchwellenErgebnis.ERREICHT)) {
+                    aktuellErreicht = sortedNiveau;
+                    continue;
+                }
+            }
+            if (keineRichtig) {
+                if (erreichteNiveausMap.get(sortedNiveau).equals(ETSchwellenErgebnis.ERREICHT)) {
+                    aktuellErreicht = sortedNiveau;
+                    keineRichtig = false;
+                    continue;
+                } else break;
+            }
+            if (nichtErreicht) {
+                if (erreichteNiveausMap.get(sortedNiveau).equals(ETSchwellenErgebnis.KNAPP_ERREICHT)) {
+                    aktuellErreicht = sortedNiveau;
+                    break;
+                }
+                if (erreichteNiveausMap.get(sortedNiveau).equals(ETSchwellenErgebnis.ERREICHT)) {
+                    aktuellErreicht = sortedNiveau;
+                } else break;
+            }
+        }
+        ergebnisseDto.setMaxErreichtesNiveau(aktuellErreicht);
     }
 
 
@@ -106,10 +153,8 @@ public class ETAntwortenPruefer {
             });
         });
 
-        evaluate2(ergebnisseDto,mindestSchwellen);
-
-
-
+        var erreichteNiveausMap = evaluate2(ergebnisseDto,mindestSchwellen);
+        defineMaxLevel(ergebnisseDto,erreichteNiveausMap);
 
         return ergebnisseDto;
     }
