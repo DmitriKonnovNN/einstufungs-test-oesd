@@ -34,7 +34,6 @@ public class ETErgebnisseConverterAndPersister {
                 .maxErreichtesNiveau(ergebnisseDto.getMaxErreichtesNiveau())
                 .aufgabenBogenHash(ergebnisseDto.getAufgabenBogenHash())
                 .idZuRichtigkeitMap(ergebnisseDto.getIdZuRichtigkeitMap())
-                .richtigeLoesungenNachNiveau(ergebnisseDto.getRichtigeLoesungenNachNiveau())
                 .build();
         log.info("ErgebnisseDto {} converted to Entity {}", ergebnisseDto,ergebnisse);
         repo.save(ergebnisse);

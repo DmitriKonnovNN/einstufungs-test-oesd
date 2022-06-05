@@ -1,12 +1,19 @@
 package solutions.dmitrikonnov.einstufungstest.businesslayer;
 
+import ch.qos.logback.classic.turbo.MDCValueLevelPair;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.*;
 import solutions.dmitrikonnov.einstufungstest.persistinglayer.MindestSchwelleRepo;
 
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.BiFunction;
+import java.util.function.BiPredicate;
+import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * The Service checks the correctness of answers.
@@ -26,25 +33,48 @@ public class ETAntwortenPruefer {
         ergebnisseDto.getNiveauZurZahlRichtiger().put(aufgabe.getAufgabenNiveau(),count);
 
     }
-    private void evaluate2 (ETErgebnisseDto ergebnisseDto, Iterable<ETMindestschwelle> mindestSchwellen){
-        int [] ignoreNextNext = new int[1];
+    private void evaluate2 (ETErgebnisseDto ergebnisseDto, List<ETMindestschwelle> mindestSchwellen){
+
+        var entrySetErgebnisse = ergebnisseDto.getNiveauZurZahlRichtiger().entrySet();
+
+        // TODO: Check the performance of both implementations down below with respect to concurrent call;
+
+        Map <ETAufgabenNiveau,ETSchwellenErgebnis> ergebnisMap = Collections.synchronizedMap(new HashMap<>());
+        //Map <ETAufgabenNiveau,ETSchwellenErgebnis> ergebnisMap = new ConcurrentHashMap<>();
+
+        BiPredicate<Integer,Integer> erreicht = (schwelle,richtig) -> richtig > schwelle;
+        BiPredicate<Integer,Integer> knappErreicht = (schwelle,richtig) -> richtig.equals(schwelle);
+        BiPredicate<Integer,Integer> nichtErreicht = (schwelle,richtig) -> richtig < schwelle && richtig > 0;
+
+        BiFunction<Integer, Integer, ETSchwellenErgebnis> evaluateLevel = (richtig,mindestSchwelle) -> {
+
+            if(erreicht.test(mindestSchwelle,richtig)) return ETSchwellenErgebnis.ERREICHT;
+            if(knappErreicht.test(mindestSchwelle,richtig)) return ETSchwellenErgebnis.KNAPP_ERREICHT;
+            if(nichtErreicht.test(mindestSchwelle,richtig)) return ETSchwellenErgebnis.NICHT_ERREICHT;
+            return ETSchwellenErgebnis.KEINE_RICHTIG;
+        };
 
 
-        Predicate <ETSchwelle> erreicht = schwelle -> schwelle.getMindestSchwelle()<ergebnisseDto.getNiveauZurZahlRichtiger().get(schwelle.getNiveau());
-        Predicate <ETSchwelle> knappErreicht = schwelle -> schwelle.getMindestSchwelle().equals(ergebnisseDto.getNiveauZurZahlRichtiger().get(schwelle.getNiveau()));
-        Predicate <ETSchwelle> nichtErreicht = schwelle -> schwelle.getMindestSchwelle()>ergebnisseDto.getNiveauZurZahlRichtiger().get(schwelle.getNiveau());
-        Predicate <ETSchwelle> keineRichtigen = schwelle -> ergebnisseDto.getNiveauZurZahlRichtiger().get(schwelle.getNiveau())==0;
+   /*     for (ETMindestschwelle schwelle : mindestSchwellen) {
 
+            ETAufgabenNiveau niveau = schwelle.getNiveau();
+            List <ETSchwellenErgebnis> list = entrySetErgebnisse.stream().filter(naSet -> naSet.getKey().equals(niveau))
+                        .map(naSet -> evaluateLevel.apply(naSet.getValue(),schwelle.getMindestSchwelle()))
+                        .collect(Collectors.toUnmodifiableList());
+            ergebnisMap.put(niveau,list.get(0));
+        }*/
 
         mindestSchwellen.forEach(schwelle -> {
-            if (ignoreNextNext[0]>=2) {}
-            else {
-                if (keineRichtigen.test(schwelle))ignoreNextNext[0]=+2;
-                if (knappErreicht.test(schwelle))ignoreNextNext[0]++;
-            }
+            ETAufgabenNiveau niveau = schwelle.getNiveau();
+            List <ETSchwellenErgebnis> list = entrySetErgebnisse.stream().filter(naSet -> naSet.getKey().equals(niveau))
+                    .map(naSet -> evaluateLevel.apply(naSet.getValue(),schwelle.getMindestSchwelle()))
+                    .collect(Collectors.toUnmodifiableList());
+            ergebnisMap.put(niveau,list.get(0));
 
-        });
+        } );
+
     }
+
 
 
 
@@ -52,7 +82,7 @@ public class ETAntwortenPruefer {
 
         List<ETAufgabe> cachedAufgaben = cachedAufgabenBogen.getAufgabenListe();
         ETErgebnisseDto ergebnisseDto = new ETErgebnisseDto();
-        Iterable<ETMindestschwelle> mindestSchwellen = mindestSchwelleRepo.findAllOrderByNiveauAsc();
+        List<ETMindestschwelle> mindestSchwellen = mindestSchwelleRepo.findAllOrderByNiveauAsc();
         mindestSchwellen.forEach(schwelle -> ergebnisseDto
                 .getNiveauZurZahlRichtiger()
                 .put(schwelle.getNiveau(),0));
