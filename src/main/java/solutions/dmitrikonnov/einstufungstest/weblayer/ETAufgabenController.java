@@ -2,12 +2,10 @@ package solutions.dmitrikonnov.einstufungstest.weblayer;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import solutions.dmitrikonnov.einstufungstest.businesslayer.ETAufgabenService;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAntwortBogenDto;
+import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabeDto;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETEndResultForFE;
 
 @RestController
@@ -16,6 +14,11 @@ import solutions.dmitrikonnov.einstufungstest.domainlayer.ETEndResultForFE;
 public class ETAufgabenController {
     private final ETAufgabenService aufgabenService;
     // TODO: Implement a controller with cache that saves a preset list. Key - AufgabenBogenID or Hash? Evicting policy: LRU + after submitting AntwortBogenDto;
+
+    @GetMapping
+    public ResponseEntity<ETAufgabeDto> getAufgaben (){
+        aufgabenService.getAufgabenListe()
+    }
 
     @PostMapping()
     public ResponseEntity<ETEndResultForFE> checkAndGetResults(@RequestBody ETAntwortBogenDto bogen){

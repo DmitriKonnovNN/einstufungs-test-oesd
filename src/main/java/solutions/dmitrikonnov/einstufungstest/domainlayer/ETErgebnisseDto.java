@@ -3,6 +3,7 @@ package solutions.dmitrikonnov.einstufungstest.domainlayer;
 import lombok.Data;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Data
@@ -21,7 +22,6 @@ public class ETErgebnisseDto {
     private int C1richtig = 0;
     private int C2richtig = 0;
 
-    private Map<ETAufgabenNiveau, Integer> niveauZurZahlRichtiger = new HashMap<>();
 
     private Boolean A1erreicht = false;
     private Boolean A2erreicht = false;
@@ -32,8 +32,10 @@ public class ETErgebnisseDto {
 
     private ETAufgabenNiveau maxErreichtesNiveau = ETAufgabenNiveau.A0;
     private Integer zahlRichtigerAntworten = 0;
-
+    private List<ETAufgabenNiveau> RichtigeLoesungenNachNiveau;
     private Map<Integer, Boolean> idZuRichtigkeitMap = new HashMap<>();
+    private Map<ETAufgabenNiveau, Integer> niveauZurZahlRichtiger = new HashMap<>();
+
 
 
 }

@@ -29,12 +29,12 @@ public class ETAufgabenService {
 
     public ETEndResultForFE checkAntwortBogenAndGetTestErgebnisse (ETAntwortBogenDto antwortBogen, ETAufgabenBogen chachedAufgabenBogen){
         var ergebnisseDto = pruefer.checkBogen(antwortBogen,chachedAufgabenBogen);
-        evaluator.evaluate(ergebnisseDto);
-        converterAndPersister.convertAndPersist(ergebnisseDto);
+        var ergebnisseDto1 = evaluator.evaluate(ergebnisseDto);
+        converterAndPersister.convertAndPersist(ergebnisseDto1);
         return ETEndResultForFE.builder()
                 .id(ergebnisseDto.getId())
-                .erreichtesNiveau(ergebnisseDto.getMaxErreichtesNiveau())
-                .zahlRichtigerAntworten(ergebnisseDto.getZahlRichtigerAntworten())
+                .erreichtesNiveau(ergebnisseDto1.getMaxErreichtesNiveau())
+                .zahlRichtigerAntworten(ergebnisseDto1.getZahlRichtigerAntworten())
                 .build();
     }
 }
