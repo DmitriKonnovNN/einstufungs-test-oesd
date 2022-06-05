@@ -32,21 +32,10 @@ public class ETErgebnisse {
     @CollectionTable (name = "et_r_loesungen_nach_niveau")
     private List<String> richtigeLoesungenNachNiveau;
 
-    private int A1richtig;
-    private int A2richtig;
-    private int B1richtig;
-    private int B2richtig;
-    private int C1richtig;
-    private int C2richtig;
-
-    private Boolean A1erreicht;
-    private Boolean A2erreicht;
-    private Boolean B1erreicht;
-    private Boolean B2erreicht;
-    private Boolean C1erreicht;
-    private Boolean C2erreicht;
-
+    @Column (updatable = false)
     private ETAufgabenNiveau maxErreichtesNiveau;
+
+    @Column(updatable = false)
     private Integer zahlRichtigerAntworten;
 
     @ElementCollection
@@ -54,6 +43,12 @@ public class ETErgebnisse {
     @MapKeyColumn (name = "et_aufg_id")
     @Column (name = "et_aufg_correctness")
     private Map<Integer, Boolean> idZuRichtigkeitMap;
+
+    @ElementCollection
+    @CollectionTable (name = "et_niveau_richtige_map")
+    @MapKeyColumn (name = "et_niveau")
+    @Column (name = "et_zahl_richtiger")
+    private Map<String, Integer> niveauZurZahlRichtiger;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column (updatable = false)
