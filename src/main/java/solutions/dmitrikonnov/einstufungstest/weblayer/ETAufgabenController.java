@@ -19,12 +19,14 @@ public class ETAufgabenController {
     @GetMapping
     public ResponseEntity<ETAufgabeDto> getAufgaben (){
 
-        return ResponseEntity.ok().cacheControl().
+        //return ResponseEntity.ok().cacheControl().
+        return null;
     }
 
     @PostMapping()
     public ResponseEntity<ETEndResultForFE> checkAndGetResults(@RequestBody ETAntwortBogenDto bogen){
 
-        return aufgabenService.checkAntwortBogenAndGetTestErgebnisse(bogen, cachedAufgabenBogen);
+        //return aufgabenService.checkAntwortBogenAndGetTestErgebnisse(bogen, cachedAufgabenBogen);
+        return null;
     }
 }

@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    password: P@ssw0rd
+    url: jdbc:mysql://localhost:3306/einstufungs-test?createDatabaseIfNotExist=true&Unicode=true&serverTimezone=UTC
+    username: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        format_sql: true
+        show-sql: true
+        use_sql_comments: true
+        search:
+          version: 5.11.7.Final

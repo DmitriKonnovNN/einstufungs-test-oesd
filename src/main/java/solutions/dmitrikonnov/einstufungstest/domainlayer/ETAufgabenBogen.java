@@ -28,7 +28,7 @@ public class ETAufgabenBogen {
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
             generator = "et_aufgabenbogen_seq")
     private final Long aufgabenBogenId;
-    private Integer aufgabenBogenHash;
+    private final Integer aufgabenBogenHash;
     private final List<ETAufgabe> aufgabenListe;
 
 
