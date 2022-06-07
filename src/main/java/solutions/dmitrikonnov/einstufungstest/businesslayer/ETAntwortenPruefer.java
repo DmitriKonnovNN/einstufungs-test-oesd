@@ -7,10 +7,6 @@ import solutions.dmitrikonnov.einstufungstest.domainlayer.*;
 import solutions.dmitrikonnov.einstufungstest.persistinglayer.MindestSchwelleRepo;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.BiFunction;
-import java.util.function.BiPredicate;
-import java.util.stream.Collectors;
 
 /**
  * The Service checks the correctness of answers.

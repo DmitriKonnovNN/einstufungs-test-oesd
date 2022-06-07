@@ -1,6 +1,7 @@
 package solutions.dmitrikonnov.einstufungstest.weblayer;
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.CacheControl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import solutions.dmitrikonnov.einstufungstest.businesslayer.ETAufgabenService;
@@ -17,7 +18,8 @@ public class ETAufgabenController {
 
     @GetMapping
     public ResponseEntity<ETAufgabeDto> getAufgaben (){
-        aufgabenService.getAufgabenListe()
+
+        return ResponseEntity.ok().cacheControl().
     }
 
     @PostMapping()

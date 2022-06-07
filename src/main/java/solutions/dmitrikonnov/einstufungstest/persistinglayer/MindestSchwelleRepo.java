@@ -1,7 +1,7 @@
 package solutions.dmitrikonnov.einstufungstest.persistinglayer;
 
 import org.springframework.data.repository.CrudRepository;
-import solutions.dmitrikonnov.einstufungstest.businesslayer.ETMindestschwelle;
+import solutions.dmitrikonnov.einstufungstest.domainlayer.ETMindestschwelle;
 
 import java.util.List;
 

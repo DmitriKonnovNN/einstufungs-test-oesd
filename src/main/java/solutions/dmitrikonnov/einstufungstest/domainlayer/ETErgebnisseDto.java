@@ -2,12 +2,14 @@ package solutions.dmitrikonnov.einstufungstest.domainlayer;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Data
-public class ETErgebnisseDto {
+public class ETErgebnisseDto implements Serializable {
+    private static final long serialVersionUID = -1798070786993154676L;
 
     private  String id;
     private Integer aufgabenBogenHash;

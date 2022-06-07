@@ -21,7 +21,7 @@ public class ETErgebnisseConverterAndPersister {
 
     @Async
     public void convertAndPersist(ETErgebnisseDto ergebnisseDto) {
-        //TODO: Write converter DTO to Entity
+
         ETErgebnisse ergebnisse = ETErgebnisse.builder()
                 .aufgabenBogenHash(ergebnisseDto.getAufgabenBogenHash())
                 .richtigeLoesungenNachNiveau(ergebnisseDto.getRichtigeLoesungenNachNiveau()
