@@ -4,6 +4,7 @@ import com.github.javafaker.Faker;
 import org.assertj.core.api.BDDAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -12,6 +13,7 @@ import org.springframework.test.context.ActiveProfiles;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.*;
 import static org.mockito.BDDMockito.*;
 import static solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenNiveau.*;
+import static org.assertj.core.api.Assertions.*;
 import solutions.dmitrikonnov.einstufungstest.persistinglayer.MindestSchwelleRepo;
 
 import java.util.*;
@@ -30,12 +32,20 @@ class ETAntwortenPrueferTest {
     private ETAntwortBogenDto givenAntwortBogen;
     private ETAufgabenBogen givenCachedAB;
     private Map<Integer, ArrayList<String>> givenAufgabenHashZAMap;
-    private List<ETAufgabe> givenAufgabenListe;
+    private List<ETAufgabe> givenAufgabenListe = new ArrayList<>();
+    private List<ETMindestschwelle> mindestschwellen;
+    private ETErgebnisseDto expectedDto;
 
 
     @BeforeEach
     void setUp() {
         underTest = new ETAntwortenPruefer(mindSchwRepoMock);
+
+        ETMindestschwelle schwelleA1 = ETMindestschwelle.builder().id(1).niveau(A1).mindestSchwelle(1).build();
+        ETMindestschwelle schwelleA2 = ETMindestschwelle.builder().id(2).niveau(A2).mindestSchwelle(1).build();
+        mindestschwellen = new ArrayList<>();
+        mindestschwellen.add(schwelleA1);
+        mindestschwellen.add(schwelleA2);
 
         ETAufgabe aufgabe1 = ETAufgabe.builder()
                 .aufgabeId(4)
@@ -80,7 +90,7 @@ class ETAntwortenPrueferTest {
         Random r = new Random();
         long range = 1234567L;
         final Long ID = (long)(r.nextDouble()*range);
-        Integer ABH = faker.number().numberBetween(1,10000);
+        int ABH = faker.number().numberBetween(1,10000);
 
 
 
@@ -95,31 +105,54 @@ class ETAntwortenPrueferTest {
             //givenAufgabenListe.a
         }
 */
+
+
         givenAufgabenHashZAMap = new HashMap<>(){{
-            put(2, new ArrayList<>(Collections.singleton("in den Arsch ficken")));
-            put(4,new ArrayList<>(Collections.singleton("dich")));
-            put(8,new ArrayList<>(Collections.singleton("drauf")));
-            put(9,new ArrayList<>(Arrays.asList("die Eier", "einen Schwanz")));
+            put(sumHash(2,ABH), new ArrayList<>(Collections.singleton("in den Arsch ficken")));
+            put(sumHash(4,ABH),new ArrayList<>(Collections.singleton("dich")));
+            put(sumHash(8,ABH),new ArrayList<>(Collections.singleton("drauf")));
+            put(sumHash(9,ABH),new ArrayList<>(Arrays.asList("die Eier", "einen Schwanz")));
 
 
         }};
 
         givenCachedAB = new ETAufgabenBogen(ID,ABH,givenAufgabenListe);
         givenAntwortBogen = new ETAntwortBogenDto(ID,givenAufgabenHashZAMap);
+        expectedDto = ETErgebnisseDto.builder()
+                .aufgabenBogenHash(ABH)
+                .zahlRichtigerAntworten(2)
+                .idZuRichtigkeitMap(new HashMap<>(){{
+                   put(4,true);
+                   put(2,false);
+                   put(9, false);
+                   put(8,true);
+                }})
+                .RichtigeLoesungenNachNiveau(Arrays.asList(A1,A1))
+                .niveauZurZahlRichtiger(new HashMap<>(){{
+                    put(A1,0);
+                    put(A2,0);
+                }})
+                .build();
     }
 
     @AfterEach
     void tearDown() {
     }
 
-    @Test
+    @RepeatedTest(3)
     void shouldcheckBogen() {
         //given
-        given(mindSchwRepoMock.findAllByOrderByNiveau()).willReturn()
+        given(mindSchwRepoMock.findAllByOrderByNiveau()).willReturn(mindestschwellen);
         //when
-        underTest.checkBogen(givenAntwortBogen,givenCachedAB);
+        var actualResult = underTest.checkBogen(givenAntwortBogen,givenCachedAB);
         //then
+        assertThat(actualResult).isEqualTo(expectedDto);
 
 
+
+    }
+
+    private Integer sumHash (Integer a, Integer b) {
+        return a+b;
     }
 }

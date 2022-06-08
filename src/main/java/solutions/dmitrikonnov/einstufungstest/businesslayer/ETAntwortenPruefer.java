@@ -36,7 +36,7 @@ public class ETAntwortenPruefer {
         var aufgabenHashZuAntwortMap = antwortBogen.getAufgabenHashZuAntwortMap();
 
         aufgabenHashZuAntwortMap.forEach((hashedId, list) -> {
-            var antwId = cachedBogenHash - hashedId;
+            var antwId = hashedId - cachedBogenHash;
             cachedAufgaben.forEach(aufgabe -> {
 
                 if (aufgabe.getAufgabeId().equals(antwId)){

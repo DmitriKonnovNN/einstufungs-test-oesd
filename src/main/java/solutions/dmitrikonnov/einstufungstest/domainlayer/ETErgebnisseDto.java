@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,8 +33,8 @@ public class ETErgebnisseDto implements Serializable {
     private  Integer aufgabenBogenHash;
     private  ETAufgabenNiveau maxErreichtesNiveau;
     private  Integer zahlRichtigerAntworten;
-    private  List<ETAufgabenNiveau> RichtigeLoesungenNachNiveau;
-    private  Map<Integer, Boolean> idZuRichtigkeitMap;
-    private  Map<ETAufgabenNiveau, Integer> niveauZurZahlRichtiger;
+    private  List<ETAufgabenNiveau> RichtigeLoesungenNachNiveau = new ArrayList<>();
+    private  Map<Integer, Boolean> idZuRichtigkeitMap = new HashMap<>();
+    private  Map<ETAufgabenNiveau, Integer> niveauZurZahlRichtiger = new HashMap<>();
 
 }
