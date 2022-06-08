@@ -109,16 +109,15 @@ class ETErgebnisseConverterAndPersisterTest {
 
     @Test
     void shouldConvertAndPersist() {
-        //given
+        //given see setUp();
 
-        underTest.convertAndPersist(dtoGiven);
         //when
-
+        underTest.convertAndPersist(dtoGiven);
+        //then
         ArgumentCaptor<ETErgebnisse> entityArgumentCaptor = ArgumentCaptor.forClass(ETErgebnisse.class);
         verify(repoMock).save(entityArgumentCaptor.capture());
         ETErgebnisse result = entityArgumentCaptor.getValue();
         assertThat(entityExpected).isEqualTo(result);
-        //then
 
     }
 }
