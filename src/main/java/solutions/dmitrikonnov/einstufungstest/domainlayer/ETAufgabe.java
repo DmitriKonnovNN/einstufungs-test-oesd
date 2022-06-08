@@ -46,6 +46,7 @@ public class ETAufgabe {
     @Enumerated(EnumType.STRING)
     private ETAufgabenTyp aufgabenTyp;
 
+    @Column (name = "AUFGABEN_NIVEAU")
     @Enumerated(EnumType.STRING)
     private ETAufgabenNiveau aufgabenNiveau;
 

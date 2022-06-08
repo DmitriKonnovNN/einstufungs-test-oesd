@@ -7,6 +7,7 @@ import solutions.dmitrikonnov.einstufungstest.domainlayer.*;
 import solutions.dmitrikonnov.einstufungstest.persistinglayer.MindestSchwelleRepo;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * The Service checks the correctness of answers.
@@ -22,7 +23,8 @@ public class ETAntwortenPruefer {
 
         List<ETAufgabe> cachedAufgaben = cachedAufgabenBogen.getAufgabenListe();
         ETErgebnisseDto ergebnisseDto = new ETErgebnisseDto();
-        List<ETMindestschwelle> mindestSchwellen = mindestSchwelleRepo.findAllOrderByNiveauAsc();
+
+        List<ETMindestschwelle> mindestSchwellen = mindestSchwelleRepo.findAllByOrderByNiveau();
 
         mindestSchwellen.forEach(schwelle -> ergebnisseDto
                 .getNiveauZurZahlRichtiger()
@@ -48,7 +50,8 @@ public class ETAntwortenPruefer {
             });
         });
         ergebnisseDto.setZahlRichtigerAntworten(ergebnisseDto.getRichtigeLoesungenNachNiveau().size());
-        return ergebnisseDto;
+
+        return new ETErgebnisseDto(ergebnisseDto);
     }
 
   /*  private void evaluate (ETErgebnisseDto ergebnisseDto, ETAufgabenNiveau niveau){

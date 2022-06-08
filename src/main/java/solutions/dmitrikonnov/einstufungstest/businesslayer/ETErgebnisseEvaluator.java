@@ -25,7 +25,7 @@ public class ETErgebnisseEvaluator {
 
 
     public ETErgebnisseDto evaluate(ETErgebnisseDto ergebnisse) {
-        List<ETMindestschwelle> mindestSchwellen = mindestSchwelleRepo.findAllOrderByNiveauAsc();
+        List<ETMindestschwelle> mindestSchwellen = mindestSchwelleRepo.findAllByOrderByNiveau();
 
         if (noneCorrect(ergebnisse)){
             mindestSchwellen.forEach(record -> setNachNiveauAlleFalsch(record.getNiveau(),ergebnisse.getNiveauZurZahlRichtiger()));

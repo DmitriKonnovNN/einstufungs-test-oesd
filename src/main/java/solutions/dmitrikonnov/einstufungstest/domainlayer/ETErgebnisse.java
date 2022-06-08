@@ -15,6 +15,9 @@ import java.util.Map;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString
+@EqualsAndHashCode
+@Table (name = "ET_ERGEBNISSE")
 public class ETErgebnisse {
 
 
@@ -27,23 +30,26 @@ public class ETErgebnisse {
     private Integer aufgabenBogenHash;
 
     @ElementCollection
-    @CollectionTable (name = "et_r_loesungen_nach_niveau")
+    @CollectionTable (name = "et_r_loesungen_nach_niveau"/*,
+    joinColumns = @JoinColumn ("ETERGEBNISSE_ID")*/)
+    @Column(name = "R_LOESUNGEN")
     private List<String> richtigeLoesungenNachNiveau;
 
-    @Column (updatable = false)
-    private ETAufgabenNiveau maxErreichtesNiveau;
+    //@Column (updatable = false)
+    @Enumerated(EnumType.STRING)
+    private ETAufgabenNiveau maxErreichtesNiveau = ETAufgabenNiveau.A0;
 
-    @Column(updatable = false)
+    //@Column(updatable = false)
     private Integer zahlRichtigerAntworten;
 
     @ElementCollection
-    @CollectionTable (name = "et_ergebnisse_mapping")
+    @CollectionTable (name = "et_ergebnisse_mapping"/*,joinColumns = @JoinColumn ("ETERGEBNISSE_ID") */)
     @MapKeyColumn (name = "et_aufg_id")
     @Column (name = "et_aufg_correctness")
     private Map<Integer, Boolean> idZuRichtigkeitMap;
 
     @ElementCollection
-    @CollectionTable (name = "et_niveau_richtige_map")
+    @CollectionTable (name = "et_niveau_richtige_map"/*, joinColumns = @JoinColumn ("ETERGEBNISSE_ID")*/)
     @MapKeyColumn (name = "et_niveau")
     @Column (name = "et_zahl_richtiger")
     private Map<String, Integer> niveauZurZahlRichtiger;

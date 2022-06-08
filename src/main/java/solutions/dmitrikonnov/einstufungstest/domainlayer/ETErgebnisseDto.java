@@ -1,6 +1,9 @@
 package solutions.dmitrikonnov.einstufungstest.domainlayer;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -8,15 +11,29 @@ import java.util.List;
 import java.util.Map;
 
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class ETErgebnisseDto implements Serializable {
     private static final long serialVersionUID = -1798070786993154676L;
 
+    public ETErgebnisseDto(ETErgebnisseDto ergebnisseDto) {
+        this.id = ergebnisseDto.getId();
+        this.aufgabenBogenHash = ergebnisseDto.getAufgabenBogenHash();
+        this.maxErreichtesNiveau = ergebnisseDto.getMaxErreichtesNiveau();
+        this.zahlRichtigerAntworten = ergebnisseDto.getZahlRichtigerAntworten();
+        this.RichtigeLoesungenNachNiveau = ergebnisseDto.getRichtigeLoesungenNachNiveau();
+        this.idZuRichtigkeitMap = ergebnisseDto.getIdZuRichtigkeitMap();
+        this.niveauZurZahlRichtiger = ergebnisseDto.getNiveauZurZahlRichtiger();
+
+    }
+
     private  String id;
-    private Integer aufgabenBogenHash;
-    private ETAufgabenNiveau maxErreichtesNiveau = ETAufgabenNiveau.A0;
-    private Integer zahlRichtigerAntworten = 0;
-    private List<ETAufgabenNiveau> RichtigeLoesungenNachNiveau;
-    private Map<Integer, Boolean> idZuRichtigkeitMap = new HashMap<>();
-    private Map<ETAufgabenNiveau, Integer> niveauZurZahlRichtiger = new HashMap<>();
+    private  Integer aufgabenBogenHash;
+    private  ETAufgabenNiveau maxErreichtesNiveau;
+    private  Integer zahlRichtigerAntworten;
+    private  List<ETAufgabenNiveau> RichtigeLoesungenNachNiveau;
+    private  Map<Integer, Boolean> idZuRichtigkeitMap;
+    private  Map<ETAufgabenNiveau, Integer> niveauZurZahlRichtiger;
 
 }

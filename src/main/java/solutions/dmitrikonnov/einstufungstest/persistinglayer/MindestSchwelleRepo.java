@@ -8,5 +8,5 @@ import java.util.List;
 public interface MindestSchwelleRepo extends CrudRepository<ETMindestschwelle,Integer> {
 
 
-    List<ETMindestschwelle> findAllOrderByNiveauAsc();
+    List<ETMindestschwelle> findAllByOrderByNiveau();
 }
