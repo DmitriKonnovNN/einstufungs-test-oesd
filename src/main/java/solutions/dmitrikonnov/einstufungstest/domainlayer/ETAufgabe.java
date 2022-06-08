@@ -1,5 +1,6 @@
 package solutions.dmitrikonnov.einstufungstest.domainlayer;
 
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,6 +18,7 @@ import java.util.Set;
 @Getter
 @Setter
 @EqualsAndHashCode
+@Builder
 @Table (name = "ET_AUFGABE", indexes = @Index(columnList = "AUFGABEN_NIVEAU", name = "ET_AUFGABE_NIVEAU_IDX"))
 public class ETAufgabe {
 

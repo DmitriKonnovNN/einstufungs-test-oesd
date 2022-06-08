@@ -3,6 +3,7 @@ package solutions.dmitrikonnov.einstufungstest.persistinglayer;
 import com.github.javafaker.Faker;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -105,9 +106,10 @@ class ETErgebnisseConverterAndPersisterTest {
 
     @AfterEach
     void tearDown() {
+
     }
 
-    @Test
+    @RepeatedTest(2)
     void shouldConvertAndPersist() {
         //given see setUp();
 
@@ -118,6 +120,7 @@ class ETErgebnisseConverterAndPersisterTest {
         verify(repoMock).save(entityArgumentCaptor.capture());
         ETErgebnisse result = entityArgumentCaptor.getValue();
         assertThat(entityExpected).isEqualTo(result);
+        
 
     }
 }
