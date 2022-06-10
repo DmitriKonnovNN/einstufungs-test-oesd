@@ -43,9 +43,17 @@ class ETAntwortenPrueferTest {
 
         ETMindestschwelle schwelleA1 = ETMindestschwelle.builder().id(1).niveau(A1).mindestSchwelle(1).build();
         ETMindestschwelle schwelleA2 = ETMindestschwelle.builder().id(2).niveau(A2).mindestSchwelle(1).build();
+        ETMindestschwelle schwelleB1 = ETMindestschwelle.builder().id(2).niveau(A2).mindestSchwelle(2).build();
+        ETMindestschwelle schwelleB2 = ETMindestschwelle.builder().id(2).niveau(A2).mindestSchwelle(2).build();
+        ETMindestschwelle schwelleC1 = ETMindestschwelle.builder().id(2).niveau(A2).mindestSchwelle(2).build();
+        ETMindestschwelle schwelleC2 = ETMindestschwelle.builder().id(2).niveau(A2).mindestSchwelle(1).build();
         mindestschwellen = new ArrayList<>();
         mindestschwellen.add(schwelleA1);
         mindestschwellen.add(schwelleA2);
+        mindestschwellen.add(schwelleB1);
+        mindestschwellen.add(schwelleB2);
+        mindestschwellen.add(schwelleC1);
+        mindestschwellen.add(schwelleC2);
 
         ETAufgabe aufgabe1 = ETAufgabe.builder()
                 .aufgabeId(4)

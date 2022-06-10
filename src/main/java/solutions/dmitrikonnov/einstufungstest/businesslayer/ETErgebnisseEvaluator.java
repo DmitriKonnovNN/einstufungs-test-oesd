@@ -29,6 +29,7 @@ public class ETErgebnisseEvaluator {
 
         if (noneCorrect(ergebnisse)){
             mindestSchwellen.forEach(record -> setNachNiveauAlleFalsch(record.getNiveau(),ergebnisse.getNiveauZurZahlRichtiger()));
+            ergebnisse.setMaxErreichtesNiveau(ETAufgabenNiveau.A0);
             return ergebnisse;
         }
         List<ETAufgabenNiveau> sortedCorrectAnswers = ergebnisse.getRichtigeLoesungenNachNiveau()
