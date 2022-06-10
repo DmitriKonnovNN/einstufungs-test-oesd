@@ -1,5 +1,6 @@
 package solutions.dmitrikonnov.einstufungstest.persistinglayer;
 
+import io.micrometer.core.annotation.Timed;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
@@ -20,6 +21,7 @@ public class ETErgebnisseConverterAndPersister {
     private final ETErgebnisseRepo repo;
 
     @Async
+    @Timed (value = "et.service.ergconverter-persister")
     public void convertAndPersist(ETErgebnisseDto ergebnisseDto) {
 
         ETErgebnisse ergebnisse = ETErgebnisse.builder()
