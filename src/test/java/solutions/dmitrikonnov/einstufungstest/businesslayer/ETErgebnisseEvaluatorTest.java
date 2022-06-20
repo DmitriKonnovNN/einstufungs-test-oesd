@@ -101,7 +101,7 @@ class ETErgebnisseEvaluatorTest {
                 .build();
 
         expectedDto = new ETErgebnisseDto(passedDto);
-        expectedDto.setMaxErreichtesNiveau(A1);
+        expectedDto.setMaxErreichtesNiveau(A1_1);
         expectedDto.setNiveauZurZahlRichtiger(new HashMap<>(){{
             put(A1,2);
             put(A2,0);
@@ -147,7 +147,7 @@ class ETErgebnisseEvaluatorTest {
     }
 
     @Test
-    void evaluate3_reachedLevel_shouldBe_A1_ifOnlyA1Erreicht (){
+    void evaluate3_reachedLevel_shouldBe_A1_1_ifOnlyA1Erreicht (){
         //given
         passedDto = ETErgebnisseDto.builder()
                 .id("PASSED-DTO-ID-3")
@@ -165,7 +165,7 @@ class ETErgebnisseEvaluatorTest {
                 .build();
 
         expectedDto = new ETErgebnisseDto(passedDto);
-        expectedDto.setMaxErreichtesNiveau(A1);
+        expectedDto.setMaxErreichtesNiveau(A1_1);
         expectedDto.setNiveauZurZahlRichtiger(new HashMap<>(){{
             put(A1,2);
             put(A2,1);
@@ -363,7 +363,7 @@ class ETErgebnisseEvaluatorTest {
     }
 
     @Test
-    void evaluate8_reachedLevel_shouldBe_A1_evenIfCorrect_2_1_1_0_2_2() {
+    void evaluate8_reachedLevel_shouldBe_A1_1_evenIfCorrect_2_1_1_0_2_2() {
         //given
         passedDto = ETErgebnisseDto.builder()
                 .id("PASSED-DTO-ID-8")
@@ -381,7 +381,7 @@ class ETErgebnisseEvaluatorTest {
                 .build();
 
         expectedDto = new ETErgebnisseDto(passedDto);
-        expectedDto.setMaxErreichtesNiveau(A1);
+        expectedDto.setMaxErreichtesNiveau(A1_1);
         expectedDto.setNiveauZurZahlRichtiger(new HashMap<>(){{
             put(A1,2); // Knapp erreicht = 50 % (die Mindestschwelle ist 2 richtige Lösungen)
             put(A2,1); // Niveau nicht erreicht = unter 50 %
@@ -437,7 +437,7 @@ class ETErgebnisseEvaluatorTest {
     }
 
     @Test
-    void evaluate10_given_minLevel_3_reachedLevel_shouldBe_B1_if_4_3_3_2_2_2() {
+    void evaluate10_given_minLevel_3_reachedLevel_shouldBe_B1_1_if_4_3_3_2_2_2() {
         //given
         passedDto = ETErgebnisseDto.builder()
                 .id("PASSED-DTO-ID-10")
@@ -455,7 +455,7 @@ class ETErgebnisseEvaluatorTest {
                 .build();
 
         expectedDto = new ETErgebnisseDto(passedDto);
-        expectedDto.setMaxErreichtesNiveau(B1);
+        expectedDto.setMaxErreichtesNiveau(B1_1);
         expectedDto.setNiveauZurZahlRichtiger(new HashMap<>(){{
             put(A1,4); // erreicht = 80 % (die Mindestschwelle = 3 richtige Lösungen von 5)
             put(A2,3); // knapp erreicht = genau 60 % (3/5)
@@ -475,7 +475,7 @@ class ETErgebnisseEvaluatorTest {
     }
 
     @Test
-    void evaluate11_given_minLevel_3_reachedLevel_shouldBe_B1_if_4_3_3_2_2_2() {
+    void evaluate11_given_minLevel_3_reachedLevel_shouldBe_B1_1_if_4_3_3_2_2_2() {
         //given
         passedDto = ETErgebnisseDto.builder()
                 .id("PASSED-DTO-ID-11")
@@ -493,7 +493,7 @@ class ETErgebnisseEvaluatorTest {
                 .build();
 
         expectedDto = new ETErgebnisseDto(passedDto);
-        expectedDto.setMaxErreichtesNiveau(B1);
+        expectedDto.setMaxErreichtesNiveau(B1_1);
         expectedDto.setNiveauZurZahlRichtiger(new HashMap<>(){{
             put(A1,4); // erreicht = 80 % (die Mindestschwelle = 3 richtige Lösungen von 5)
             put(A2,3); // knapp erreicht = genau 60 % (3/5)
@@ -550,7 +550,7 @@ class ETErgebnisseEvaluatorTest {
     }
 
     @Test
-    void evaluate13_given_minLevel_3_reachedLevel_shouldBe_A2_if_3_3_1_2_3_3() {
+    void evaluate13_given_minLevel_3_reachedLevel_shouldBe_A2_1_if_3_3_1_2_3_3() {
         //given
         passedDto = ETErgebnisseDto.builder()
                 .id("PASSED-DTO-ID-13")
@@ -568,7 +568,7 @@ class ETErgebnisseEvaluatorTest {
                 .build();
 
         expectedDto = new ETErgebnisseDto(passedDto);
-        expectedDto.setMaxErreichtesNiveau(A2);
+        expectedDto.setMaxErreichtesNiveau(A2_1);
         expectedDto.setNiveauZurZahlRichtiger(new HashMap<>(){{
             put(A1,3); // knapp erreicht = genau 60 % (die Mindestschwelle = 3 richtige Lösungen von 5)
             put(A2,3); // knapp erreicht = genau 60 % (3/5)
@@ -606,7 +606,7 @@ class ETErgebnisseEvaluatorTest {
                 .build();
 
         expectedDto = new ETErgebnisseDto(passedDto);
-        expectedDto.setMaxErreichtesNiveau(A2);
+        expectedDto.setMaxErreichtesNiveau(A2_1);
         expectedDto.setNiveauZurZahlRichtiger(new HashMap<>(){{
             put(A1,3); // knapp erreicht = genau 60 % (die Mindestschwelle = 3 richtige Lösungen von 5)
             put(A2,3); // knapp erreicht = genau 60 % (3/5)
@@ -622,6 +622,84 @@ class ETErgebnisseEvaluatorTest {
         assertThat(actualResult).isEqualTo(expectedDto);
         log.info("Das erreichte Niveau: " + actualResult.getMaxErreichtesNiveau());
         log.debug(passedDto.toString());
+
+    }
+
+    @Test
+    void evaluate14_given_minLevel_3_reachedLevel_shouldBe_B1_if_4_4_3_1_1_0() {
+        //given
+        passedDto = ETErgebnisseDto.builder()
+                .id("PASSED-DTO-ID-14")
+                .aufgabenBogenHash(ABH)
+                .zahlRichtigerAntworten(13)
+                .RichtigeLoesungenNachNiveau(Arrays.asList(A1,A1,A1,A1,A2,A2,A2,A2,B1,B1,B1,B2,C1))
+                .niveauZurZahlRichtiger(new HashMap<>(){{
+                    put(A1,0);
+                    put(A2,0);
+                    put(B1,0);
+                    put(B2,0);
+                    put(C1,0);
+                    put(C2,0);
+                }})
+                .build();
+
+        expectedDto = new ETErgebnisseDto(passedDto);
+        expectedDto.setMaxErreichtesNiveau(B1_1);
+        expectedDto.setNiveauZurZahlRichtiger(new HashMap<>(){{
+            put(A1,4); // erreicht = 80 % (die Mindestschwelle = 3 richtige Lösungen von 5)
+            put(A2,4); // erreicht =             80 % (4/5)
+            put(B1,3); // knapp erreicht = genau 60 % (3/5)
+            put(B2,1); // nicht erreicht =       20 % (1/5)
+            put(C1,1); // nicht erreicht =       20 % (1/5)
+            put(C2,0); // nicht erreicht =       0 % (0/5)
+        }});
+        given(mindSchwRepoMock.findAllByOrderByNiveau()).willReturn(mindestschwellen3);
+        //when
+        var actualResult = underTest.evaluate(passedDto);
+        //then
+        assertThat(actualResult).isEqualTo(expectedDto);
+        log.info("Das erreichte Niveau: " + actualResult.getMaxErreichtesNiveau());
+        log.debug(passedDto.toString());
+
+    }
+    @Test
+    void evaluate15_given_minLevel_3_reachedLevel_shouldBe_A2_2_if_4_2_3_1_0_0() {
+        //given
+        passedDto = ETErgebnisseDto.builder()
+                .id("PASSED-DTO-ID-14")
+                .aufgabenBogenHash(ABH)
+                .zahlRichtigerAntworten(12)
+                .RichtigeLoesungenNachNiveau(Arrays.asList(A1,A1,A1,A1,A2,A2,B1,B1,B1,B2))
+                .niveauZurZahlRichtiger(new HashMap<>(){{
+                    put(A1,0);
+                    put(A2,0);
+                    put(B1,0);
+                    put(B2,0);
+                    put(C1,0);
+                    put(C2,0);
+                }})
+                .build();
+
+        expectedDto = new ETErgebnisseDto(passedDto);
+        expectedDto.setMaxErreichtesNiveau(A2_2);
+        expectedDto.setNiveauZurZahlRichtiger(new HashMap<>(){{
+            put(A1,4); // erreicht = 80 % (die Mindestschwelle = 3 richtige Lösungen von 5)
+            put(A2,2); // nicht erreicht =       40 % (2/5)
+            put(B1,3); // knapp erreicht = genau 60 % (3/5)
+            put(B2,1); // nicht erreicht =       20 % (1/5)
+            put(C1,0); // nicht erreicht =       0 % (0/5)
+            put(C2,0); // nicht erreicht =       0 % (0/5)
+        }});
+        given(mindSchwRepoMock.findAllByOrderByNiveau()).willReturn(mindestschwellen3);
+        //when
+        var actualResult = underTest.evaluate(passedDto);
+        //then
+        assertThat(actualResult).isEqualTo(expectedDto);
+        log.info("Das erreichte Niveau: " + actualResult.getMaxErreichtesNiveau());
+        log.debug(passedDto.toString());
+        Integer i = 3;
+        Integer j = 2;
+        System.out.println(Math.round(i.floatValue()/j.floatValue()));
 
     }
 }
