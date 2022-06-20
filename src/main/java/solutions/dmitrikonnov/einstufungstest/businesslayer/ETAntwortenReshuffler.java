@@ -10,4 +10,5 @@ public class ETAntwortenReshuffler {
     public List<ETAufgabe> reshuffleAntworten(List<ETAufgabe> aufgabenReshuffeld) {
         return aufgabenReshuffeld;
     }
+
 }

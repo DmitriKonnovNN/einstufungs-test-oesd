@@ -1,9 +1,6 @@
 package solutions.dmitrikonnov.einstufungstest.domainlayer;
 
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.GenerationTime;
 
 import javax.persistence.*;
