@@ -22,6 +22,7 @@ public class ETMindestschwelle implements ETSchwelle {
     @Enumerated(EnumType.STRING)
     private ETAufgabenNiveau niveau;
     private Integer mindestSchwelle;
+    private Integer maximumSchwelle;
 
 
 }

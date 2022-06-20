@@ -8,10 +8,11 @@ import solutions.dmitrikonnov.einstufungstest.domainlayer.ETMindestschwelle;
 import static solutions.dmitrikonnov.einstufungstest.domainlayer.ETSchwellenErgebnis.*;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETSchwellenErgebnis;
 import solutions.dmitrikonnov.einstufungstest.persistinglayer.MindestSchwelleRepo;
+import solutions.dmitrikonnov.einstufungstest.utils.TriFunction;
+import solutions.dmitrikonnov.einstufungstest.utils.TriPredicate;
 
 
 import java.util.*;
-import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 import java.util.stream.Collectors;
 
@@ -21,11 +22,19 @@ public class ETErgebnisseEvaluator {
 
     private final MindestSchwelleRepo mindestSchwelleRepo;
 
-    //private final BiPredicate<Integer,Integer> maxErreicht = (schwelle, richtig) -> schwelle==2? richtig >= schwelle*2 : richtig >= schwelle + Math.round(schwelle.floatValue()/2) ;
+    private final BiPredicate <Integer,Integer> alleRichtig = (max, richtig) -> richtig.equals(max);
     private final BiPredicate<Integer,Integer> erreicht = (schwelle, richtig) -> richtig > schwelle;
     private final BiPredicate<Integer,Integer> knappErreicht = (schwelle,richtig) -> richtig.equals(schwelle);
     private final BiPredicate<Integer,Integer> nichtErreicht = (schwelle,richtig) -> richtig < schwelle && richtig > 0;
     private final BiPredicate<Integer,Integer> keineRichtig = (schwelle,richtig) -> richtig == 0;
+
+    private final TriFunction<Integer, Integer, Integer, ETSchwellenErgebnis> evaluateLevel = (richtig, mindestSchwelle, maximum) -> {
+        if(alleRichtig.test(maximum,richtig)) return ALLE_RICHTIG;
+        if(erreicht.test(mindestSchwelle,richtig)) return ERREICHT;
+        if(knappErreicht.test(mindestSchwelle,richtig)) return KNAPP_ERREICHT;
+        if(nichtErreicht.test(mindestSchwelle,richtig)) return NICHT_ERREICHT;
+        return KEINE_RICHTIG;
+    };
 
 
     public ETErgebnisseDto evaluate(ETErgebnisseDto ergebnisse) {
@@ -60,20 +69,10 @@ public class ETErgebnisseEvaluator {
         //Map <ETAufgabenNiveau,ETSchwellenErgebnis> ergebnisMap = new ConcurrentHashMap<>();
 
 
-
-        BiFunction<Integer, Integer, ETSchwellenErgebnis> evaluateLevel = (richtig, mindestSchwelle) -> {
-            //if(maxErreicht.test(mindestSchwelle,richtig)) return MAX_ERREICHT;
-            if(erreicht.test(mindestSchwelle,richtig)) return ERREICHT;
-            if(knappErreicht.test(mindestSchwelle,richtig)) return KNAPP_ERREICHT;
-            if(nichtErreicht.test(mindestSchwelle,richtig)) return NICHT_ERREICHT;
-            return KEINE_RICHTIG;
-        };
-
-
         mindestSchwellen.forEach(schwelle -> {
             ETAufgabenNiveau niveau = schwelle.getNiveau();
             List <ETSchwellenErgebnis> list = entrySetErgebnisse.stream().filter(naSet -> naSet.getKey().equals(niveau))
-                    .map(naSet -> evaluateLevel.apply(naSet.getValue(),schwelle.getMindestSchwelle()))
+                    .map(naSet -> evaluateLevel.apply(naSet.getValue(),schwelle.getMindestSchwelle(), schwelle.getMaximumSchwelle()))
                     .collect(Collectors.toUnmodifiableList());
             ergebnisMap.put(niveau,list.get(0));
 
@@ -107,31 +106,44 @@ public class ETErgebnisseEvaluator {
                     continue;
                 }
                 if (erreichteNiveausMap.get(sortedNiveau).equals(ERREICHT)) {
+                    aktuellErreicht = ETAufgabenNiveau.getNiveauMitPostfix2(sortedNiveau);
+                    continue;
+                }
+                if (erreichteNiveausMap.get(sortedNiveau).equals(ALLE_RICHTIG)) {
                     aktuellErreicht = sortedNiveau;
                     continue;
                 }
             }
             if (keineRichtig) {
-                if (erreichteNiveausMap.get(sortedNiveau).equals(ERREICHT)) {
+                if (erreichteNiveausMap.get(sortedNiveau).equals(ALLE_RICHTIG)) {
                     aktuellErreicht = ETAufgabenNiveau.getNiveauMitPostfix2(vorangehendesNiveau);
                     keineRichtig = false;
                     continue;
                 }
-                if (erreichteNiveausMap.get(sortedNiveau).equals(KNAPP_ERREICHT)){
+                if (erreichteNiveausMap.get(sortedNiveau).equals(ERREICHT)) {
                     aktuellErreicht = ETAufgabenNiveau.getNiveauMitPostfix1(vorangehendesNiveau);
+                    keineRichtig = false;
+                    continue;
+                }
+                if (erreichteNiveausMap.get(sortedNiveau).equals(KNAPP_ERREICHT)){
                     keineRichtig = false;
                     continue;
                 }
                 else break;
             }
             if (nichtErreicht) {
+                if (erreichteNiveausMap.get(sortedNiveau).equals(ALLE_RICHTIG)) {
+                    aktuellErreicht = ETAufgabenNiveau.getNiveauMitPostfix1(sortedNiveau);
+                    nichtErreicht = false;
+                    continue;
+                }
                 if (erreichteNiveausMap.get(sortedNiveau).equals(KNAPP_ERREICHT)) {
-                    aktuellErreicht = ETAufgabenNiveau.getNiveauMitPostfix2(vorangehendesNiveau);
+                    aktuellErreicht = ETAufgabenNiveau.getNiveauMitPostfix1(vorangehendesNiveau);
                     nichtErreicht = false;
                     break;
                 }
                 if (erreichteNiveausMap.get(sortedNiveau).equals(ERREICHT)) {
-                    aktuellErreicht = ETAufgabenNiveau.getNiveauMitPostfix1(sortedNiveau);
+                    aktuellErreicht = vorangehendesNiveau;
                     nichtErreicht = false;
                 } else break;
             }
