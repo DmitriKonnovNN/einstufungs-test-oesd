@@ -697,9 +697,7 @@ class ETErgebnisseEvaluatorTest {
         assertThat(actualResult).isEqualTo(expectedDto);
         log.info("Das erreichte Niveau: " + actualResult.getMaxErreichtesNiveau());
         log.debug(passedDto.toString());
-        Integer i = 3;
-        Integer j = 2;
-        System.out.println(Math.round(i.floatValue()/j.floatValue()));
+
 
     }
 }
