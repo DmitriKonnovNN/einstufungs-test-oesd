@@ -91,6 +91,23 @@ class ETAntwortenPrueferTest {
                 .moeglicheAntworten(new HashSet<>(Arrays.asList("kreuz und quer", "am Arsch lecken", "in den Arsch ficken", "kreuzweis")))
                 .loesungen(Arrays.asList("am Arsch lecken", "kreuzweis"))
                 .build();
+        ETAufgabe aufgabe5 = ETAufgabe.builder()
+                .aufgabeId(1)
+                .aufgabenInhalt("Maximilian\n" +
+                        "Servus! Mein Name ist Maximilian Gruber. Ich komme aus Österreich und wohne in Wien. Ich habe eine Ausbildung zum Mechatroniker gemacht und arbeite jetzt in einer Autowerkstatt. Ich mag Autos! In der Freizeit spiele ich Fußball, fahre Rad und höre Musik. Ein Tag ohne Musik ist kein guter Tag!\n" +
+                        "\n" +
+                        "Anna\n" +
+                        "Grüß Gott! Ich heiße Anna Moser und komme aus Österreich, aus Klagenfurt. Jetzt wohne ich in Salzburg. Ich bin Musikerin und Lehrerin. Ich unterrichte am Mozarteum. Ich mag meine Studenten, die Arbeit macht mir Spaß. Meine Hobbys sind Reisen und Lesen. Ich lese gern Romane.\n" +
+                        "\n" +
+                        "Katharina\n" +
+                        "Guten Tag! Ich heiße Katharina Berger. Ich wohne in Linz, aber ich komme aus Graz. Ich bin Krankenschwester von Beruf und arbeite im Spital. Meine Hobbys sind kochen und Filme sehen. Ich mag auch Sport: Schwimmen tut gut! Ich schwimme zweimal pro Woche.\n")
+                .aufgabenTyp(ETAufgabenTyp.LESEN)
+                .aufgabenNiveau(A1)
+                .aufgabenStellung("Aufgaben 1-5\n" +
+                        "Kreuzen Sie an. Was passt zu Maximilian, Anna, Katharina?\n")
+                .moeglicheAntworten(new HashSet<>(Arrays.asList("Maximilan","Anna","Katharina")))
+                .loesungen(Arrays.asList("Anna","Katharina","Maximilan","Anna","Katharina"))
+                .build();
         givenAufgabenListe.addAll(Arrays.asList(aufgabe1, aufgabe2, aufgabe3, aufgabe4));
 
         /*List<ETAufgabenNiveau> moeglicheNiveaus = Arrays.asList(A1,A2,B1,B2,C1,C2);

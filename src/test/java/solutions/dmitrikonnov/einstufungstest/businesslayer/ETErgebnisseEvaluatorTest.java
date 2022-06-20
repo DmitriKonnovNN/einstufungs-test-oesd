@@ -1,6 +1,7 @@
 package solutions.dmitrikonnov.einstufungstest.businesslayer;
 
 import com.github.javafaker.Faker;
+import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,20 +27,15 @@ class ETErgebnisseEvaluatorTest {
     private ETErgebnisseEvaluator underTest;
     private ETErgebnisseDto passedDto;
     private ETErgebnisseDto expectedDto;
-    private ETErgebnisseDto passedDto2;
-    private ETErgebnisseDto expectedDto2;
-    private ETErgebnisseDto passedDto3;
-    private ETErgebnisseDto expectedDto3;
-    private ETErgebnisseDto passedDto4;
-    private ETErgebnisseDto expectedDto4;
-    private final Faker faker = new Faker();
+
+    private int ABH;
 
     @BeforeEach
     void setUp() {
         underTest = new ETErgebnisseEvaluator(mindSchwRepoMock);
-        ETMindestschwelle schwelleA1 = ETMindestschwelle.builder().id(1).niveau(A1).mindestSchwelle(1).build(); // 50 % von allen (von 2)
-        ETMindestschwelle schwelleA2 = ETMindestschwelle.builder().id(2).niveau(A2).mindestSchwelle(1).build(); // 50 % von allen (von 2)
-        ETMindestschwelle schwelleB1 = ETMindestschwelle.builder().id(3).niveau(B1).mindestSchwelle(2).build(); // 50 % von allen (von 4)
+        ETMindestschwelle schwelleA1 = ETMindestschwelle.builder().id(1).niveau(A1).mindestSchwelle(2).build();
+        ETMindestschwelle schwelleA2 = ETMindestschwelle.builder().id(2).niveau(A2).mindestSchwelle(2).build();
+        ETMindestschwelle schwelleB1 = ETMindestschwelle.builder().id(3).niveau(B1).mindestSchwelle(2).build();
         ETMindestschwelle schwelleB2 = ETMindestschwelle.builder().id(4).niveau(B2).mindestSchwelle(2).build();
         ETMindestschwelle schwelleC1 = ETMindestschwelle.builder().id(5).niveau(C1).mindestSchwelle(2).build();
         ETMindestschwelle schwelleC2 = ETMindestschwelle.builder().id(6).niveau(C2).mindestSchwelle(2).build();
@@ -53,9 +49,15 @@ class ETErgebnisseEvaluatorTest {
         mindestschwellen.add(schwelleC1);
         mindestschwellen.add(schwelleC2);
 
-        int ABH = faker.number().numberBetween(1,10000);
+        Faker faker = new Faker();
+        ABH = faker.number().numberBetween(1,10000);
+
+    }
 
 
+    @Test
+    void evaluate() {
+        //given
         passedDto = ETErgebnisseDto.builder()
                 .aufgabenBogenHash(ABH)
                 .zahlRichtigerAntworten(2)
@@ -87,8 +89,18 @@ class ETErgebnisseEvaluatorTest {
             put(C2,0);
 
         }});
+        given(mindSchwRepoMock.findAllByOrderByNiveau()).willReturn(mindestschwellen);
+        //when
+        var actualResult = underTest.evaluate(passedDto);
+        //then
+        assertThat(actualResult).isEqualTo(expectedDto);
 
-        passedDto2 = ETErgebnisseDto.builder()
+    }
+
+    @Test
+    void evaluate2_reachedLevel_shouldBe_A0_if_noneCorrect() {
+        //given
+        passedDto = ETErgebnisseDto.builder()
                 .aufgabenBogenHash(ABH)
                 .zahlRichtigerAntworten(0)
                 .RichtigeLoesungenNachNiveau(Collections.singletonList(null))
@@ -102,10 +114,20 @@ class ETErgebnisseEvaluatorTest {
                 }})
                 .build();
 
-        expectedDto2 = new ETErgebnisseDto(passedDto2);
-        expectedDto2.setMaxErreichtesNiveau(A0);
+        expectedDto = new ETErgebnisseDto(passedDto);
+        expectedDto.setMaxErreichtesNiveau(A0);
+        given(mindSchwRepoMock.findAllByOrderByNiveau()).willReturn(mindestschwellen);
+        //when
+        var actualResult = underTest.evaluate(passedDto);
+        //then
+        assertThat(actualResult).isEqualTo(expectedDto);
 
-        passedDto3 = ETErgebnisseDto.builder()
+    }
+
+    @Test
+    void evaluate3_reachedLevel_shouldBe_A1_ifOnlyA1Erreicht (){
+        //given
+        passedDto = ETErgebnisseDto.builder()
                 .id("PASSED-DTO-ID-3")
                 .aufgabenBogenHash(ABH)
                 .zahlRichtigerAntworten(7)
@@ -120,9 +142,9 @@ class ETErgebnisseEvaluatorTest {
                 }})
                 .build();
 
-        expectedDto3 = new ETErgebnisseDto(passedDto3);
-        expectedDto3.setMaxErreichtesNiveau(A2);
-        expectedDto3.setNiveauZurZahlRichtiger(new HashMap<>(){{
+        expectedDto = new ETErgebnisseDto(passedDto);
+        expectedDto.setMaxErreichtesNiveau(A1);
+        expectedDto.setNiveauZurZahlRichtiger(new HashMap<>(){{
             put(A1,2);
             put(A2,1);
             put(B1,1);
@@ -130,11 +152,21 @@ class ETErgebnisseEvaluatorTest {
             put(C1,1);
             put(C2,1);
         }});
+        given(mindSchwRepoMock.findAllByOrderByNiveau()).willReturn(mindestschwellen);
+        //when
+        var actualResult = underTest.evaluate(passedDto);
+        //then
+        assertThat(actualResult).isEqualTo(expectedDto);
 
-        passedDto4 = ETErgebnisseDto.builder()
+    }
+
+    @Test
+    void evaluate4_reachedLevel_shouldBe_A2_1_ifCorrect_2_0_2() {
+        //given
+        passedDto = ETErgebnisseDto.builder()
                 .id("PASSED-DTO-ID-4")
                 .aufgabenBogenHash(ABH)
-                .zahlRichtigerAntworten(7)
+                .zahlRichtigerAntworten(6)
                 .RichtigeLoesungenNachNiveau(Arrays.asList(A1,A1,B1,B1,B2,C1))
                 .niveauZurZahlRichtiger(new HashMap<>(){{
                     put(A1,0);
@@ -146,9 +178,9 @@ class ETErgebnisseEvaluatorTest {
                 }})
                 .build();
 
-        expectedDto4 = new ETErgebnisseDto(passedDto4);
-        expectedDto4.setMaxErreichtesNiveau(B1);
-        expectedDto4.setNiveauZurZahlRichtiger(new HashMap<>(){{
+        expectedDto = new ETErgebnisseDto(passedDto);
+        expectedDto.setMaxErreichtesNiveau(A2_1);
+        expectedDto.setNiveauZurZahlRichtiger(new HashMap<>(){{
             put(A1,2); // Zahl richtiger Antworten je nach Niveau
             put(A2,0);
             put(B1,2);
@@ -156,12 +188,6 @@ class ETErgebnisseEvaluatorTest {
             put(C1,1);
             put(C2,0);
         }});
-    }
-
-
-    @Test
-    void evaluate() {
-        //given
         given(mindSchwRepoMock.findAllByOrderByNiveau()).willReturn(mindestschwellen);
         //when
         var actualResult = underTest.evaluate(passedDto);
@@ -171,35 +197,146 @@ class ETErgebnisseEvaluatorTest {
     }
 
     @Test
-    void evaluate2() {
+    void evaluate5_reachedLevel_shouldBe_A2_2_ifCorrect_2_1_2() {
         //given
+        passedDto = ETErgebnisseDto.builder()
+                .id("PASSED-DTO-ID-5")
+                .aufgabenBogenHash(ABH)
+                .zahlRichtigerAntworten(7)
+                .RichtigeLoesungenNachNiveau(Arrays.asList(A1,A1,A2,B1,B1,B2,C1))
+                .niveauZurZahlRichtiger(new HashMap<>(){{
+                    put(A1,0);
+                    put(A2,0);
+                    put(B1,0);
+                    put(B2,0);
+                    put(C1,0);
+                    put(C2,0);
+                }})
+                .build();
+
+        expectedDto = new ETErgebnisseDto(passedDto);
+        expectedDto.setMaxErreichtesNiveau(A2_2);
+        expectedDto.setNiveauZurZahlRichtiger(new HashMap<>(){{
+            put(A1,2); // Zahl richtiger Antworten je nach Niveau
+            put(A2,1);
+            put(B1,2);
+            put(B2,1);
+            put(C1,1);
+            put(C2,0);
+        }});
         given(mindSchwRepoMock.findAllByOrderByNiveau()).willReturn(mindestschwellen);
         //when
-        var actualResult = underTest.evaluate(passedDto2);
+        var actualResult = underTest.evaluate(passedDto);
         //then
-        assertThat(actualResult).isEqualTo(expectedDto2);
+        assertThat(actualResult).isEqualTo(expectedDto);
 
     }
 
     @Test
-    void evaluate3() {
+    void evaluate6_reachedLevel_shouldBe_A0_ifOnlyOneCorrect() {
         //given
+        passedDto = ETErgebnisseDto.builder()
+                .id("PASSED-DTO-ID-6")
+                .aufgabenBogenHash(ABH)
+                .zahlRichtigerAntworten(7)
+                .RichtigeLoesungenNachNiveau(Collections.singletonList(A1))
+                .niveauZurZahlRichtiger(new HashMap<>(){{
+                    put(A1,0);
+                    put(A2,0);
+                    put(B1,0);
+                    put(B2,0);
+                    put(C1,0);
+                    put(C2,0);
+                }})
+                .build();
+
+        expectedDto = new ETErgebnisseDto(passedDto);
+        expectedDto.setMaxErreichtesNiveau(A0);
+        expectedDto.setNiveauZurZahlRichtiger(new HashMap<>(){{
+            put(A1,1); // Zahl richtiger Antworten je nach Niveau
+            put(A2,0);
+            put(B1,0);
+            put(B2,0);
+            put(C1,0);
+            put(C2,0);
+        }});
         given(mindSchwRepoMock.findAllByOrderByNiveau()).willReturn(mindestschwellen);
         //when
-        var actualResult = underTest.evaluate(passedDto3);
+        var actualResult = underTest.evaluate(passedDto);
         //then
-        assertThat(actualResult).isEqualTo(expectedDto3);
+        assertThat(actualResult).isEqualTo(expectedDto);
 
     }
 
     @Test
-    void evaluate4() {
+    void evaluate6_reachedLevel_shouldBe_A2_2_ifCorrect_3_0_3() {
         //given
+        passedDto = ETErgebnisseDto.builder()
+                .id("PASSED-DTO-ID-6")
+                .aufgabenBogenHash(ABH)
+                .zahlRichtigerAntworten(8)
+                .RichtigeLoesungenNachNiveau(Arrays.asList(A1,A1,A1,B1,B1,B1,B2,C1))
+                .niveauZurZahlRichtiger(new HashMap<>(){{
+                    put(A1,0);
+                    put(A2,0);
+                    put(B1,0);
+                    put(B2,0);
+                    put(C1,0);
+                    put(C2,0);
+                }})
+                .build();
+
+        expectedDto = new ETErgebnisseDto(passedDto);
+        expectedDto.setMaxErreichtesNiveau(A2_2);
+        expectedDto.setNiveauZurZahlRichtiger(new HashMap<>(){{
+            put(A1,3); // Zahl richtiger Antworten je nach Niveau
+            put(A2,0);
+            put(B1,3);
+            put(B2,1);
+            put(C1,1);
+            put(C2,0);
+        }});
         given(mindSchwRepoMock.findAllByOrderByNiveau()).willReturn(mindestschwellen);
         //when
-        var actualResult = underTest.evaluate(passedDto4);
+        var actualResult = underTest.evaluate(passedDto);
         //then
-        assertThat(actualResult).isEqualTo(expectedDto4);
+        assertThat(actualResult).isEqualTo(expectedDto);
+
+    }
+
+    @Test
+    void evaluate7_reachedLevel_shouldBe_B1_1_ifCorrect_3_1_3() {
+        //given
+        passedDto = ETErgebnisseDto.builder()
+                .id("PASSED-DTO-ID-7")
+                .aufgabenBogenHash(ABH)
+                .zahlRichtigerAntworten(8)
+                .RichtigeLoesungenNachNiveau(Arrays.asList(A1,A1,A1,A2,B1,B1,B1,B2,C1))
+                .niveauZurZahlRichtiger(new HashMap<>(){{
+                    put(A1,0);
+                    put(A2,0);
+                    put(B1,0);
+                    put(B2,0);
+                    put(C1,0);
+                    put(C2,0);
+                }})
+                .build();
+
+        expectedDto = new ETErgebnisseDto(passedDto);
+        expectedDto.setMaxErreichtesNiveau(B1_1);
+        expectedDto.setNiveauZurZahlRichtiger(new HashMap<>(){{
+            put(A1,3); // Zahl richtiger Antworten je nach Niveau
+            put(A2,1);
+            put(B1,3);
+            put(B2,1);
+            put(C1,1);
+            put(C2,0);
+        }});
+        given(mindSchwRepoMock.findAllByOrderByNiveau()).willReturn(mindestschwellen);
+        //when
+        var actualResult = underTest.evaluate(passedDto);
+        //then
+        assertThat(actualResult).isEqualTo(expectedDto);
 
     }
 }

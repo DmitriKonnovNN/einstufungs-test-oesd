@@ -83,16 +83,19 @@ public class ETErgebnisseEvaluator {
         List <ETAufgabenNiveau> sortedNiveaus = erreichteNiveausMap.keySet().stream().sorted().collect(Collectors.toList());
         boolean keineRichtig = false;
         boolean nichtErreicht = false;
+        ETAufgabenNiveau vorangehendesNiveau = ETAufgabenNiveau.A0;
         ETAufgabenNiveau aktuellErreicht = ETAufgabenNiveau.A0;
         for (ETAufgabenNiveau sortedNiveau : sortedNiveaus) {
             if (!keineRichtig && !nichtErreicht) {
                 if (erreichteNiveausMap.get(sortedNiveau).equals(ETSchwellenErgebnis.KEINE_RICHTIG)) {
                     keineRichtig = true;
                     nichtErreicht = true;
+                    vorangehendesNiveau = sortedNiveau;
                     continue;
                 }
                 if (erreichteNiveausMap.get(sortedNiveau).equals(ETSchwellenErgebnis.NICHT_ERREICHT)) {
                     nichtErreicht = true;
+                    vorangehendesNiveau = sortedNiveau;
                     continue;
                 }
                 if (erreichteNiveausMap.get(sortedNiveau).equals(ETSchwellenErgebnis.KNAPP_ERREICHT)) {
@@ -106,18 +109,26 @@ public class ETErgebnisseEvaluator {
             }
             if (keineRichtig) {
                 if (erreichteNiveausMap.get(sortedNiveau).equals(ETSchwellenErgebnis.ERREICHT)) {
-                    aktuellErreicht = sortedNiveau;
+                    aktuellErreicht = ETAufgabenNiveau.getNiveauMitPostfix2(vorangehendesNiveau);
                     keineRichtig = false;
                     continue;
-                } else break;
+                }
+                if (erreichteNiveausMap.get(sortedNiveau).equals(ETSchwellenErgebnis.KNAPP_ERREICHT)){
+                    aktuellErreicht = ETAufgabenNiveau.getNiveauMitPostfix1(vorangehendesNiveau);
+                    keineRichtig = false;
+                    continue;
+                }
+                else break;
             }
             if (nichtErreicht) {
                 if (erreichteNiveausMap.get(sortedNiveau).equals(ETSchwellenErgebnis.KNAPP_ERREICHT)) {
-                    aktuellErreicht = sortedNiveau;
+                    aktuellErreicht = ETAufgabenNiveau.getNiveauMitPostfix2(vorangehendesNiveau);
+                    nichtErreicht = false;
                     break;
                 }
                 if (erreichteNiveausMap.get(sortedNiveau).equals(ETSchwellenErgebnis.ERREICHT)) {
-                    aktuellErreicht = sortedNiveau;
+                    aktuellErreicht = ETAufgabenNiveau.getNiveauMitPostfix1(sortedNiveau);
+                    nichtErreicht = false;
                 } else break;
             }
         }

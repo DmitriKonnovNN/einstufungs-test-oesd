@@ -35,6 +35,9 @@ public class ETAntwortenPruefer {
         var cachedBogenHash = cachedAufgabenBogen.getAufgabenBogenHash();
         var aufgabenHashZuAntwortMap = antwortBogen.getAufgabenHashZuAntwortMap();
 
+        //TODO: Die Liste unten soll überprüft werden, ob sie mehrere Elemente hat. Wenn ja,
+        // i) soll sichergestellt werden, ob alle Elemente richtig sein sollen oder
+        // ii) ob JEDES Element als EINE richtige Antwort gilt.
         aufgabenHashZuAntwortMap.forEach((hashedId, list) -> {
             var antwId = hashedId - cachedBogenHash;
             cachedAufgaben.forEach(aufgabe -> {
