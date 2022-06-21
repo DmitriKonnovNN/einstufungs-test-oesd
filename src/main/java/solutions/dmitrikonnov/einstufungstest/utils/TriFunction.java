@@ -13,7 +13,7 @@ import java.util.function.Function;
  * @param <R> the type of the result of the function
  *
  * @see Function
- * @since 1.8
+ *
  */
 @FunctionalInterface
 public interface TriFunction <T,U,Y,R> {

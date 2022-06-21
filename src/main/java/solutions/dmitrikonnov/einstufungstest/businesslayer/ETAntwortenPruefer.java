@@ -47,7 +47,7 @@ public class ETAntwortenPruefer {
                     ergebnisseDto.getIdZuRichtigkeitMap().put(antwId, correct);
                     if (correct){
                         ergebnisseDto.getRichtigeLoesungenNachNiveau().add(aufgabe.getAufgabenNiveau());
-                        /*evaluate(ergebnisseDto,aufgabe.getAufgabenNiveau());*/
+
                     }
                 }
             });
@@ -57,10 +57,4 @@ public class ETAntwortenPruefer {
         return new ETErgebnisseDto(ergebnisseDto);
     }
 
-  /*  private void evaluate (ETErgebnisseDto ergebnisseDto, ETAufgabenNiveau niveau){
-        Integer count = ergebnisseDto.getNiveauZurZahlRichtiger().get(niveau);
-        count++;
-        ergebnisseDto.getNiveauZurZahlRichtiger().put(niveau,count);
-
-    }*/
 }
