@@ -4,6 +4,7 @@ import lombok.*;
 import org.hibernate.annotations.GenerationTime;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -11,11 +12,13 @@ import java.util.Set;
 /**
  * this class should be persistent
  * */
-@Entity
+
 @Getter
 @Setter
-@EqualsAndHashCode
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
 @Table (name = "ET_AUFGABE", indexes = @Index(columnList = "AUFGABEN_NIVEAU", name = "ET_AUFGABE_NIVEAU_IDX"))
 public class ETAufgabe {
 
@@ -33,6 +36,27 @@ public class ETAufgabe {
 
     private String aufgabenStellung;
 
+    /*
+    * mappedBy attribute which indicates that the @ManyToOne side is responsible for handling this bidirectional association
+    *
+    *Vergiss nicht: mappedBy bekommt den Namen, wie das Element im Kind genannt wird, also ggf. im ETItem: "aufgabe"
+    *
+    * */
+    @OneToMany (cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "aufgabe")
+    private Set<ETItem> items; // Set or List?
+
+    /*
+    * https://vladmihalcea.com/jpa-hibernate-synchronize-bidirectional-entity-associations/
+    */
+
+    public void addItem(ETItem item) {
+        items.add(item);
+        item.setAufgabe(this);
+    }
+    public void removeItem(ETItem item) {
+        items.remove(item);
+        item.setAufgabe(null);
+    }
     /**
      * Either a link to media content or simple text.
      * */
@@ -63,5 +87,9 @@ public class ETAufgabe {
     @Column (insertable = false, updatable = false)
     @org.hibernate.annotations.Generated (GenerationTime.ALWAYS)
     private Date lastModified;
+
+
+
+
 
 }

@@ -3,7 +3,7 @@ package solutions.dmitrikonnov.einstufungstest.businesslayer;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabe;
-import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenTyp;
+import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenNiveau;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ETAufgabenAufsetzer {
 
-    private final ETAufgabenRepo ETAufgabenRepo;
+    private final solutions.dmitrikonnov.einstufungstest.businesslayer.ETAufgabenRepo ETAufgabenRepo;
     private final ETAufgabenReshuffler aufgabenReshuffler;
     private final ETAntwortenReshuffler antwortenReshuffler;
     private final ETAufgabenRestricter aufgabenRestricter;
@@ -24,8 +24,8 @@ public class ETAufgabenAufsetzer {
 
         //TODO: Refactor the code down below by using Java Streams;
         List<ETAufgabe> aufgesetzteList = new ArrayList<>();
-        for (ETAufgabenTyp typ: ETAufgabenTyp.values()) {
-            var aufgabenNotReshuffeld = ETAufgabenRepo.findAllByAufgabenNiveau(typ.name());
+        for (ETAufgabenNiveau niveau: ETAufgabenNiveau.values()) {
+            var aufgabenNotReshuffeld = ETAufgabenRepo.findAllByAufgabenNiveau(niveau);
             var aufgabenReshuffeld = aufgabenReshuffler.reshuffle(aufgabenNotReshuffeld);
             var aufgabenReshuffeldAndRestricted = aufgabenRestricter.restrict(aufgabenReshuffeld);
             var aufgabenWithReshuffeldAntworten = antwortenReshuffler.reshuffleAntworten(aufgabenReshuffeldAndRestricted);

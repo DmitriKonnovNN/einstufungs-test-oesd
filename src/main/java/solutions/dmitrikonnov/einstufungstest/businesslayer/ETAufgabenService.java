@@ -2,10 +2,7 @@ package solutions.dmitrikonnov.einstufungstest.businesslayer;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAntwortBogenDto;
-import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabe;
-import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenBogen;
-import solutions.dmitrikonnov.einstufungstest.domainlayer.ETEndResultForFE;
+import solutions.dmitrikonnov.einstufungstest.domainlayer.*;
 import solutions.dmitrikonnov.einstufungstest.persistinglayer.ETErgebnisseConverterAndPersister;
 
 import java.util.List;
@@ -15,10 +12,19 @@ import java.util.List;
 public class ETAufgabenService {
 
 
+    private final ETAufgabenRepo aufgabenRepo;
     private final ETAufgabenAufsetzer aufsetzer;
     private final ETAntwortenPruefer pruefer;
     private final ETErgebnisseEvaluator evaluator;
     private final ETErgebnisseConverterAndPersister converterAndPersister;
+
+
+    public void addAufgabe (ETAufgabe aufgabe) {
+
+        aufgabenRepo.save(aufgabe);
+
+    }
+
 
 
     public ETAufgabenBogen getAufgabenListe (){

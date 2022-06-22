@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import solutions.dmitrikonnov.einstufungstest.businesslayer.ETAufgabenService;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAntwortBogenDto;
+import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabe;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabeDto;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETEndResultForFE;
 
@@ -22,6 +23,11 @@ public class ETAufgabenController {
         //return ResponseEntity.ok().cacheControl().
         return null;
     }
+/*    @PostMapping
+    public void addAufgabe (@RequestBody ETAufgabe aufgabe){
+
+
+    }*/
 
     @PostMapping()
     public ResponseEntity<ETEndResultForFE> checkAndGetResults(@RequestBody ETAntwortBogenDto bogen){
@@ -29,4 +35,6 @@ public class ETAufgabenController {
         //return aufgabenService.checkAntwortBogenAndGetTestErgebnisse(bogen, cachedAufgabenBogen);
         return null;
     }
+
+
 }
