@@ -16,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ETAufgabenAufsetzer {
 
-    private final solutions.dmitrikonnov.einstufungstest.businesslayer.ETAufgabenRepo ETAufgabenRepo;
+    private final ETAufgabenRepo ETAufgabenRepo;
     private final ETAufgabenReshuffler aufgabenReshuffler;
     private final ETAntwortenReshuffler antwortenReshuffler;
     private final ETAufgabenRestricter aufgabenRestricter;
