@@ -2,9 +2,11 @@ package solutions.dmitrikonnov.einstufungstest.businesslayer;
 
 
 import lombok.AllArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.*;
 import solutions.dmitrikonnov.einstufungstest.persistinglayer.MindestSchwelleRepo;
+import solutions.dmitrikonnov.einstufungstest.utils.AntwortBogenCheckedEvent;
 
 import java.util.List;
 
@@ -16,6 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ETAntwortenPruefer {
 
+    private final ApplicationEventPublisher publisher;
     private final MindestSchwelleRepo mindestSchwelleRepo;
 
     public ETErgebnisseDto checkBogen(ETAntwortBogenDto antwortBogen, ETAufgabenBogen cachedAufgabenBogen) {
@@ -30,9 +33,9 @@ public class ETAntwortenPruefer {
                 .put(schwelle.getNiveau(),0));
 
         ergebnisseDto.setAufgabenBogenHash(cachedAufgabenBogen.getAufgabenBogenHash());
-
-        var cachedBogenHash = cachedAufgabenBogen.getAufgabenBogenHash();
-        var aufgabenHashZuAntwortMap = antwortBogen.getAufgabenHashZuAntwortMap();
+        final var cachedBogenId = cachedAufgabenBogen.getAufgabenBogenId();
+        final var cachedBogenHash = cachedAufgabenBogen.getAufgabenBogenHash();
+        final var aufgabenHashZuAntwortMap = antwortBogen.getAufgabenHashZuAntwortMap();
 
         //TODO: Die Liste unten soll überprüft werden, ob sie mehrere Elemente hat. Wenn ja,
         // i) soll sichergestellt werden, ob alle Elemente richtig sein sollen oder
@@ -52,7 +55,7 @@ public class ETAntwortenPruefer {
             });
         });
         ergebnisseDto.setZahlRichtigerAntworten(ergebnisseDto.getRichtigeLoesungenNachNiveau().size());
-
+        publisher.publishEvent(new AntwortBogenCheckedEvent(this, cachedBogenId,ergebnisseDto.toString()));
         return new ETErgebnisseDto(ergebnisseDto);
     }
 

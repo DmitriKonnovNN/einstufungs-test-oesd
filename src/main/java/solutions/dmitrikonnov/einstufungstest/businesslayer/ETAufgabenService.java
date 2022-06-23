@@ -32,6 +32,7 @@ public class ETAufgabenService {
 
 
 
+
     public ETAufgabenBogen getAufgabenListe (){
         List<ETAufgabe> aufgesetzteListe = aufsetzer.listeAufsetzen();
         ETAufgabenBogen bogen = bogenAufsetzer.aufsetzen(aufgesetzteListe);

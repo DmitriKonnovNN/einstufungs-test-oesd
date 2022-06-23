@@ -33,6 +33,7 @@ public class ETAufgabenBogen {
     private final Long aufgabenBogenId;
     private final Integer aufgabenBogenHash;
     private List<ETAufgabeDto> aufgabenListe;
+    private long cachedAt;
 
 
 
