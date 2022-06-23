@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabe;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenNiveau;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -20,9 +20,18 @@ public class ETAufgabenAufsetzer {
     private final ETAufgabenReshuffler aufgabenReshuffler;
     private final ETAntwortenReshuffler antwortenReshuffler;
     private final ETAufgabenRestricter aufgabenRestricter;
-    public List<ETAufgabe> listeAufsetzen() {
 
-        //TODO: Refactor the code down below by using Java Streams;
+    public List<ETAufgabe> listeAufsetzen(){
+        return Arrays.stream(ETAufgabenNiveau.values())
+                .map(ETAufgabenRepo::findAllByAufgabenNiveau)
+                .map(aufgabenReshuffler::reshuffle)
+                .map(aufgabenRestricter::restrict)
+                .map(antwortenReshuffler::reshuffleAntworten).findFirst().orElseThrow();
+
+    }
+
+/*    public List<ETAufgabe> listeAufsetzen() {
+
         List<ETAufgabe> aufgesetzteList = new ArrayList<>();
         for (ETAufgabenNiveau niveau: ETAufgabenNiveau.values()) {
             var aufgabenNotReshuffeld = ETAufgabenRepo.findAllByAufgabenNiveau(niveau);
@@ -32,5 +41,8 @@ public class ETAufgabenAufsetzer {
             aufgesetzteList.addAll(aufgabenWithReshuffeldAntworten);
         }
         return aufgesetzteList;
-    }
+
+    }*/
+
+
 }

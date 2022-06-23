@@ -32,7 +32,7 @@ public class ETAufgabenBogen {
             generator = "et_aufgabenbogen_seq")
     private final Long aufgabenBogenId;
     private final Integer aufgabenBogenHash;
-    private final List<ETAufgabe> aufgabenListe;
+    private List<ETAufgabeDto> aufgabenListe;
 
 
 

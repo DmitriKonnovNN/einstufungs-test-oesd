@@ -4,9 +4,7 @@ import lombok.*;
 import org.hibernate.annotations.GenerationTime;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -30,9 +28,7 @@ public class ETAufgabe {
             generator = "et_aufgabe_seq")
     private Integer aufgabeId;
 
-    @ElementCollection
-    @CollectionTable (name = "et_loesungen_set")
-    private List<String> loesungen;
+
 
     private String aufgabenStellung;
 
@@ -61,10 +57,6 @@ public class ETAufgabe {
      * Either a link to media content or simple text.
      * */
     private String aufgabenInhalt;
-
-    @ElementCollection
-    @CollectionTable (name = "et_moegl_antw_set")
-    private Set<String> moeglicheAntworten;
 
     @Enumerated(EnumType.STRING)
     private ETAufgabenTyp aufgabenTyp;

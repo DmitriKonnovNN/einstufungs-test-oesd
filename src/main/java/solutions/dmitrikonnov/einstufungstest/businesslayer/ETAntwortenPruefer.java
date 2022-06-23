@@ -6,8 +6,7 @@ import org.springframework.stereotype.Service;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.*;
 import solutions.dmitrikonnov.einstufungstest.persistinglayer.MindestSchwelleRepo;
 
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.List;
 
 /**
  * The Service checks the correctness of answers.
@@ -41,14 +40,14 @@ public class ETAntwortenPruefer {
         aufgabenHashZuAntwortMap.forEach((hashedId, list) -> {
             var antwId = hashedId - cachedBogenHash;
             cachedAufgaben.forEach(aufgabe -> {
-
                 if (aufgabe.getAufgabeId().equals(antwId)){
-                    Boolean correct = aufgabe.getLoesungen().equals(list);
-                    ergebnisseDto.getIdZuRichtigkeitMap().put(antwId, correct);
-                    if (correct){
-                        ergebnisseDto.getRichtigeLoesungenNachNiveau().add(aufgabe.getAufgabenNiveau());
-
-                    }
+                    aufgabe.getItems().forEach(item -> {
+                        Boolean correct = item.getLoesungen().equals(list);
+                        ergebnisseDto.getIdZuRichtigkeitMap().put(antwId, correct);
+                        if (correct){
+                            ergebnisseDto.getRichtigeLoesungenNachNiveau().add(aufgabe.getAufgabenNiveau());
+                        }
+                    });
                 }
             });
         });

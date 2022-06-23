@@ -2,13 +2,11 @@ package solutions.dmitrikonnov.einstufungstest.weblayer;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.CacheControl;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import solutions.dmitrikonnov.einstufungstest.businesslayer.ETAufgabenService;
-import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAntwortBogenDto;
-import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabe;
-import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabeDto;
-import solutions.dmitrikonnov.einstufungstest.domainlayer.ETEndResultForFE;
+import solutions.dmitrikonnov.einstufungstest.domainlayer.*;
 
 @RestController
 @RequestMapping("api/v2.0.0/et_ufzgi")
@@ -18,10 +16,10 @@ public class ETAufgabenController {
     // TODO: Implement a controller with cache that saves a preset list. Key - AufgabenBogenID or Hash? Evicting policy: LRU + after submitting AntwortBogenDto;
 
     @GetMapping
-    public ResponseEntity<ETAufgabeDto> getAufgaben (){
+    public ResponseEntity<ETAufgabenBogen> getAufgaben (){
 
-        //return ResponseEntity.ok().cacheControl().
-        return null;
+        //TODO: refactor so that we return list of AufgabeDTO
+        return ResponseEntity.status(HttpStatus.OK).body(aufgabenService.getAufgabenListe());
     }
 /*    @PostMapping
     public void addAufgabe (@RequestBody ETAufgabe aufgabe){
