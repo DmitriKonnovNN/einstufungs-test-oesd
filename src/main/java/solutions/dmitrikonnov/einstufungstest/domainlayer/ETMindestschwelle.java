@@ -2,7 +2,6 @@ package solutions.dmitrikonnov.einstufungstest.domainlayer;
 
 import lombok.*;
 import solutions.dmitrikonnov.einstufungstest.businesslayer.ETSchwelle;
-import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenNiveau;
 
 import javax.persistence.*;
 
@@ -18,11 +17,11 @@ import javax.persistence.*;
 public class ETMindestschwelle implements ETSchwelle {
 
     @Id
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private short id;
     @Enumerated(EnumType.STRING)
     private ETAufgabenNiveau niveau;
     private Integer mindestSchwelle;
     private Integer maximumSchwelle;
-
 
 }

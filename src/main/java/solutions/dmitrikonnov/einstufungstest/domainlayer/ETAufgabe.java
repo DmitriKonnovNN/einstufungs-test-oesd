@@ -68,7 +68,6 @@ public class ETAufgabe {
     private Integer gewichtung;
 
     private Long counter;
-    private Long counterCorrectAnswers;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column (updatable = false)

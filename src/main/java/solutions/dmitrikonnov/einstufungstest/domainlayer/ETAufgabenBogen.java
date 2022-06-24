@@ -1,9 +1,6 @@
 package solutions.dmitrikonnov.einstufungstest.domainlayer;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,7 +15,7 @@ import java.util.Map;
  * Die Id wird dem Nutzer zuteil und abschließend in den Antwortbogen eingetragen.
  * */
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Setter
 @Getter
 @Builder
@@ -32,7 +29,7 @@ public class ETAufgabenBogen {
             generator = "et_aufgabenbogen_seq")
     private final Long aufgabenBogenId;
     private final Integer aufgabenBogenHash;
-    private List<ETAufgabeDto> aufgabenListe;
+    private final List<ETAufgabeDto> aufgabenListe;
     private long cachedAt;
     private final Map<Integer, List<String>> itemZuLoesungen;
     private final Map<Integer,ETAufgabenNiveau>itemZuNiveau;
