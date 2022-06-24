@@ -22,9 +22,7 @@ public class ETAufgabenService {
     private final ETAntwortenPruefer pruefer;
     private final ETErgebnisseEvaluator evaluator;
     private final ETErgebnisseConverterAndPersister converterAndPersister;
-
     private final ETAufgabenBogenAufsetzer bogenAufsetzer;
-
 
 
     public void addAufgabe (ETAufgabe aufgabe) {
@@ -32,25 +30,21 @@ public class ETAufgabenService {
 
     }
 
-
-
-
     public ETAufgabenBogen getAufgabenListe (){
         List<ETAufgabe> aufgesetzteListe = aufsetzer.listeAufsetzen();
         ETAufgabenBogen bogen = bogenAufsetzer.aufsetzen(aufgesetzteListe);
         return bogen;
     }
 
-
     @SneakyThrows
     public ETEndResultForFE checkAntwortBogenAndGetTestErgebnisse (ETAntwortBogenDto antwortBogen, ETAufgabenBogen chachedAufgabenBogen){
         var ergebnisseDto = pruefer.checkBogen(antwortBogen,chachedAufgabenBogen);
         var ergebnisseDto1 = evaluator.evaluate(ergebnisseDto);
-        var ergebnisseId = converterAndPersister.convertAndPersist(ergebnisseDto1);
+        var ergebnisseUUID = converterAndPersister.convertAndPersist(ergebnisseDto1);
         return ETEndResultForFE.builder()
                 .erreichtesNiveau(ergebnisseDto1.getMaxErreichtesNiveau())
                 .zahlRichtigerAntworten(ergebnisseDto1.getZahlRichtigerAntworten())
-                .id(ergebnisseId.get(2, TimeUnit.SECONDS))
+                .id(ergebnisseUUID.get(2, TimeUnit.SECONDS))
                 .build();
     }
 }

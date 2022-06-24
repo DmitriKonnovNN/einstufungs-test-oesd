@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import solutions.dmitrikonnov.einstufungstest.businesslayer.ETAufgabenService;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAntwortBogenDto;
-import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenBogen;
+import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenBogenDto;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETEndResultForFE;
 import solutions.dmitrikonnov.einstufungstest.utils.AufgabenBogenFetchedFromCache;
 
@@ -21,11 +21,15 @@ public class ETAufgabenController {
 
 
     @GetMapping
-    public ResponseEntity<ETAufgabenBogen> getAufgaben (){
+    public ResponseEntity<ETAufgabenBogenDto> getAufgaben (){
+
 
         var bogen = simpleCache.getPreparetedAufgabeBogen();
         publisher.publishEvent(new AufgabenBogenFetchedFromCache(this));
-        return ResponseEntity.status(HttpStatus.OK).body(bogen);
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new ETAufgabenBogenDto(bogen.getAufgabenBogenId(),
+                        bogen.getAufgabenListe() ));
     }
 /*    @PostMapping
     public void addAufgabe (@RequestBody ETAufgabe aufgabe){

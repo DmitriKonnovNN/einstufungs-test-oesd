@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Der Bogen wird einmal im BackEnd nach dem Reshuffle aufgesetzt. Hiervon werden einzelne Aufgaben abgerufen.
@@ -34,7 +35,8 @@ public class ETAufgabenBogen {
     private final Integer aufgabenBogenHash;
     private List<ETAufgabeDto> aufgabenListe;
     private long cachedAt;
-
+    private final Map<Integer, List<String>> itemZuLoesungen;
+    private final Map<Integer,ETAufgabenNiveau>itemZuNiveau;
 
 
 }

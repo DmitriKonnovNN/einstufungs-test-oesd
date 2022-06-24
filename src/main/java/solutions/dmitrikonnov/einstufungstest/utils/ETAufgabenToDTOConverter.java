@@ -3,6 +3,7 @@ package solutions.dmitrikonnov.einstufungstest.utils;
 import org.springframework.stereotype.Service;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabe;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabeDto;
+import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenNiveau;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETItemDto;
 
 import java.util.List;
@@ -17,14 +18,17 @@ public class ETAufgabenToDTOConverter {
                .collect(Collectors.toList());
 
     }
-    private  ETAufgabeDto convert1 ( ETAufgabe entity, Integer bogenHash,Long bogenId) {
+    private  ETAufgabeDto convert1 (ETAufgabe entity,
+                                    Integer bogenHash,
+                                    Long bogenId,) {
 
         return ETAufgabeDto.builder()
                 .aufgabenStellung(entity.getAufgabenStellung())
                 .aufgabenInhalt(entity.getAufgabenInhalt())
                 .aufgabenHash(entity.getAufgabeId()+bogenHash)
+                .niveau(entity.getAufgabenNiveau())
                 .items(entity.getItems().stream().map(item-> ETItemDto.builder()
-                        .itemId(item.getItemId())
+                        .itemId(item.getItemId()+bogenHash)
                         .moeglicheAntworten(item.getMoeglicheAntworten())
                         .build()).collect(Collectors.toList()))
                 .aufgabenBogenId(bogenId).build();

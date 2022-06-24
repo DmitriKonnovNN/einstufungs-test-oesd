@@ -19,5 +19,6 @@ public class ETAufgabeDto implements Serializable {
     private Integer aufgabenHash; // AufgabeId AufgabenBogenId
     private String aufgabenStellung;
     private String aufgabenInhalt;
+    private ETAufgabenNiveau niveau;
     private List<ETItemDto> items;
 }

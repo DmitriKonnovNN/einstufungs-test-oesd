@@ -62,4 +62,8 @@ public class InRamSimpleCache {
        return aufgabenService.getAufgabenListe();
     }
 
+    protected void warmUpCache(){
+        
+    }
+
 }
