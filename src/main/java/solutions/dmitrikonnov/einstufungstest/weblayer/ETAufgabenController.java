@@ -24,7 +24,7 @@ public class ETAufgabenController {
     public ResponseEntity<ETAufgabenBogenDto> getAufgaben (){
 
 
-        var bogen = simpleCache.getPreparetedAufgabeBogen();
+        var bogen = simpleCache.getPreparedAufgabenbogen();
         publisher.publishEvent(new AufgabenBogenFetchedFromCache(this));
 
         return ResponseEntity.status(HttpStatus.OK)

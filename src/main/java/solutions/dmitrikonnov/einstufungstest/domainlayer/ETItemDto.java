@@ -5,18 +5,17 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.Set;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ETItemDto {
+public class ETItemDto implements Serializable {
 
-
+    private static final long serialVersionUID = -1798070786993154676L;
     private Integer itemId;
-
-    //private ETAufgabe aufgabe;
 
     private Set<String> moeglicheAntworten;
 

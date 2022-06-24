@@ -23,9 +23,9 @@ public class InRamSimpleCache {
     private final ETAufgabenService aufgabenService;
 
 
-    private void save(Long id, ETAufgabenBogen aufgabenbogen){
-        aufgabenbogen.setCachedAt(System.currentTimeMillis());
-        toCheckCache.put(id, aufgabenbogen);
+    private void saveToCheck(Long id, ETAufgabenBogen bogen){
+        bogen.setCachedAt(System.currentTimeMillis());
+        toCheckCache.put(id, bogen);
     }
 
     public ETAufgabenBogen fetch(Long id){
@@ -36,10 +36,10 @@ public class InRamSimpleCache {
         toCheckCache.remove(id);
     }
 
-    public ETAufgabenBogen getPreparetedAufgabeBogen(){
+    public ETAufgabenBogen getPreparedAufgabenbogen(){
 
         var bogen = toServeCache.poll().orElse(getBogenForced());
-        save(bogen.getAufgabenBogenId(),bogen);
+        saveToCheck(bogen.getAufgabenBogenId(),bogen);
         return bogen;
     }
     public void checkIfAlmostEmptyAndPopulate (){
@@ -50,6 +50,7 @@ public class InRamSimpleCache {
         for (int i = cacheAllocSize; i > 0 ; i--) {
             toServeCache.offer(Optional.ofNullable(aufgabenService.getAufgabenListe()));
         }
+        log.debug("Cache (allocated to {} ) has been populated with {} elements",cacheAllocSize ,toServeCache.size());
 
     }
 
@@ -62,8 +63,9 @@ public class InRamSimpleCache {
        return aufgabenService.getAufgabenListe();
     }
 
-    protected void warmUpCache(){
-        
+    public void warmUpCache(){
+        log.debug("Cache warm-up started");
+        populateCache();
     }
 
 }
