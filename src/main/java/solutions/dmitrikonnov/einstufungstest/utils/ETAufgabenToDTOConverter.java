@@ -32,7 +32,7 @@ public class ETAufgabenToDTOConverter {
                 .niveau(entity.getAufgabenNiveau())
                 .items(entity.getItems().stream().map(item-> ETItemDto.builder()
                         .itemId(item.getItemId()+bogenHash)
-                        .itemAufgabe(item.getItemAufgabe())
+                        .itemAufgabenInhalt(item.getItemAufgabenInhalt())
                         .moeglicheAntworten(item.getMoeglicheAntworten())
                         .build()).collect(Collectors.toList()))
                 .aufgabenBogenId(bogenId).build();

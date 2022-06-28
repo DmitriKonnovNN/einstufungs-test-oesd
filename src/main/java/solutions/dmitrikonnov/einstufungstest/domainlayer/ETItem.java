@@ -44,7 +44,7 @@ public class ETItem {
     @JoinColumn(name ="ET_AUFGABE_ID")
     private ETAufgabe aufgabe;
 
-    private String itemAufgabe;
+    private String itemAufgabenInhalt;
 
     @ElementCollection
     @CollectionTable(name = "et_moegl_antw_set")

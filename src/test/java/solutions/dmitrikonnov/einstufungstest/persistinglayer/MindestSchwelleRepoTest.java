@@ -1,5 +1,6 @@
 package solutions.dmitrikonnov.einstufungstest.persistinglayer;
 
+import org.junit.Ignore;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,6 +13,7 @@ import solutions.dmitrikonnov.einstufungstest.domainlayer.ETMindestschwelle;
 
 @DataJpaTest
 @ActiveProfiles("unit-test")
+@Ignore
 class MindestSchwelleRepoTest {
 
     @Autowired

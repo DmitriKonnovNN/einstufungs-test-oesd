@@ -69,22 +69,26 @@ class ETAntwortenPrueferTest {
 
         ETItem item1 = ETItem.builder()
                 .itemId(1)
+                .itemAufgabenInhalt("Verpiss ...!")
                 .moeglicheAntworten(new HashSet<>(Arrays.asList("dich", "euch", "du", "Sie")))
                 .loesungen(Collections.singletonList("dich"))
                 .build();
 
         ETItem item2 = ETItem.builder()
                 .itemId(2)
+                .itemAufgabenInhalt("Scheiß ..., Alta!")
                 .moeglicheAntworten(new HashSet<>(Arrays.asList("dich selber", "drauf", "und pisse", "dran")))
                 .loesungen(Collections.singletonList("drauf"))
                 .build();
         ETItem item3 = ETItem.builder()
                 .itemId(3)
+                .itemAufgabenInhalt("Willst du mir .. blasen, Schatz?")
                 .moeglicheAntworten(new HashSet<>(Arrays.asList("einen Schwanz", "den Arsch", "die Eier", "einen")))
                 .loesungen(Collections.singletonList("einen"))
                 .build();
         ETItem item4 = ETItem.builder()
                 .itemId(4)
+                .itemAufgabenInhalt("Du kannst du mich mal ...?")
                 .moeglicheAntworten(new HashSet<>(Arrays.asList("kreuz und quer", "am Arsch lecken", "in den Arsch ficken", "kreuzweis")))
                 .loesungen(Arrays.asList("am Arsch lecken", "kreuzweis"))
                 .build();
@@ -92,31 +96,31 @@ class ETAntwortenPrueferTest {
 
         ETItem item5 = ETItem.builder()
                 .itemId(5)
-                .itemAufgabe("...wohnt in Salzburg")
+                .itemAufgabenInhalt("...wohnt in Salzburg")
                 .moeglicheAntworten(new HashSet<>(Arrays.asList("Maximilian","Anna", "Katharina")))
                 .loesungen(Collections.singletonList("Anna"))
                 .build();
         ETItem item6 = ETItem.builder()
                 .itemId(6)
-                .itemAufgabe("...kommt aus Graz")
+                .itemAufgabenInhalt("...kommt aus Graz")
                 .moeglicheAntworten(new HashSet<>(Arrays.asList("Maximilian","Anna", "Katharina")))
                 .loesungen(Collections.singletonList("Katharina"))
                 .build();
         ETItem item7 = ETItem.builder()
                 .itemId(7)
-                .itemAufgabe("...mag Musik")
+                .itemAufgabenInhalt("...mag Musik")
                 .moeglicheAntworten(new HashSet<>(Arrays.asList("Maximilian","Anna", "Katharina")))
                 .loesungen(Collections.singletonList("Maximilian"))
                 .build();
         ETItem item8 = ETItem.builder()
-                .itemAufgabe("...arbeitet als Lehrerin")
+                .itemAufgabenInhalt("...arbeitet als Lehrerin")
                 .itemId(8)
                 .moeglicheAntworten(new HashSet<>(Arrays.asList("Maximilian","Anna", "Katharina")))
                 .loesungen(Collections.singletonList("Anna"))
                 .build();
         ETItem item9 = ETItem.builder()
                 .itemId(8)
-                .itemAufgabe("...kocht und schwimmt gern")
+                .itemAufgabenInhalt("...kocht und schwimmt gern")
                 .moeglicheAntworten(new HashSet<>(Arrays.asList("Maximilian","Anna", "Katharina")))
                 .loesungen(Collections.singletonList("Katharina"))
                 .build();
@@ -124,7 +128,6 @@ class ETAntwortenPrueferTest {
 
         ETAufgabe aufgabe1 = ETAufgabe.builder()
                 .aufgabeId(4)
-                .aufgabenInhalt("Verpiss ...!")
                 .aufgabenTyp(ETAufgabenTyp.SPRACHBAUSTEINE)
                 .aufgabenNiveau(A1)
                 .aufgabenStellung("Ergänzen Sie den Satz!")
@@ -132,7 +135,6 @@ class ETAntwortenPrueferTest {
                 .build();
         ETAufgabe aufgabe2 = ETAufgabe.builder()
                 .aufgabeId(8)
-                .aufgabenInhalt("Scheiß ..., Alta!")
                 .aufgabenTyp(ETAufgabenTyp.SPRACHBAUSTEINE)
                 .aufgabenNiveau(A1)
                 .aufgabenStellung("Ergänzen Sie den Satz!")
@@ -140,7 +142,6 @@ class ETAntwortenPrueferTest {
                 .build();
         ETAufgabe aufgabe3 = ETAufgabe.builder()
                 .aufgabeId(9)
-                .aufgabenInhalt("Willst du mir .. blasen, Schatz?")
                 .aufgabenTyp(ETAufgabenTyp.SPRACHBAUSTEINE)
                 .aufgabenNiveau(A2)
                 .aufgabenStellung("Ergänzen Sie den Satz!")
@@ -148,7 +149,6 @@ class ETAntwortenPrueferTest {
                 .build();
         ETAufgabe aufgabe4 = ETAufgabe.builder()
                 .aufgabeId(2)
-                .aufgabenInhalt("Du kannst du mich mal ...?")
                 .aufgabenTyp(ETAufgabenTyp.SPRACHBAUSTEINE)
                 .aufgabenNiveau(A2)
                 .aufgabenStellung("Ergänzen Sie den Satz!")
@@ -248,7 +248,7 @@ class ETAntwortenPrueferTest {
                 .idZuRichtigkeitMap(new HashMap<>(){{
                    put(item1.getItemId(),true);
                    put(item2.getItemId(),true);
-                   put(item3.getItemId(), false);
+                   put(item3.getItemId(),false);
                    put(item4.getItemId(),false);
                    put(item5.getItemId(),true);
                    put(item6.getItemId(),false);
