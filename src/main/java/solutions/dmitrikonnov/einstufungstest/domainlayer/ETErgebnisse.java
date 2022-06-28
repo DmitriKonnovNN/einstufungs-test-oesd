@@ -44,8 +44,8 @@ public class ETErgebnisse {
 
     @ElementCollection
     @CollectionTable (name = "et_ergebnisse_mapping"/*,joinColumns = @JoinColumn ("ETERGEBNISSE_ID") */)
-    @MapKeyColumn (name = "et_aufg_id")
-    @Column (name = "et_aufg_correctness")
+    @MapKeyColumn (name = "et_item_id")
+    @Column (name = "et_item_correctness")
     private Map<Integer, Boolean> idZuRichtigkeitMap;
 
     @ElementCollection

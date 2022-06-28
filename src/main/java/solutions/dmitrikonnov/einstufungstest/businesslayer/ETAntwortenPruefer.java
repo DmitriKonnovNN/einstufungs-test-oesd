@@ -2,12 +2,15 @@ package solutions.dmitrikonnov.einstufungstest.businesslayer;
 
 
 import lombok.AllArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.*;
 import solutions.dmitrikonnov.einstufungstest.persistinglayer.MindestSchwelleRepo;
+import solutions.dmitrikonnov.einstufungstest.utils.AntwortBogenCheckedEvent;
 
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * The Service checks the correctness of answers.
@@ -17,14 +20,19 @@ import java.util.concurrent.ConcurrentHashMap;
 @AllArgsConstructor
 public class ETAntwortenPruefer {
 
+    private final ApplicationEventPublisher publisher;
     private final MindestSchwelleRepo mindestSchwelleRepo;
 
     public ETErgebnisseDto checkBogen(ETAntwortBogenDto antwortBogen, ETAufgabenBogen cachedAufgabenBogen) {
 
-        List<ETAufgabe> cachedAufgaben = cachedAufgabenBogen.getAufgabenListe();
-        ETErgebnisseDto ergebnisseDto = new ETErgebnisseDto();
 
-        List<ETMindestschwelle> mindestSchwellen = mindestSchwelleRepo.findAllByOrderByNiveau();
+        final Map<Integer,List<String>> cachedItemZuloesungen = cachedAufgabenBogen.getItemZuLoesungen();
+        final ETErgebnisseDto ergebnisseDto = new ETErgebnisseDto();
+        final Map<Integer, ETAufgabenNiveau> itemIdZuNiveau = cachedAufgabenBogen.getItemZuNiveau();
+        final Long cachedBogenId = cachedAufgabenBogen.getAufgabenBogenId();
+        final Integer cachedBogenHash = cachedAufgabenBogen.getAufgabenBogenHash();
+        final Map<Integer, ArrayList<String>> itemHashZuAntwortMap = antwortBogen.getItemHashZuAntwortMap();
+        final List<ETMindestschwelle> mindestSchwellen = mindestSchwelleRepo.findAllByOrderByNiveau();
 
         mindestSchwellen.forEach(schwelle -> ergebnisseDto
                 .getNiveauZurZahlRichtiger()
@@ -32,28 +40,18 @@ public class ETAntwortenPruefer {
 
         ergebnisseDto.setAufgabenBogenHash(cachedAufgabenBogen.getAufgabenBogenHash());
 
-        var cachedBogenHash = cachedAufgabenBogen.getAufgabenBogenHash();
-        var aufgabenHashZuAntwortMap = antwortBogen.getAufgabenHashZuAntwortMap();
-
-        //TODO: Die Liste unten soll überprüft werden, ob sie mehrere Elemente hat. Wenn ja,
-        // i) soll sichergestellt werden, ob alle Elemente richtig sein sollen oder
-        // ii) ob JEDES Element als EINE richtige Antwort gilt.
-        aufgabenHashZuAntwortMap.forEach((hashedId, list) -> {
-            var antwId = hashedId - cachedBogenHash;
-            cachedAufgaben.forEach(aufgabe -> {
-
-                if (aufgabe.getAufgabeId().equals(antwId)){
-                    Boolean correct = aufgabe.getLoesungen().equals(list);
-                    ergebnisseDto.getIdZuRichtigkeitMap().put(antwId, correct);
-                    if (correct){
-                        ergebnisseDto.getRichtigeLoesungenNachNiveau().add(aufgabe.getAufgabenNiveau());
-
-                    }
-                }
+        itemHashZuAntwortMap.forEach((hashedId, list) -> {
+            var itemId = hashedId - cachedBogenHash;
+            var cLoesungen = cachedItemZuloesungen.get(itemId);
+            Boolean correct = cLoesungen.equals(list);
+            ergebnisseDto.getIdZuRichtigkeitMap().put(itemId, correct);
+            if(correct){
+                ergebnisseDto.getRichtigeLoesungenNachNiveau().add(itemIdZuNiveau.get(itemId));
+            }
             });
-        });
-        ergebnisseDto.setZahlRichtigerAntworten(ergebnisseDto.getRichtigeLoesungenNachNiveau().size());
 
+        ergebnisseDto.setZahlRichtigerAntworten(ergebnisseDto.getRichtigeLoesungenNachNiveau().size());
+        publisher.publishEvent(new AntwortBogenCheckedEvent(this, cachedBogenId,ergebnisseDto.toString()));
         return new ETErgebnisseDto(ergebnisseDto);
     }
 

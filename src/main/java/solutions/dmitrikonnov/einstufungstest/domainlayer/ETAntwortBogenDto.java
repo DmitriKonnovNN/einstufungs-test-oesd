@@ -14,6 +14,5 @@ public class ETAntwortBogenDto implements Serializable {
 
     private static final long serialVersionUID = -1798070786993154676L;
     private final Long antwortBogenId;
-    private final Map<Integer, ArrayList<String>> aufgabenHashZuAntwortMap;
-
+    private final Map<Integer, ArrayList<String>> itemHashZuAntwortMap;
 }

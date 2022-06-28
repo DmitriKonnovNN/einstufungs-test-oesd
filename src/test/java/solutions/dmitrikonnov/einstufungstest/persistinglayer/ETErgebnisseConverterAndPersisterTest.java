@@ -4,24 +4,22 @@ import com.github.javafaker.Faker;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.BDDMockito;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.ActiveProfiles;
-
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.mockito.Mockito.verify;
-import static solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenNiveau.*;
-
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenNiveau;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETErgebnisse;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETErgebnisseDto;
 
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenNiveau.*;
 
 @ExtendWith(MockitoExtension.class)
 @ActiveProfiles("unit-test")
@@ -112,7 +110,7 @@ class ETErgebnisseConverterAndPersisterTest {
     @RepeatedTest(2)
     void shouldConvertAndPersist() {
         //given see setUp();
-
+        BDDMockito.given(repoMock.save(any())).willReturn(entityExpected);
         //when
         underTest.convertAndPersist(dtoGiven);
         //then
@@ -120,7 +118,6 @@ class ETErgebnisseConverterAndPersisterTest {
         verify(repoMock).save(entityArgumentCaptor.capture());
         ETErgebnisse result = entityArgumentCaptor.getValue();
         assertThat(entityExpected).isEqualTo(result);
-        
 
     }
 }

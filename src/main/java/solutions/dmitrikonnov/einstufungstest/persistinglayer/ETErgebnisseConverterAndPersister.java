@@ -4,13 +4,14 @@ import io.micrometer.core.annotation.Timed;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenNiveau;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETErgebnisse;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETErgebnisseDto;
 
 import java.util.Map;
-import java.util.function.Function;
+import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,7 +23,7 @@ public class ETErgebnisseConverterAndPersister {
 
     @Async
     @Timed (value = "et.service.ergconverter-persister")
-    public void convertAndPersist(ETErgebnisseDto ergebnisseDto) {
+    public Future<String> convertAndPersist(ETErgebnisseDto ergebnisseDto) {
 
         ETErgebnisse ergebnisse = ETErgebnisse.builder()
                 .aufgabenBogenHash(ergebnisseDto.getAufgabenBogenHash())
@@ -36,8 +37,9 @@ public class ETErgebnisseConverterAndPersister {
                 .idZuRichtigkeitMap(ergebnisseDto.getIdZuRichtigkeitMap())
                 .build();
         log.info("ErgebnisseDto {} converted to Entity {}", ergebnisseDto,ergebnisse);
-        repo.save(ergebnisse);
+        String persistedUUID = repo.save(ergebnisse).getId();
         log.info("ErgebnisseEntity {} persisted", ergebnisse);
+        return new AsyncResult<>(persistedUUID);
     }
 
 }
