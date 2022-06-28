@@ -6,7 +6,6 @@ import org.hibernate.annotations.GenerationTime;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -44,6 +43,8 @@ public class ETItem {
     @ManyToOne (fetch = FetchType.LAZY)
     @JoinColumn(name ="ET_AUFGABE_ID")
     private ETAufgabe aufgabe;
+
+    private String itemAufgabe;
 
     @ElementCollection
     @CollectionTable(name = "et_moegl_antw_set")

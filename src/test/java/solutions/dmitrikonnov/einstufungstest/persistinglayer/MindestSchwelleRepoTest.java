@@ -29,8 +29,9 @@ class MindestSchwelleRepoTest {
     void itShouldCheckIf_AllSchwellenFoundOrderByNiveauAscended() {
         //given
         ETMindestschwelle mindestschwelle = ETMindestschwelle.builder()
-                .id(1)
+                .id((short)1)
                 .niveau(ETAufgabenNiveau.A1)
+                .maximumSchwelle(5)
                 .mindestSchwelle(2)
                 .build();
         underTest.save(mindestschwelle);
