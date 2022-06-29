@@ -17,6 +17,7 @@ import java.util.Map;
 @Builder
 @ToString
 @EqualsAndHashCode
+
 @Table (name = "ET_ERGEBNISSE")
 public class ETErgebnisse {
 

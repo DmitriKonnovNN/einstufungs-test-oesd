@@ -1,6 +1,7 @@
 package solutions.dmitrikonnov.einstufungstest.businesslayer;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.AufgabenBogenSequenceRepo;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabe;
@@ -12,6 +13,7 @@ import java.util.*;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class ETAufgabenBogenAufsetzer {
     private final ETAufgabenToDTOConverter aufgabeToDtoConverter;
     private final AufgabenBogenSequenceRepo sequenceRepo;
@@ -19,6 +21,7 @@ public class ETAufgabenBogenAufsetzer {
     public ETAufgabenBogen aufsetzen (List<ETAufgabe> aufgaben) {
         final Integer aufgabenBogenHash = aufgaben.hashCode();
         final Long aufgabenBogenId = sequenceRepo.nextVal();
+        log.debug("$sequenceRepo.nextVal() called. Returned value: {} .", aufgabenBogenId);
 
         return ETAufgabenBogen.builder()
                 .aufgabenBogenHash(aufgabenBogenHash)
