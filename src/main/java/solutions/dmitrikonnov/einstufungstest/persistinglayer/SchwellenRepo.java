@@ -1,12 +1,14 @@
 package solutions.dmitrikonnov.einstufungstest.persistinglayer;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETMindestschwelle;
 
 import java.util.List;
 
-public interface MindestSchwelleRepo extends CrudRepository<ETMindestschwelle,Integer> {
+public interface SchwellenRepo extends JpaRepository<ETMindestschwelle,Integer>,SchwellenCustomRepo {
 
 
     List<ETMindestschwelle> findAllByOrderByNiveau();
+
+
 }

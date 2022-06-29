@@ -48,14 +48,18 @@ public class ETAufgabe {
     public void addItem(ETItem item) {
         items.add(item);
         item.setAufgabe(this);
+        zahlItems++;
     }
     public void removeItem(ETItem item) {
         items.remove(item);
         item.setAufgabe(null);
+        zahlItems--;
     }
     /**
      * Either a link to media content or simple text.
      * */
+
+    private short zahlItems;
     private String aufgabenInhalt;
 
     @Enumerated(EnumType.STRING)

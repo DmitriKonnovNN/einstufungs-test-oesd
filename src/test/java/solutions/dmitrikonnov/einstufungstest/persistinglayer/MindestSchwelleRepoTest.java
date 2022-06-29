@@ -17,7 +17,7 @@ import solutions.dmitrikonnov.einstufungstest.domainlayer.ETMindestschwelle;
 class MindestSchwelleRepoTest {
 
     @Autowired
-    private MindestSchwelleRepo underTest;
+    private SchwellenRepo underTest;
 
     @BeforeEach
     void setUp() {

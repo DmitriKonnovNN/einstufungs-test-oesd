@@ -10,7 +10,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.test.context.ActiveProfiles;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.*;
-import solutions.dmitrikonnov.einstufungstest.persistinglayer.MindestSchwelleRepo;
+import solutions.dmitrikonnov.einstufungstest.persistinglayer.SchwellenRepo;
 import solutions.dmitrikonnov.einstufungstest.utils.AntwortBogenCheckedEvent;
 import solutions.dmitrikonnov.einstufungstest.utils.ETAufgabenToDTOConverter;
 
@@ -27,7 +27,7 @@ import static solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenNivea
 class ETAntwortenPrueferTest {
 
     @Mock
-    private MindestSchwelleRepo mindSchwRepoMock;
+    private SchwellenRepo mindSchwRepoMock;
     @Mock
     private ApplicationEventPublisher publisherMock;
     private AntwortBogenCheckedEvent expectedEvent;

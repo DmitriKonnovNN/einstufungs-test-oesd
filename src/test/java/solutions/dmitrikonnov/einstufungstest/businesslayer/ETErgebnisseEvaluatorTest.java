@@ -11,7 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.ActiveProfiles;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETErgebnisseDto;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETMindestschwelle;
-import solutions.dmitrikonnov.einstufungstest.persistinglayer.MindestSchwelleRepo;
+import solutions.dmitrikonnov.einstufungstest.persistinglayer.SchwellenRepo;
 import java.util.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
@@ -23,7 +23,7 @@ import static solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenNivea
 class ETErgebnisseEvaluatorTest {
 
     @Mock
-    private MindestSchwelleRepo mindSchwRepoMock;
+    private SchwellenRepo mindSchwRepoMock;
     private static List<ETMindestschwelle> mindestschwellen2;
     private static List<ETMindestschwelle> mindestschwellen3;
     private ETErgebnisseEvaluator underTest;

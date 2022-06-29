@@ -1,16 +1,13 @@
 package solutions.dmitrikonnov.einstufungstest.businesslayer;
 
-import org.springframework.stereotype.Service;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabe;
+import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenNiveau;
 
 import java.util.List;
+import java.util.Map;
 
-@Service
-public class ETAufgabenRestricter {
+public interface ETAufgabenRestricter {
 
-
-    public List<ETAufgabe> restrict(List<ETAufgabe> aufgabenReshuffeld) {
-        return aufgabenReshuffeld;
-    }
-
+    public List<ETAufgabe> restrict(List<ETAufgabe> selectedAndReshuffeled, Map<ETAufgabenNiveau,Integer> niveauToMax);
+    public List<ETAufgabe> restrict(List<ETAufgabe> selectedAndReshuffeled);
 }

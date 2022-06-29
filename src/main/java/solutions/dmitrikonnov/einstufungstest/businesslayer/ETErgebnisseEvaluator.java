@@ -6,7 +6,7 @@ import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenNiveau;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETErgebnisseDto;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETMindestschwelle;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETSchwellenErgebnis;
-import solutions.dmitrikonnov.einstufungstest.persistinglayer.MindestSchwelleRepo;
+import solutions.dmitrikonnov.einstufungstest.persistinglayer.SchwellenRepo;
 import solutions.dmitrikonnov.einstufungstest.utils.TriFunction;
 
 import java.util.Collections;
@@ -22,7 +22,7 @@ import static solutions.dmitrikonnov.einstufungstest.domainlayer.ETSchwellenErge
 @AllArgsConstructor
 public class ETErgebnisseEvaluator {
 
-    private final MindestSchwelleRepo mindestSchwelleRepo;
+    private final SchwellenRepo schwellenRepo;
 
     private final BiPredicate <Integer,Integer> alleRichtig = (max, richtig) -> richtig.equals(max);
     private final BiPredicate<Integer,Integer> erreicht = (schwelle, richtig) -> richtig > schwelle;
@@ -40,7 +40,7 @@ public class ETErgebnisseEvaluator {
 
 
     public ETErgebnisseDto evaluate(ETErgebnisseDto ergebnisse) {
-        List<ETMindestschwelle> mindestSchwellen = mindestSchwelleRepo.findAllByOrderByNiveau();
+        List<ETMindestschwelle> mindestSchwellen = schwellenRepo.findAllByOrderByNiveau();
 
         if (noneCorrect(ergebnisse)){
             mindestSchwellen.forEach(record -> setNachNiveauAlleFalsch(record.getNiveau(),ergebnisse.getNiveauZurZahlRichtiger()));
