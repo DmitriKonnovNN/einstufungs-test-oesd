@@ -53,12 +53,12 @@ class ETAntwortenPrueferTest {
         underTest = new ETAntwortenPruefer(publisherMock,mindSchwRepoMock);
 
 
-        ETMindestschwelle schwelleA1 = ETMindestschwelle.builder().id((short)1).niveau(A1).mindestSchwelle(1).build();
-        ETMindestschwelle schwelleA2 = ETMindestschwelle.builder().id((short)2).niveau(A2).mindestSchwelle(1).build();
-        ETMindestschwelle schwelleB1 = ETMindestschwelle.builder().id((short)3).niveau(B1).mindestSchwelle(2).build();
-        ETMindestschwelle schwelleB2 = ETMindestschwelle.builder().id((short)4).niveau(B2).mindestSchwelle(2).build();
-        ETMindestschwelle schwelleC1 = ETMindestschwelle.builder().id((short)5).niveau(C1).mindestSchwelle(2).build();
-        ETMindestschwelle schwelleC2 = ETMindestschwelle.builder().id((short)6).niveau(C2).mindestSchwelle(1).build();
+        ETMindestschwelle schwelleA1 = ETMindestschwelle.builder().id((short)1).niveau(A1).mindestSchwelle(2).maximumSchwelle(5).build();
+        ETMindestschwelle schwelleA2 = ETMindestschwelle.builder().id((short)2).niveau(A2).mindestSchwelle(2).maximumSchwelle(5).build();
+        ETMindestschwelle schwelleB1 = ETMindestschwelle.builder().id((short)3).niveau(B1).mindestSchwelle(2).maximumSchwelle(5).build();
+        ETMindestschwelle schwelleB2 = ETMindestschwelle.builder().id((short)4).niveau(B2).mindestSchwelle(2).maximumSchwelle(5).build();
+        ETMindestschwelle schwelleC1 = ETMindestschwelle.builder().id((short)5).niveau(C1).mindestSchwelle(2).maximumSchwelle(5).build();
+        ETMindestschwelle schwelleC2 = ETMindestschwelle.builder().id((short)6).niveau(C2).mindestSchwelle(2).maximumSchwelle(5).build();
         mindestschwellen = new ArrayList<>();
         mindestschwellen.add(schwelleA1);
         mindestschwellen.add(schwelleA2);
@@ -172,7 +172,34 @@ class ETAntwortenPrueferTest {
                 .items(new HashSet<>(Arrays.asList(item5,item6,item7,item8,item9)))
                 .build();
 
-        givenAufgabenListe.addAll(Arrays.asList(aufgabe1, aufgabe2, aufgabe3, aufgabe4, aufgabe5));
+        ETItem item10 = ETItem.builder()
+                .itemId(10)
+                .itemAufgabenInhalt("Wie ${dropbox} heißt du?\n +" +
+                        "Ich bin Katharina, Katharina Berger")
+                .moeglicheAntworten(new HashSet<>(Arrays.asList("heißt","kommst", "gehst")))
+                .loesungen(Collections.singletonList("heißt"))
+                .build();
+        ETItem item11 = ETItem.builder()
+                .itemId(11  )
+                .itemAufgabenInhalt("Woher ${dropbox} du?")
+                .moeglicheAntworten(new HashSet<>(Arrays.asList("wohnst","kommst", "gehst")))
+                .loesungen(Collections.singletonList("kommst"))
+                .build();
+        ETItem item12 = ETItem.builder()
+                .itemId(12)
+                .itemAufgabenInhalt("Ich {dropbox} aus Österreich, aus Graz")
+                .moeglicheAntworten(new HashSet<>(Arrays.asList("komme", "wohne", "lebe")))
+                .loesungen(Collections.singletonList("komme"))
+                .build();
+        ETAufgabe aufgabe6 = ETAufgabe.builder()
+                .aufgabeId(3)
+                .aufgabenStellung("Wählen Sie das richrige Wort")
+                .aufgabenNiveau(A2)
+                .items(new HashSet<>(Arrays.asList(item10,item11,item12)))
+                .build();
+
+
+        givenAufgabenListe.addAll(Arrays.asList(aufgabe1, aufgabe2, aufgabe3, aufgabe4, aufgabe5,aufgabe6));
         givenAufgabenDTOListe = converter.convert(givenAufgabenListe,ABH,ID);
 
         Map<Integer, List<String>> itemZuLoesungen = new HashMap<>(){{
@@ -185,6 +212,9 @@ class ETAntwortenPrueferTest {
             put(item7.getItemId(), item7.getLoesungen());
             put(item8.getItemId(), item8.getLoesungen());
             put(item9.getItemId(), item9.getLoesungen());
+            put(item10.getItemId(), item10.getLoesungen());
+            put(item11.getItemId(), item11.getLoesungen());
+            put(item12.getItemId(), item12.getLoesungen());
         }};
 
         Map<Integer, ETAufgabenNiveau> itemZuNiveau = new HashMap<>(){{
@@ -197,6 +227,9 @@ class ETAntwortenPrueferTest {
             put(item7.getItemId(),aufgabe5.getAufgabenNiveau());
             put(item8.getItemId(),aufgabe5.getAufgabenNiveau());
             put(item9.getItemId(),aufgabe5.getAufgabenNiveau());
+            put(item10.getItemId(),aufgabe6.getAufgabenNiveau());
+            put(item11.getItemId(),aufgabe6.getAufgabenNiveau());
+            put(item12.getItemId(),aufgabe6.getAufgabenNiveau());
 
         }};
 
@@ -237,6 +270,10 @@ class ETAntwortenPrueferTest {
             put(sumHash(item7.getItemId(),ABH),new ArrayList<>(Arrays.asList("Anna", "Katharina"))); // two false
             put(sumHash(item8.getItemId(),ABH),new ArrayList<>(Arrays.asList("Maximilian", "Anna"))); // false: one false one right
             put(sumHash(item9.getItemId(),ABH),new ArrayList<>(Collections.singletonList("Katharina"))); // correct
+            put(sumHash(item10.getItemId(),ABH),new ArrayList<>(Collections.singletonList("heißt"))); // correct
+            put(sumHash(item11.getItemId(),ABH),new ArrayList<>(Collections.singletonList("kommst"))); // correct
+            put(sumHash(item12.getItemId(),ABH),new ArrayList<>(Collections.singletonList("wohne"))); // false
+
 
         }};
 
@@ -244,7 +281,7 @@ class ETAntwortenPrueferTest {
         givenAntwortBogen = new ETAntwortBogenDto(ID,givenItemHashZuAMap);
         expectedDto = ETErgebnisseDto.builder()
                 .aufgabenBogenHash(ABH)
-                .zahlRichtigerAntworten(4)
+                .zahlRichtigerAntworten(6)
                 .idZuRichtigkeitMap(new HashMap<>(){{
                    put(item1.getItemId(),true);
                    put(item2.getItemId(),true);
@@ -255,8 +292,11 @@ class ETAntwortenPrueferTest {
                    put(item7.getItemId(),false);
                    put(item8.getItemId(),false);
                    put(item9.getItemId(),true);
+                   put(item10.getItemId(),true);
+                   put(item11.getItemId(),true);
+                   put(item12.getItemId(),false);
                 }})
-                .RichtigeLoesungenNachNiveau(Arrays.asList(A1,A1,A1,A1))
+                .RichtigeLoesungenNachNiveau(Arrays.asList(A1,A1,A1,A1,A2,A2))
                 .niveauZurZahlRichtiger(new HashMap<>(){{
                     put(A1,0);
                     put(A2,0);
@@ -288,6 +328,8 @@ class ETAntwortenPrueferTest {
                 .should()
                 .publishEvent(any(AntwortBogenCheckedEvent.class));
         assertThat(actualResult).isEqualTo(expectedDto);
+
+
 
 
 

@@ -5,16 +5,18 @@ import org.springframework.stereotype.Service;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenNiveau;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETErgebnisseDto;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETMindestschwelle;
-import static solutions.dmitrikonnov.einstufungstest.domainlayer.ETSchwellenErgebnis.*;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETSchwellenErgebnis;
 import solutions.dmitrikonnov.einstufungstest.persistinglayer.MindestSchwelleRepo;
 import solutions.dmitrikonnov.einstufungstest.utils.TriFunction;
-import solutions.dmitrikonnov.einstufungstest.utils.TriPredicate;
 
-
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.BiPredicate;
 import java.util.stream.Collectors;
+
+import static solutions.dmitrikonnov.einstufungstest.domainlayer.ETSchwellenErgebnis.*;
 
 @Service
 @AllArgsConstructor
@@ -45,10 +47,7 @@ public class ETErgebnisseEvaluator {
             ergebnisse.setMaxErreichtesNiveau(ETAufgabenNiveau.A0);
             return ergebnisse;
         }
-        List<ETAufgabenNiveau> sortedCorrectAnswers = ergebnisse.getRichtigeLoesungenNachNiveau()
-                .stream()
-                .sorted()
-                .collect(Collectors.toList());
+        List<ETAufgabenNiveau> sortedCorrectAnswers = ergebnisse.getRichtigeLoesungenNachNiveau();
 
         mindestSchwellen.forEach(record ->
                 countRichtigeJeNiveau(record.getNiveau(),sortedCorrectAnswers,ergebnisse.getNiveauZurZahlRichtiger()));

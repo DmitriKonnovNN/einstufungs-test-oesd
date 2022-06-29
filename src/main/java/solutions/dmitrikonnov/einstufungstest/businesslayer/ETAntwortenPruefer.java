@@ -11,6 +11,7 @@ import solutions.dmitrikonnov.einstufungstest.utils.AntwortBogenCheckedEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * The Service checks the correctness of answers.
@@ -33,6 +34,7 @@ public class ETAntwortenPruefer {
         final Integer cachedBogenHash = cachedAufgabenBogen.getAufgabenBogenHash();
         final Map<Integer, ArrayList<String>> itemHashZuAntwortMap = antwortBogen.getItemHashZuAntwortMap();
         final List<ETMindestschwelle> mindestSchwellen = mindestSchwelleRepo.findAllByOrderByNiveau();
+        final List<ETAufgabenNiveau> richtigeLoesungenNachNiveauTemp = new ArrayList<>();
 
         mindestSchwellen.forEach(schwelle -> ergebnisseDto
                 .getNiveauZurZahlRichtiger()
@@ -46,11 +48,16 @@ public class ETAntwortenPruefer {
             Boolean correct = cLoesungen.equals(list);
             ergebnisseDto.getIdZuRichtigkeitMap().put(itemId, correct);
             if(correct){
-                ergebnisseDto.getRichtigeLoesungenNachNiveau().add(itemIdZuNiveau.get(itemId));
+                richtigeLoesungenNachNiveauTemp.add(itemIdZuNiveau.get(itemId));
             }
             });
 
-        ergebnisseDto.setZahlRichtigerAntworten(ergebnisseDto.getRichtigeLoesungenNachNiveau().size());
+        ergebnisseDto.setZahlRichtigerAntworten(richtigeLoesungenNachNiveauTemp.size());
+        ergebnisseDto.getRichtigeLoesungenNachNiveau().addAll(
+                richtigeLoesungenNachNiveauTemp
+                        .stream()
+                        .sorted()
+                        .collect(Collectors.toList()));
         publisher.publishEvent(new AntwortBogenCheckedEvent(this, cachedBogenId,ergebnisseDto.toString()));
         return new ETErgebnisseDto(ergebnisseDto);
     }
