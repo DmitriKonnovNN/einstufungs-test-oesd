@@ -41,7 +41,7 @@ public class ETErgebnisse {
     private ETAufgabenNiveau maxErreichtesNiveau = ETAufgabenNiveau.A0;
 
     //@Column(updatable = false)
-    private Integer zahlRichtigerAntworten;
+    private Short zahlRichtigerAntworten;
 
     @ElementCollection
     @CollectionTable (name = "et_ergebnisse_mapping"/*,joinColumns = @JoinColumn ("ETERGEBNISSE_ID") */)
@@ -53,7 +53,7 @@ public class ETErgebnisse {
     @CollectionTable (name = "et_niveau_richtige_map"/*, joinColumns = @JoinColumn ("ETERGEBNISSE_ID")*/)
     @MapKeyColumn (name = "et_niveau")
     @Column (name = "et_zahl_richtiger")
-    private Map<String, Integer> niveauZurZahlRichtiger;
+    private Map<String, Short> niveauZurZahlRichtiger;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column (updatable = false)

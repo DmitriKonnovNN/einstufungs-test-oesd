@@ -47,7 +47,7 @@ class ETErgebnisseConverterAndPersisterTest {
         //String ID = UUID.randomUUID().toString();
         Integer ABH = faker.number().numberBetween(1,10000);
         ETAufgabenNiveau MEN = A2;
-        Integer ZR = 5;
+        Short ZR = 5;
         List<ETAufgabenNiveau> RLNN = new ArrayList<>(List.of(A1, A1, A2, A2, B1));
         List<String> RNNNSTRING = new ArrayList<>(List.of("A1", "A1", "A2", "A2", "B1"));
         Map<Integer, Boolean> IDZUR = new HashMap<>(){{
@@ -62,21 +62,21 @@ class ETErgebnisseConverterAndPersisterTest {
             put(faker.random().nextInt(1,10000),false);
 
         }};
-        Map<ETAufgabenNiveau, Integer> NZZR = new HashMap<>(){{
-            put(A1, 2);
-            put(A2, 2);
-            put(B1,1);
-            put(B2, 0);
-            put(C1, 0);
-            put(C2, 0);
+        Map<ETAufgabenNiveau, Short> NZZR = new HashMap<>(){{
+            put(A1,(short)2);
+            put(A2,(short)2);
+            put(B1,(short)1);
+            put(B2,(short)0);
+            put(C1,(short)0);
+            put(C2,(short)0);
         }};
-        Map<String, Integer> NZZRSTRING = new HashMap<>(){{
-            put("A1", 2);
-            put("A2", 2);
-            put("B1",1);
-            put("B2", 0);
-            put("C1", 0);
-            put("C2", 0);
+        Map<String, Short> NZZRSTRING = new HashMap<>(){{
+            put("A1",(short)2);
+            put("A2",(short)2);
+            put("B1",(short)1);
+            put("B2",(short)0);
+            put("C1",(short)0);
+            put("C2",(short)0);
         }};
 
         dtoGiven = ETErgebnisseDto.builder()

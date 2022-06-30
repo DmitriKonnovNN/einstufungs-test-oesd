@@ -29,6 +29,7 @@ public class ETAufgabenToDTOConverter {
                 .aufgabenStellung(entity.getAufgabenStellung())
                 .aufgabenInhalt(entity.getAufgabenInhalt())
                 .aufgabenHash(entity.getAufgabeId()+bogenHash)
+                .frontEndType(entity.getFrontEndType())
                 .niveau(entity.getAufgabenNiveau())
                 .items(entity.getItems().stream().map(item-> ETItemDto.builder()
                         .itemId(item.getItemId()+bogenHash)

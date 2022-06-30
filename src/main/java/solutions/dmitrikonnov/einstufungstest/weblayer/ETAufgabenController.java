@@ -31,11 +31,6 @@ public class ETAufgabenController {
                 .body(new ETAufgabenBogenDto(bogen.getAufgabenBogenId(),
                         bogen.getAufgabenListe() ));
     }
-/*    @PostMapping
-    public void addAufgabe (@RequestBody ETAufgabe aufgabe){
-
-
-    }*/
 
     @PostMapping()
     public ResponseEntity<ETEndResultForFE> checkAndGetResults(@RequestBody ETAntwortBogenDto antwortBogen){

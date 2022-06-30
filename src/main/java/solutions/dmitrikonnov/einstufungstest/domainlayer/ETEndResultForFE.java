@@ -10,5 +10,5 @@ public class ETEndResultForFE {
 
     private final ETAufgabenNiveau erreichtesNiveau;
 
-    private final Integer zahlRichtigerAntworten;
+    private final String zahlRichtigerAntworten;
 }

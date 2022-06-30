@@ -21,4 +21,5 @@ public class ETAufgabeDto implements Serializable {
     private String aufgabenInhalt;
     private ETAufgabenNiveau niveau;
     private List<ETItemDto> items;
+    private ETAufgabenFrontEndType frontEndType;
 }

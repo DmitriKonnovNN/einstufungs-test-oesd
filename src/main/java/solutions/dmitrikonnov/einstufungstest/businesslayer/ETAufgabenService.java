@@ -43,7 +43,7 @@ public class ETAufgabenService {
         var ergebnisseUUID = converterAndPersister.convertAndPersist(ergebnisseDto1);
         return ETEndResultForFE.builder()
                 .erreichtesNiveau(ergebnisseDto1.getMaxErreichtesNiveau())
-                .zahlRichtigerAntworten(ergebnisseDto1.getZahlRichtigerAntworten())
+                .zahlRichtigerAntworten(ergebnisseDto1.getZahlRichtigerAntworten().toString())
                 .id(ergebnisseUUID.get(2, TimeUnit.SECONDS))
                 .build();
     }

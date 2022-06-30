@@ -33,8 +33,8 @@ class MindestSchwelleRepoTest {
         ETMindestschwelle mindestschwelle = ETMindestschwelle.builder()
                 .id((short)1)
                 .niveau(ETAufgabenNiveau.A1)
-                .maximumSchwelle(5)
-                .mindestSchwelle(2)
+                .maximumSchwelle((short)5)
+                .mindestSchwelle((short)2)
                 .build();
         underTest.save(mindestschwelle);
         //when

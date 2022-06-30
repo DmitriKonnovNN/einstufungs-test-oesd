@@ -53,12 +53,12 @@ class ETAntwortenPrueferTest {
         underTest = new ETAntwortenPruefer(publisherMock,mindSchwRepoMock);
 
 
-        ETMindestschwelle schwelleA1 = ETMindestschwelle.builder().id((short)1).niveau(A1).mindestSchwelle(2).maximumSchwelle(5).build();
-        ETMindestschwelle schwelleA2 = ETMindestschwelle.builder().id((short)2).niveau(A2).mindestSchwelle(2).maximumSchwelle(5).build();
-        ETMindestschwelle schwelleB1 = ETMindestschwelle.builder().id((short)3).niveau(B1).mindestSchwelle(2).maximumSchwelle(5).build();
-        ETMindestschwelle schwelleB2 = ETMindestschwelle.builder().id((short)4).niveau(B2).mindestSchwelle(2).maximumSchwelle(5).build();
-        ETMindestschwelle schwelleC1 = ETMindestschwelle.builder().id((short)5).niveau(C1).mindestSchwelle(2).maximumSchwelle(5).build();
-        ETMindestschwelle schwelleC2 = ETMindestschwelle.builder().id((short)6).niveau(C2).mindestSchwelle(2).maximumSchwelle(5).build();
+        ETMindestschwelle schwelleA1 = ETMindestschwelle.builder().id((short)1).niveau(A1).mindestSchwelle((short)2).maximumSchwelle((short)5).build();
+        ETMindestschwelle schwelleA2 = ETMindestschwelle.builder().id((short)2).niveau(A2).mindestSchwelle((short)2).maximumSchwelle((short)5).build();
+        ETMindestschwelle schwelleB1 = ETMindestschwelle.builder().id((short)3).niveau(B1).mindestSchwelle((short)2).maximumSchwelle((short)5).build();
+        ETMindestschwelle schwelleB2 = ETMindestschwelle.builder().id((short)4).niveau(B2).mindestSchwelle((short)2).maximumSchwelle((short)5).build();
+        ETMindestschwelle schwelleC1 = ETMindestschwelle.builder().id((short)5).niveau(C1).mindestSchwelle((short)2).maximumSchwelle((short)5).build();
+        ETMindestschwelle schwelleC2 = ETMindestschwelle.builder().id((short)6).niveau(C2).mindestSchwelle((short)2).maximumSchwelle((short)5).build();
         mindestschwellen = new ArrayList<>();
         mindestschwellen.add(schwelleA1);
         mindestschwellen.add(schwelleA2);
@@ -281,7 +281,7 @@ class ETAntwortenPrueferTest {
         givenAntwortBogen = new ETAntwortBogenDto(ID,givenItemHashZuAMap);
         expectedDto = ETErgebnisseDto.builder()
                 .aufgabenBogenHash(ABH)
-                .zahlRichtigerAntworten(6)
+                .zahlRichtigerAntworten((short)6)
                 .idZuRichtigkeitMap(new HashMap<>(){{
                    put(item1.getItemId(),true);
                    put(item2.getItemId(),true);
@@ -298,12 +298,12 @@ class ETAntwortenPrueferTest {
                 }})
                 .RichtigeLoesungenNachNiveau(Arrays.asList(A1,A1,A1,A1,A2,A2))
                 .niveauZurZahlRichtiger(new HashMap<>(){{
-                    put(A1,0);
-                    put(A2,0);
-                    put(B1,0);
-                    put(B2,0);
-                    put(C1,0);
-                    put(C2,0);
+                    put(A1,(short)0);
+                    put(A2,(short)0);
+                    put(B1,(short)0);
+                    put(B2,(short)0);
+                    put(C1,(short)0);
+                    put(C2,(short)0);
                 }})
                 .build();
 

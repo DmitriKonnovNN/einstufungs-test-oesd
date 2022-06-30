@@ -24,13 +24,13 @@ public class ETErgebnisseEvaluator {
 
     private final SchwellenRepo schwellenRepo;
 
-    private final BiPredicate <Integer,Integer> alleRichtig = (max, richtig) -> richtig.equals(max);
-    private final BiPredicate<Integer,Integer> erreicht = (schwelle, richtig) -> richtig > schwelle;
-    private final BiPredicate<Integer,Integer> knappErreicht = (schwelle,richtig) -> richtig.equals(schwelle);
-    private final BiPredicate<Integer,Integer> nichtErreicht = (schwelle,richtig) -> richtig < schwelle && richtig > 0;
-    private final BiPredicate<Integer,Integer> keineRichtig = (schwelle,richtig) -> richtig == 0;
+    private final BiPredicate <Short,Short> alleRichtig = (max, richtig) -> richtig.equals(max);
+    private final BiPredicate<Short,Short> erreicht = (schwelle, richtig) -> richtig > schwelle;
+    private final BiPredicate<Short,Short> knappErreicht = (schwelle,richtig) -> richtig.equals(schwelle);
+    private final BiPredicate<Short,Short> nichtErreicht = (schwelle,richtig) -> richtig < schwelle && richtig > 0;
+    private final BiPredicate<Short,Short> keineRichtig = (schwelle,richtig) -> richtig == 0;
 
-    private final TriFunction<Integer, Integer, Integer, ETSchwellenErgebnis> evaluateLevel = (richtig, mindestSchwelle, maximum) -> {
+    private final TriFunction<Short, Short, Short, ETSchwellenErgebnis> evaluateLevel = (richtig, mindestSchwelle, maximum) -> {
         if(alleRichtig.test(maximum,richtig)) return ALLE_RICHTIG;
         if(erreicht.test(mindestSchwelle,richtig)) return ERREICHT;
         if(knappErreicht.test(mindestSchwelle,richtig)) return KNAPP_ERREICHT;
@@ -151,15 +151,15 @@ public class ETErgebnisseEvaluator {
     }
 
     private boolean noneCorrect(ETErgebnisseDto ergebnisse){
-        return ergebnisse.getZahlRichtigerAntworten().equals(0);
+        return ergebnisse.getZahlRichtigerAntworten().equals((short)0);
     }
 
-    private void setNachNiveauAlleFalsch (ETAufgabenNiveau niveau, Map <ETAufgabenNiveau,Integer> map) {
-        map.put(niveau,0);
+    private void setNachNiveauAlleFalsch (ETAufgabenNiveau niveau, Map <ETAufgabenNiveau,Short> map) {
+        map.put(niveau,(short)0);
     }
 
-    private void countRichtigeJeNiveau(ETAufgabenNiveau niveau, List<ETAufgabenNiveau> answers, Map <ETAufgabenNiveau,Integer> map) {
-        Integer richtige = answers.stream().filter(niveau::equals).mapToInt(value -> 1).sum();
+    private void countRichtigeJeNiveau(ETAufgabenNiveau niveau, List<ETAufgabenNiveau> answers, Map <ETAufgabenNiveau,Short> map) {
+        Short richtige = (short)answers.stream().filter(niveau::equals).mapToInt(value -> 1).sum();
 
         map.put(niveau,richtige);
     }

@@ -34,12 +34,12 @@ class ETErgebnisseEvaluatorTest {
 
     @BeforeAll
     static void setUpMindestSchwelle() {
-        ETMindestschwelle schwelleA1 = ETMindestschwelle.builder().id((short)1).niveau(A1).mindestSchwelle(2).maximumSchwelle(4).build();
-        ETMindestschwelle schwelleA2 = ETMindestschwelle.builder().id((short)2).niveau(A2).mindestSchwelle(2).maximumSchwelle(4).build();
-        ETMindestschwelle schwelleB1 = ETMindestschwelle.builder().id((short)3).niveau(B1).mindestSchwelle(2).maximumSchwelle(4).build();
-        ETMindestschwelle schwelleB2 = ETMindestschwelle.builder().id((short)4).niveau(B2).mindestSchwelle(2).maximumSchwelle(4).build();
-        ETMindestschwelle schwelleC1 = ETMindestschwelle.builder().id((short)5).niveau(C1).mindestSchwelle(2).maximumSchwelle(4).build();
-        ETMindestschwelle schwelleC2 = ETMindestschwelle.builder().id((short)6).niveau(C2).mindestSchwelle(2).maximumSchwelle(4).build();
+        ETMindestschwelle schwelleA1 = ETMindestschwelle.builder().id((short)1).niveau(A1).mindestSchwelle((short)2).maximumSchwelle((short)4).build();
+        ETMindestschwelle schwelleA2 = ETMindestschwelle.builder().id((short)2).niveau(A2).mindestSchwelle((short)2).maximumSchwelle((short)4).build();
+        ETMindestschwelle schwelleB1 = ETMindestschwelle.builder().id((short)3).niveau(B1).mindestSchwelle((short)2).maximumSchwelle((short)4).build();
+        ETMindestschwelle schwelleB2 = ETMindestschwelle.builder().id((short)4).niveau(B2).mindestSchwelle((short)2).maximumSchwelle((short)4).build();
+        ETMindestschwelle schwelleC1 = ETMindestschwelle.builder().id((short)5).niveau(C1).mindestSchwelle((short)2).maximumSchwelle((short)4).build();
+        ETMindestschwelle schwelleC2 = ETMindestschwelle.builder().id((short)6).niveau(C2).mindestSchwelle((short)2).maximumSchwelle((short)4).build();
 
         mindestschwellen2 = new ArrayList<>();
         mindestschwellen2.add(schwelleA1);
@@ -49,12 +49,12 @@ class ETErgebnisseEvaluatorTest {
         mindestschwellen2.add(schwelleC1);
         mindestschwellen2.add(schwelleC2);
 
-        ETMindestschwelle schwelle3A1 = ETMindestschwelle.builder().id((short)1).niveau(A1).mindestSchwelle(3).maximumSchwelle(5).build();
-        ETMindestschwelle schwelle3A2 = ETMindestschwelle.builder().id((short)2).niveau(A2).mindestSchwelle(3).maximumSchwelle(5).build();
-        ETMindestschwelle schwelle3B1 = ETMindestschwelle.builder().id((short)3).niveau(B1).mindestSchwelle(3).maximumSchwelle(5).build();
-        ETMindestschwelle schwelle3B2 = ETMindestschwelle.builder().id((short)4).niveau(B2).mindestSchwelle(3).maximumSchwelle(5).build();
-        ETMindestschwelle schwelle3C1 = ETMindestschwelle.builder().id((short)5).niveau(C1).mindestSchwelle(3).maximumSchwelle(5).build();
-        ETMindestschwelle schwelle3C2 = ETMindestschwelle.builder().id((short)6).niveau(C2).mindestSchwelle(3).maximumSchwelle(5).build();
+        ETMindestschwelle schwelle3A1 = ETMindestschwelle.builder().id((short)1).niveau(A1).mindestSchwelle((short)3).maximumSchwelle((short)5).build();
+        ETMindestschwelle schwelle3A2 = ETMindestschwelle.builder().id((short)2).niveau(A2).mindestSchwelle((short)3).maximumSchwelle((short)5).build();
+        ETMindestschwelle schwelle3B1 = ETMindestschwelle.builder().id((short)3).niveau(B1).mindestSchwelle((short)3).maximumSchwelle((short)5).build();
+        ETMindestschwelle schwelle3B2 = ETMindestschwelle.builder().id((short)4).niveau(B2).mindestSchwelle((short)3).maximumSchwelle((short)5).build();
+        ETMindestschwelle schwelle3C1 = ETMindestschwelle.builder().id((short)5).niveau(C1).mindestSchwelle((short)3).maximumSchwelle((short)5).build();
+        ETMindestschwelle schwelle3C2 = ETMindestschwelle.builder().id((short)6).niveau(C2).mindestSchwelle((short)3).maximumSchwelle((short)5).build();
 
         mindestschwellen3 = new ArrayList<>();
         mindestschwellen3.add(schwelle3A1);
@@ -81,15 +81,15 @@ class ETErgebnisseEvaluatorTest {
         //given
         passedDto = ETErgebnisseDto.builder()
                 .aufgabenBogenHash(ABH)
-                .zahlRichtigerAntworten(0)
+                .zahlRichtigerAntworten((short)0)
                 .RichtigeLoesungenNachNiveau(Collections.singletonList(null))
                 .niveauZurZahlRichtiger(new HashMap<>(){{
-                    put(A1,0);
-                    put(A2,0);
-                    put(B1,0);
-                    put(B2,0);
-                    put(C1,0);
-                    put(C2,0);
+                    put(A1,(short)0);
+                    put(A2,(short)0);
+                    put(B1,(short)0);
+                    put(B2,(short)0);
+                    put(C1,(short)0);
+                    put(C2,(short)0);
                 }})
                 .build();
 
@@ -109,27 +109,27 @@ class ETErgebnisseEvaluatorTest {
         passedDto = ETErgebnisseDto.builder()
                 .id("PASSED-DTO-ID-3")
                 .aufgabenBogenHash(ABH)
-                .zahlRichtigerAntworten(7)
+                .zahlRichtigerAntworten((short)7)
                 .RichtigeLoesungenNachNiveau(Arrays.asList(A1,A1,A2,B1,B2,C1,C2))
                 .niveauZurZahlRichtiger(new HashMap<>(){{
-                    put(A1,0);
-                    put(A2,0);
-                    put(B1,0);
-                    put(B2,0);
-                    put(C1,0);
-                    put(C2,0);
+                    put(A1,(short)0);
+                    put(A2,(short)0);
+                    put(B1,(short)0);
+                    put(B2,(short)0);
+                    put(C1,(short)0);
+                    put(C2,(short)0);
                 }})
                 .build();
 
         expectedDto = new ETErgebnisseDto(passedDto);
         expectedDto.setMaxErreichtesNiveau(A1_1);
         expectedDto.setNiveauZurZahlRichtiger(new HashMap<>(){{
-            put(A1,2);
-            put(A2,1);
-            put(B1,1);
-            put(B2,1);
-            put(C1,1);
-            put(C2,1);
+            put(A1,(short)2);
+            put(A2,(short)1);
+            put(B1,(short)1);
+            put(B2,(short)1);
+            put(C1,(short)1);
+            put(C2,(short)1);
         }});
         given(mindSchwRepoMock.findAllByOrderByNiveau()).willReturn(mindestschwellen2);
         //when
@@ -145,27 +145,27 @@ class ETErgebnisseEvaluatorTest {
         passedDto = ETErgebnisseDto.builder()
                 .id("PASSED-DTO-ID-4")
                 .aufgabenBogenHash(ABH)
-                .zahlRichtigerAntworten(6)
+                .zahlRichtigerAntworten((short)6)
                 .RichtigeLoesungenNachNiveau(Arrays.asList(A1,A1,B1,B1,B2,C1))
                 .niveauZurZahlRichtiger(new HashMap<>(){{
-                    put(A1,0);
-                    put(A2,0);
-                    put(B1,0);
-                    put(B2,0);
-                    put(C1,0);
-                    put(C2,0);
+                    put(A1,(short)0);
+                    put(A2,(short)0);
+                    put(B1,(short)0);
+                    put(B2,(short)0);
+                    put(C1,(short)0);
+                    put(C2,(short)0);
                 }})
                 .build();
 
         expectedDto = new ETErgebnisseDto(passedDto);
         expectedDto.setMaxErreichtesNiveau(A1_1);
         expectedDto.setNiveauZurZahlRichtiger(new HashMap<>(){{
-            put(A1,2); // Zahl richtiger Antworten je nach Niveau
-            put(A2,0);
-            put(B1,2);
-            put(B2,1);
-            put(C1,1);
-            put(C2,0);
+            put(A1,(short)2); // Zahl richtiger Antworten je nach Niveau
+            put(A2,(short)0);
+            put(B1,(short)2);
+            put(B2,(short)1);
+            put(C1,(short)1);
+            put(C2,(short)0);
         }});
         given(mindSchwRepoMock.findAllByOrderByNiveau()).willReturn(mindestschwellen2);
         //when
@@ -181,27 +181,27 @@ class ETErgebnisseEvaluatorTest {
         passedDto = ETErgebnisseDto.builder()
                 .id("PASSED-DTO-ID-5")
                 .aufgabenBogenHash(ABH)
-                .zahlRichtigerAntworten(7)
+                .zahlRichtigerAntworten((short)7)
                 .RichtigeLoesungenNachNiveau(Arrays.asList(A1,A1,A2,B1,B1,B2,C1))
                 .niveauZurZahlRichtiger(new HashMap<>(){{
-                    put(A1,0);
-                    put(A2,0);
-                    put(B1,0);
-                    put(B2,0);
-                    put(C1,0);
-                    put(C2,0);
+                    put(A1,(short)0);
+                    put(A2,(short)0);
+                    put(B1,(short)0);
+                    put(B2,(short)0);
+                    put(C1,(short)0);
+                    put(C2,(short)0);
                 }})
                 .build();
 
         expectedDto = new ETErgebnisseDto(passedDto);
         expectedDto.setMaxErreichtesNiveau(A2_1);
         expectedDto.setNiveauZurZahlRichtiger(new HashMap<>(){{
-            put(A1,2); // Zahl richtiger Antworten je nach Niveau
-            put(A2,1);
-            put(B1,2);
-            put(B2,1);
-            put(C1,1);
-            put(C2,0);
+            put(A1,(short)2); // Zahl richtiger Antworten je nach Niveau
+            put(A2,(short)1);
+            put(B1,(short)2);
+            put(B2,(short)1);
+            put(C1,(short)1);
+            put(C2,(short)0);
         }});
         given(mindSchwRepoMock.findAllByOrderByNiveau()).willReturn(mindestschwellen2);
         //when
@@ -217,27 +217,27 @@ class ETErgebnisseEvaluatorTest {
         passedDto = ETErgebnisseDto.builder()
                 .id("PASSED-DTO-ID-6")
                 .aufgabenBogenHash(ABH)
-                .zahlRichtigerAntworten(7)
+                .zahlRichtigerAntworten((short)7)
                 .RichtigeLoesungenNachNiveau(Collections.singletonList(A1))
                 .niveauZurZahlRichtiger(new HashMap<>(){{
-                    put(A1,0);
-                    put(A2,0);
-                    put(B1,0);
-                    put(B2,0);
-                    put(C1,0);
-                    put(C2,0);
+                    put(A1,(short)0);
+                    put(A2,(short)0);
+                    put(B1,(short)0);
+                    put(B2,(short)0);
+                    put(C1,(short)0);
+                    put(C2,(short)0);
                 }})
                 .build();
 
         expectedDto = new ETErgebnisseDto(passedDto);
         expectedDto.setMaxErreichtesNiveau(A0);
         expectedDto.setNiveauZurZahlRichtiger(new HashMap<>(){{
-            put(A1,1); // Zahl richtiger Antworten je nach Niveau
-            put(A2,0);
-            put(B1,0);
-            put(B2,0);
-            put(C1,0);
-            put(C2,0);
+            put(A1,(short)1); // Zahl richtiger Antworten je nach Niveau
+            put(A2,(short)0);
+            put(B1,(short)0);
+            put(B2,(short)0);
+            put(C1,(short)0);
+            put(C2,(short)0);
         }});
         given(mindSchwRepoMock.findAllByOrderByNiveau()).willReturn(mindestschwellen2);
         //when
@@ -253,27 +253,27 @@ class ETErgebnisseEvaluatorTest {
         passedDto = ETErgebnisseDto.builder()
                 .id("PASSED-DTO-ID-6")
                 .aufgabenBogenHash(ABH)
-                .zahlRichtigerAntworten(8)
+                .zahlRichtigerAntworten((short)8)
                 .RichtigeLoesungenNachNiveau(Arrays.asList(A1,A1,A1,B1,B1,B1,B2,C1))
                 .niveauZurZahlRichtiger(new HashMap<>(){{
-                    put(A1,0);
-                    put(A2,0);
-                    put(B1,0);
-                    put(B2,0);
-                    put(C1,0);
-                    put(C2,0);
+                    put(A1,(short)0);
+                    put(A2,(short)0);
+                    put(B1,(short)0);
+                    put(B2,(short)0);
+                    put(C1,(short)0);
+                    put(C2,(short)0);
                 }})
                 .build();
 
         expectedDto = new ETErgebnisseDto(passedDto);
         expectedDto.setMaxErreichtesNiveau(A2_1);
         expectedDto.setNiveauZurZahlRichtiger(new HashMap<>(){{
-            put(A1,3); // Zahl richtiger Antworten je nach Niveau
-            put(A2,0);
-            put(B1,3);
-            put(B2,1);
-            put(C1,1);
-            put(C2,0);
+            put(A1,(short)3); // Zahl richtiger Antworten je nach Niveau
+            put(A2,(short)0);
+            put(B1,(short)3);
+            put(B2,(short)1);
+            put(C1,(short)1);
+            put(C2,(short)0);
         }});
         given(mindSchwRepoMock.findAllByOrderByNiveau()).willReturn(mindestschwellen2);
         //when
@@ -289,27 +289,27 @@ class ETErgebnisseEvaluatorTest {
         passedDto = ETErgebnisseDto.builder()
                 .id("PASSED-DTO-ID-7")
                 .aufgabenBogenHash(ABH)
-                .zahlRichtigerAntworten(8)
+                .zahlRichtigerAntworten((short)8)
                 .RichtigeLoesungenNachNiveau(Arrays.asList(A1,A1,A1,A2,B1,B1,B1,B2,C1))
                 .niveauZurZahlRichtiger(new HashMap<>(){{
-                    put(A1,0);
-                    put(A2,0);
-                    put(B1,0);
-                    put(B2,0);
-                    put(C1,0);
-                    put(C2,0);
+                    put(A1,(short)0);
+                    put(A2,(short)0);
+                    put(B1,(short)0);
+                    put(B2,(short)0);
+                    put(C1,(short)0);
+                    put(C2,(short)0);
                 }})
                 .build();
 
         expectedDto = new ETErgebnisseDto(passedDto);
         expectedDto.setMaxErreichtesNiveau(A2);
         expectedDto.setNiveauZurZahlRichtiger(new HashMap<>(){{
-            put(A1,3); // Zahl richtiger Antworten je nach Niveau
-            put(A2,1);
-            put(B1,3);
-            put(B2,1);
-            put(C1,1);
-            put(C2,0);
+            put(A1,(short)3); // Zahl richtiger Antworten je nach Niveau
+            put(A2,(short)1);
+            put(B1,(short)3);
+            put(B2,(short)1);
+            put(C1,(short)1);
+            put(C2,(short)0);
         }});
         given(mindSchwRepoMock.findAllByOrderByNiveau()).willReturn(mindestschwellen2);
         //when
@@ -325,27 +325,27 @@ class ETErgebnisseEvaluatorTest {
         passedDto = ETErgebnisseDto.builder()
                 .id("PASSED-DTO-ID-8")
                 .aufgabenBogenHash(ABH)
-                .zahlRichtigerAntworten(8)
+                .zahlRichtigerAntworten((short)8)
                 .RichtigeLoesungenNachNiveau(Arrays.asList(A1,A1,A2,B1,C1,C1,C2,C2))
                 .niveauZurZahlRichtiger(new HashMap<>(){{
-                    put(A1,0);
-                    put(A2,0);
-                    put(B1,0);
-                    put(B2,0);
-                    put(C1,0);
-                    put(C2,0);
+                    put(A1,(short)0);
+                    put(A2,(short)0);
+                    put(B1,(short)0);
+                    put(B2,(short)0);
+                    put(C1,(short)0);
+                    put(C2,(short)0);
                 }})
                 .build();
 
         expectedDto = new ETErgebnisseDto(passedDto);
         expectedDto.setMaxErreichtesNiveau(A1_1);
         expectedDto.setNiveauZurZahlRichtiger(new HashMap<>(){{
-            put(A1,2); // Knapp erreicht = 50 % (die Mindestschwelle ist 2 richtige Lösungen)
-            put(A2,1); // Niveau nicht erreicht = unter 50 %
-            put(B1,1); // Niveau nicht erreicht = unter 50 %
-            put(B2,0); // Von hier an werden keine Antworten mehr berücksichtigt
-            put(C1,2); // ENDERGEBNIS: A1
-            put(C2,2);
+            put(A1,(short)2); // Knapp erreicht = 50 % (die Mindestschwelle ist 2 richtige Lösungen)
+            put(A2,(short)1); // Niveau nicht erreicht = unter 50 %
+            put(B1,(short)1); // Niveau nicht erreicht = unter 50 %
+            put(B2,(short)0); // Von hier an werden keine Antworten mehr berücksichtigt
+            put(C1,(short)2); // ENDERGEBNIS: A1
+            put(C2,(short)2);
         }});
         given(mindSchwRepoMock.findAllByOrderByNiveau()).willReturn(mindestschwellen2);
         //when
@@ -361,27 +361,27 @@ class ETErgebnisseEvaluatorTest {
         passedDto = ETErgebnisseDto.builder()
                 .id("PASSED-DTO-ID-9")
                 .aufgabenBogenHash(ABH)
-                .zahlRichtigerAntworten(12)
+                .zahlRichtigerAntworten((short)12)
                 .RichtigeLoesungenNachNiveau(Arrays.asList(A1,A1,A1,A2,A2,B1,B1,B2,C1,C1,C2,C2))
                 .niveauZurZahlRichtiger(new HashMap<>(){{
-                    put(A1,0);
-                    put(A2,0);
-                    put(B1,0);
-                    put(B2,0);
-                    put(C1,0);
-                    put(C2,0);
+                    put(A1,(short)0);
+                    put(A2,(short)0);
+                    put(B1,(short)0);
+                    put(B2,(short)0);
+                    put(C1,(short)0);
+                    put(C2,(short)0);
                 }})
                 .build();
 
         expectedDto = new ETErgebnisseDto(passedDto);
         expectedDto.setMaxErreichtesNiveau(B2_1);
         expectedDto.setNiveauZurZahlRichtiger(new HashMap<>(){{
-            put(A1,3); // erreicht = 75 % (die Mindestschwelle = 2 richtige Lösungen)
-            put(A2,2); // knapp erreicht = genau 50 %
-            put(B1,2); // knapp erreicht = genau 50 %
-            put(B2,1); // Niveau nicht erreicht = unter 50 %
-            put(C1,2); // knapp erreicht = genau 50 %
-            put(C2,2); // // knapp erreicht = genau 50 %
+            put(A1,(short)3); // erreicht = 75 % (die Mindestschwelle = 2 richtige Lösungen)
+            put(A2,(short)2); // knapp erreicht = genau 50 %
+            put(B1,(short)2); // knapp erreicht = genau 50 %
+            put(B2,(short)1); // Niveau nicht erreicht = unter 50 %
+            put(C1,(short)2); // knapp erreicht = genau 50 %
+            put(C2,(short)2); // // knapp erreicht = genau 50 %
         }});
         given(mindSchwRepoMock.findAllByOrderByNiveau()).willReturn(mindestschwellen2);
         //when
@@ -399,27 +399,27 @@ class ETErgebnisseEvaluatorTest {
         passedDto = ETErgebnisseDto.builder()
                 .id("PASSED-DTO-ID-10")
                 .aufgabenBogenHash(ABH)
-                .zahlRichtigerAntworten(16)
+                .zahlRichtigerAntworten((short)16)
                 .RichtigeLoesungenNachNiveau(Arrays.asList(A1,A1,A1,A1,A2,A2,A2,B1,B1,B1,B2,B2,C1,C1,C2,C2))
                 .niveauZurZahlRichtiger(new HashMap<>(){{
-                    put(A1,0);
-                    put(A2,0);
-                    put(B1,0);
-                    put(B2,0);
-                    put(C1,0);
-                    put(C2,0);
+                    put(A1,(short)0);
+                    put(A2,(short)0);
+                    put(B1,(short)0);
+                    put(B2,(short)0);
+                    put(C1,(short)0);
+                    put(C2,(short)0);
                 }})
                 .build();
 
         expectedDto = new ETErgebnisseDto(passedDto);
         expectedDto.setMaxErreichtesNiveau(B1_1);
         expectedDto.setNiveauZurZahlRichtiger(new HashMap<>(){{
-            put(A1,4); // erreicht = 80 % (die Mindestschwelle = 3 richtige Lösungen von 5)
-            put(A2,3); // knapp erreicht = genau 60 % (3/5)
-            put(B1,3); // knapp erreicht = genau 60 % (3/5)
-            put(B2,2); // nicht erreicht =       40 % (2/5)
-            put(C1,2); // nicht erreicht =       40 % (2/5)
-            put(C2,2); // nicht erreicht =       40 % (2/5)
+            put(A1,(short)4); // erreicht = 80 % (die Mindestschwelle = 3 richtige Lösungen von 5)
+            put(A2,(short)3); // knapp erreicht = genau 60 % (3/5)
+            put(B1,(short)3); // knapp erreicht = genau 60 % (3/5)
+            put(B2,(short)2); // nicht erreicht =       40 % (2/5)
+            put(C1,(short)2); // nicht erreicht =       40 % (2/5)
+            put(C2,(short)2); // nicht erreicht =       40 % (2/5)
         }});
         given(mindSchwRepoMock.findAllByOrderByNiveau()).willReturn(mindestschwellen3);
         //when
@@ -437,27 +437,27 @@ class ETErgebnisseEvaluatorTest {
         passedDto = ETErgebnisseDto.builder()
                 .id("PASSED-DTO-ID-11")
                 .aufgabenBogenHash(ABH)
-                .zahlRichtigerAntworten(16)
+                .zahlRichtigerAntworten((short)16)
                 .RichtigeLoesungenNachNiveau(Arrays.asList(A1,A1,A1,A1,A2,A2,A2,B1,B1,B1,B2,B2,C1,C1,C2,C2))
                 .niveauZurZahlRichtiger(new HashMap<>(){{
-                    put(A1,0);
-                    put(A2,0);
-                    put(B1,0);
-                    put(B2,0);
-                    put(C1,0);
-                    put(C2,0);
+                    put(A1,(short)0);
+                    put(A2,(short)0);
+                    put(B1,(short)0);
+                    put(B2,(short)0);
+                    put(C1,(short)0);
+                    put(C2,(short)0);
                 }})
                 .build();
 
         expectedDto = new ETErgebnisseDto(passedDto);
         expectedDto.setMaxErreichtesNiveau(B1_1);
         expectedDto.setNiveauZurZahlRichtiger(new HashMap<>(){{
-            put(A1,4); // erreicht = 80 % (die Mindestschwelle = 3 richtige Lösungen von 5)
-            put(A2,3); // knapp erreicht = genau 60 % (3/5)
-            put(B1,3); // knapp erreicht = genau 60 % (3/5)
-            put(B2,2); // nicht erreicht =       40 % (2/5)
-            put(C1,2); // nicht erreicht =       40 % (2/5)
-            put(C2,2); // nicht erreicht =       40 % (2/5)
+            put(A1,(short)4); // erreicht = 80 % (die Mindestschwelle = 3 richtige Lösungen von 5)
+            put(A2,(short)3); // knapp erreicht = genau 60 % (3/5)
+            put(B1,(short)3); // knapp erreicht = genau 60 % (3/5)
+            put(B2,(short)2); // nicht erreicht =       40 % (2/5)
+            put(C1,(short)2); // nicht erreicht =       40 % (2/5)
+            put(C2,(short)2); // nicht erreicht =       40 % (2/5)
         }});
         given(mindSchwRepoMock.findAllByOrderByNiveau()).willReturn(mindestschwellen3);
         //when
@@ -474,27 +474,27 @@ class ETErgebnisseEvaluatorTest {
         passedDto = ETErgebnisseDto.builder()
                 .id("PASSED-DTO-ID-12")
                 .aufgabenBogenHash(ABH)
-                .zahlRichtigerAntworten(16)
+                .zahlRichtigerAntworten((short)16)
                 .RichtigeLoesungenNachNiveau(Arrays.asList(A1,A1,A1,A2,A2,A2,B1,B2,B2,B2,C1,C1,C1,C2,C2,C2))
                 .niveauZurZahlRichtiger(new HashMap<>(){{
-                    put(A1,0);
-                    put(A2,0);
-                    put(B1,0);
-                    put(B2,0);
-                    put(C1,0);
-                    put(C2,0);
+                    put(A1,(short)0);
+                    put(A2,(short)0);
+                    put(B1,(short)0);
+                    put(B2,(short)0);
+                    put(C1,(short)0);
+                    put(C2,(short)0);
                 }})
                 .build();
 
         expectedDto = new ETErgebnisseDto(passedDto);
         expectedDto.setMaxErreichtesNiveau(B1_1);
         expectedDto.setNiveauZurZahlRichtiger(new HashMap<>(){{
-            put(A1,3); // knapp erreicht = genau 60 % (die Mindestschwelle = 3 richtige Lösungen von 5)
-            put(A2,3); // knapp erreicht = genau 60 % (3/5)
-            put(B1,1); // nicht erreicht =       20 % (1/5)
-            put(B2,3); // knapp erreicht =       60 % (2/5)
-            put(C1,3); // knapp erreicht =       60 % (3/5)
-            put(C2,3); // knapp erreicht =       60 % (3/5)
+            put(A1,(short)3); // knapp erreicht = genau 60 % (die Mindestschwelle = 3 richtige Lösungen von 5)
+            put(A2,(short)3); // knapp erreicht = genau 60 % (3/5)
+            put(B1,(short)1); // nicht erreicht =       20 % (1/5)
+            put(B2,(short)3); // knapp erreicht =       60 % (2/5)
+            put(C1,(short)3); // knapp erreicht =       60 % (3/5)
+            put(C2,(short)3); // knapp erreicht =       60 % (3/5)
         }});
         given(mindSchwRepoMock.findAllByOrderByNiveau()).willReturn(mindestschwellen3);
         //when
@@ -514,27 +514,27 @@ class ETErgebnisseEvaluatorTest {
         passedDto = ETErgebnisseDto.builder()
                 .id("PASSED-DTO-ID-13")
                 .aufgabenBogenHash(ABH)
-                .zahlRichtigerAntworten(17)
+                .zahlRichtigerAntworten((short)17)
                 .RichtigeLoesungenNachNiveau(Arrays.asList(A1,A1,A1,A2,A2,A2,B1,B2,B2,C1,C1,C1,C2,C2,C2,C2,C2))
                 .niveauZurZahlRichtiger(new HashMap<>(){{
-                    put(A1,0);
-                    put(A2,0);
-                    put(B1,0);
-                    put(B2,0);
-                    put(C1,0);
-                    put(C2,0);
+                    put(A1,(short)0);
+                    put(A2,(short)0);
+                    put(B1,(short)0);
+                    put(B2,(short)0);
+                    put(C1,(short)0);
+                    put(C2,(short)0);
                 }})
                 .build();
 
         expectedDto = new ETErgebnisseDto(passedDto);
         expectedDto.setMaxErreichtesNiveau(A2_1);
         expectedDto.setNiveauZurZahlRichtiger(new HashMap<>(){{
-            put(A1,3); // knapp erreicht = genau 60 % (die Mindestschwelle = 3 richtige Lösungen von 5)
-            put(A2,3); // knapp erreicht = genau 60 % (3/5)
-            put(B1,1); // nicht erreicht =       20 % (1/5)
-            put(B2,2); // nicht erreicht =       40 % (2/5)
-            put(C1,3); // knapp erreicht =       60 % (3/5)
-            put(C2,5); // max erreicht aber egal = 100 % (5/5)
+            put(A1,(short)3); // knapp erreicht = genau 60 % (die Mindestschwelle = 3 richtige Lösungen von 5)
+            put(A2,(short)3); // knapp erreicht = genau 60 % (3/5)
+            put(B1,(short)1); // nicht erreicht =       20 % (1/5)
+            put(B2,(short)2); // nicht erreicht =       40 % (2/5)
+            put(C1,(short)3); // knapp erreicht =       60 % (3/5)
+            put(C2,(short)5); // max erreicht aber egal = 100 % (5/5)
         }});
         given(mindSchwRepoMock.findAllByOrderByNiveau()).willReturn(mindestschwellen3);
         //when
@@ -552,27 +552,27 @@ class ETErgebnisseEvaluatorTest {
         passedDto = ETErgebnisseDto.builder()
                 .id("PASSED-DTO-ID-14")
                 .aufgabenBogenHash(ABH)
-                .zahlRichtigerAntworten(13)
+                .zahlRichtigerAntworten((short)13)
                 .RichtigeLoesungenNachNiveau(Arrays.asList(A1,A1,A1,A1,A2,A2,A2,A2,B1,B1,B1,B2,C1))
                 .niveauZurZahlRichtiger(new HashMap<>(){{
-                    put(A1,0);
-                    put(A2,0);
-                    put(B1,0);
-                    put(B2,0);
-                    put(C1,0);
-                    put(C2,0);
+                    put(A1,(short)0);
+                    put(A2,(short)0);
+                    put(B1,(short)0);
+                    put(B2,(short)0);
+                    put(C1,(short)0);
+                    put(C2,(short)0);
                 }})
                 .build();
 
         expectedDto = new ETErgebnisseDto(passedDto);
         expectedDto.setMaxErreichtesNiveau(B1_1);
         expectedDto.setNiveauZurZahlRichtiger(new HashMap<>(){{
-            put(A1,4); // erreicht = 80 % (die Mindestschwelle = 3 richtige Lösungen von 5)
-            put(A2,4); // erreicht =             80 % (4/5)
-            put(B1,3); // knapp erreicht = genau 60 % (3/5)
-            put(B2,1); // nicht erreicht =       20 % (1/5)
-            put(C1,1); // nicht erreicht =       20 % (1/5)
-            put(C2,0); // nicht erreicht =       0 % (0/5)
+            put(A1,(short)4); // erreicht = 80 % (die Mindestschwelle = 3 richtige Lösungen von 5)
+            put(A2,(short)4); // erreicht =             80 % (4/5)
+            put(B1,(short)3); // knapp erreicht = genau 60 % (3/5)
+            put(B2,(short)1); // nicht erreicht =       20 % (1/5)
+            put(C1,(short)1); // nicht erreicht =       20 % (1/5)
+            put(C2,(short)0); // nicht erreicht =       0 % (0/5)
         }});
         given(mindSchwRepoMock.findAllByOrderByNiveau()).willReturn(mindestschwellen3);
         //when
@@ -589,27 +589,27 @@ class ETErgebnisseEvaluatorTest {
         passedDto = ETErgebnisseDto.builder()
                 .id("PASSED-DTO-ID-15")
                 .aufgabenBogenHash(ABH)
-                .zahlRichtigerAntworten(12)
+                .zahlRichtigerAntworten((short)12)
                 .RichtigeLoesungenNachNiveau(Arrays.asList(A1,A1,A1,A1,A2,A2,B1,B1,B1,B2))
                 .niveauZurZahlRichtiger(new HashMap<>(){{
-                    put(A1,0);
-                    put(A2,0);
-                    put(B1,0);
-                    put(B2,0);
-                    put(C1,0);
-                    put(C2,0);
+                    put(A1,(short)0);
+                    put(A2,(short)0);
+                    put(B1,(short)0);
+                    put(B2,(short)0);
+                    put(C1,(short)0);
+                    put(C2,(short)0);
                 }})
                 .build();
 
         expectedDto = new ETErgebnisseDto(passedDto);
         expectedDto.setMaxErreichtesNiveau(A2_1);
         expectedDto.setNiveauZurZahlRichtiger(new HashMap<>(){{
-            put(A1,4); // erreicht = 80 % (die Mindestschwelle = 3 richtige Lösungen von 5)
-            put(A2,2); // nicht erreicht =       40 % (2/5)
-            put(B1,3); // knapp erreicht = genau 60 % (3/5)
-            put(B2,1); // nicht erreicht =       20 % (1/5)
-            put(C1,0); // nicht erreicht =       0 % (0/5)
-            put(C2,0); // nicht erreicht =       0 % (0/5)
+            put(A1,(short)4); // erreicht = 80 % (die Mindestschwelle = 3 richtige Lösungen von 5)
+            put(A2,(short)2); // nicht erreicht =       40 % (2/5)
+            put(B1,(short)3); // knapp erreicht = genau 60 % (3/5)
+            put(B2,(short)1); // nicht erreicht =       20 % (1/5)
+            put(C1,(short)0); // nicht erreicht =       0 % (0/5)
+            put(C2,(short)0); // nicht erreicht =       0 % (0/5)
         }});
         given(mindSchwRepoMock.findAllByOrderByNiveau()).willReturn(mindestschwellen3);
         //when
@@ -627,27 +627,27 @@ class ETErgebnisseEvaluatorTest {
         passedDto = ETErgebnisseDto.builder()
                 .id("PASSED-DTO-ID-16")
                 .aufgabenBogenHash(ABH)
-                .zahlRichtigerAntworten(15)
+                .zahlRichtigerAntworten((short)15)
                 .RichtigeLoesungenNachNiveau(Arrays.asList(A1,A1,A1,A2,A2,A2,B1,B2,B2,C1,C1,C1,C2,C2,C2))
                 .niveauZurZahlRichtiger(new HashMap<>(){{
-                    put(A1,0);
-                    put(A2,0);
-                    put(B1,0);
-                    put(B2,0);
-                    put(C1,0);
-                    put(C2,0);
+                    put(A1,(short)0);
+                    put(A2,(short)0);
+                    put(B1,(short)0);
+                    put(B2,(short)0);
+                    put(C1,(short)0);
+                    put(C2,(short)0);
                 }})
                 .build();
 
         expectedDto = new ETErgebnisseDto(passedDto);
         expectedDto.setMaxErreichtesNiveau(A2_1);
         expectedDto.setNiveauZurZahlRichtiger(new HashMap<>(){{
-            put(A1,3); // knapp erreicht = genau 60 % (die Mindestschwelle = 3 richtige Lösungen von 5)
-            put(A2,3); // knapp erreicht = genau 60 % (3/5)
-            put(B1,1); // nicht erreicht =       20 % (1/5)
-            put(B2,2); // nicht erreicht =       40 % (2/5)
-            put(C1,3); // knapp erreicht =       60 % (3/5)
-            put(C2,3); // knapp erreicht =       60 % (3/5)
+            put(A1,(short)3); // knapp erreicht = genau 60 % (die Mindestschwelle = 3 richtige Lösungen von 5)
+            put(A2,(short)3); // knapp erreicht = genau 60 % (3/5)
+            put(B1,(short)1); // nicht erreicht =       20 % (1/5)
+            put(B2,(short)2); // nicht erreicht =       40 % (2/5)
+            put(C1,(short)3); // knapp erreicht =       60 % (3/5)
+            put(C2,(short)3); // knapp erreicht =       60 % (3/5)
         }});
         given(mindSchwRepoMock.findAllByOrderByNiveau()).willReturn(mindestschwellen3);
         //when
@@ -665,27 +665,27 @@ class ETErgebnisseEvaluatorTest {
         passedDto = ETErgebnisseDto.builder()
                 .id("PASSED-DTO-ID-17")
                 .aufgabenBogenHash(ABH)
-                .zahlRichtigerAntworten(16)
+                .zahlRichtigerAntworten((short)16)
                 .RichtigeLoesungenNachNiveau(Arrays.asList(A1,A1,A1,A2,A2,A2,A2,A2,B1,B1,B2,B2,C1,C1,C2,C2))
                 .niveauZurZahlRichtiger(new HashMap<>(){{
-                    put(A1,0);
-                    put(A2,0);
-                    put(B1,0);
-                    put(B2,0);
-                    put(C1,0);
-                    put(C2,0);
+                    put(A1,(short)0);
+                    put(A2,(short)0);
+                    put(B1,(short)0);
+                    put(B2,(short)0);
+                    put(C1,(short)0);
+                    put(C2,(short)0);
                 }})
                 .build();
 
         expectedDto = new ETErgebnisseDto(passedDto);
         expectedDto.setMaxErreichtesNiveau(A2);
         expectedDto.setNiveauZurZahlRichtiger(new HashMap<>(){{
-            put(A1,3); // knapp erreicht = genau 60 % (die Mindestschwelle = 3 richtige Lösungen von 5)
-            put(A2,5); // alle richtig =   genau 100 % (5/5)
-            put(B1,2); // nicht erreicht =       40 % (2/5)
-            put(B2,2); // nicht erreicht =       40 % (2/5)
-            put(C1,2); // nicht erreicht =       40 % (3/5)
-            put(C2,2); // knicht erreicht =      40 % (3/5)
+            put(A1,(short)3); // knapp erreicht = genau 60 % (die Mindestschwelle = 3 richtige Lösungen von 5)
+            put(A2,(short)5); // alle richtig =   genau 100 % (5/5)
+            put(B1,(short)2); // nicht erreicht =       40 % (2/5)
+            put(B2,(short)2); // nicht erreicht =       40 % (2/5)
+            put(C1,(short)2); // nicht erreicht =       40 % (3/5)
+            put(C2,(short)2); // knicht erreicht =      40 % (3/5)
         }});
         given(mindSchwRepoMock.findAllByOrderByNiveau()).willReturn(mindestschwellen3);
         //when
@@ -703,27 +703,27 @@ class ETErgebnisseEvaluatorTest {
         passedDto = ETErgebnisseDto.builder()
                 .id("PASSED-DTO-ID-18")
                 .aufgabenBogenHash(ABH)
-                .zahlRichtigerAntworten(13)
+                .zahlRichtigerAntworten((short)13)
                 .RichtigeLoesungenNachNiveau(Arrays.asList(A2,A2,A2,A2,A2,B1,B1,B2,B2,C1,C1,C2,C2))
                 .niveauZurZahlRichtiger(new HashMap<>(){{
-                    put(A1,0);
-                    put(A2,0);
-                    put(B1,0);
-                    put(B2,0);
-                    put(C1,0);
-                    put(C2,0);
+                    put(A1,(short)0);
+                    put(A2,(short)0);
+                    put(B1,(short)0);
+                    put(B2,(short)0);
+                    put(C1,(short)0);
+                    put(C2,(short)0);
                 }})
                 .build();
 
         expectedDto = new ETErgebnisseDto(passedDto);
         expectedDto.setMaxErreichtesNiveau(A1_2);
         expectedDto.setNiveauZurZahlRichtiger(new HashMap<>(){{
-            put(A1,0); // alle falsch =    genau 0 % (die Mindestschwelle = 3 richtige Lösungen von 5)
-            put(A2,5); // alle richtig =   genau 100 % (5/5)
-            put(B1,2); // nicht erreicht =       40 % (2/5)
-            put(B2,2); // nicht erreicht =       40 % (2/5)
-            put(C1,2); // nicht erreicht =       40 % (3/5)
-            put(C2,2); // knicht erreicht =      40 % (3/5)
+            put(A1,(short)0); // alle falsch =    genau 0 % (die Mindestschwelle = 3 richtige Lösungen von 5)
+            put(A2,(short)5); // alle richtig =   genau 100 % (5/5)
+            put(B1,(short)2); // nicht erreicht =       40 % (2/5)
+            put(B2,(short)2); // nicht erreicht =       40 % (2/5)
+            put(C1,(short)2); // nicht erreicht =       40 % (3/5)
+            put(C2,(short)2); // knicht erreicht =      40 % (3/5)
         }});
         given(mindSchwRepoMock.findAllByOrderByNiveau()).willReturn(mindestschwellen3);
         //when
@@ -741,27 +741,27 @@ class ETErgebnisseEvaluatorTest {
         passedDto = ETErgebnisseDto.builder()
                 .id("PASSED-DTO-ID-19")
                 .aufgabenBogenHash(ABH)
-                .zahlRichtigerAntworten(18)
+                .zahlRichtigerAntworten((short)18)
                 .RichtigeLoesungenNachNiveau(Arrays.asList(A1,A1,A1,A1,A1,A2,A2,A2,A2,A2,B1,B1,B1,B2,B2,C1,C2,C2))
                 .niveauZurZahlRichtiger(new HashMap<>(){{
-                    put(A1,0);
-                    put(A2,0);
-                    put(B1,0);
-                    put(B2,0);
-                    put(C1,0);
-                    put(C2,0);
+                    put(A1,(short)0);
+                    put(A2,(short)0);
+                    put(B1,(short)0);
+                    put(B2,(short)0);
+                    put(C1,(short)0);
+                    put(C2,(short)0);
                 }})
                 .build();
 
         expectedDto = new ETErgebnisseDto(passedDto);
         expectedDto.setMaxErreichtesNiveau(B1_1);
         expectedDto.setNiveauZurZahlRichtiger(new HashMap<>(){{
-            put(A1,5); // alle richtig =    alle 100 % (die Mindestschwelle = 3 richtige Lösungen von 5)
-            put(A2,5); // alle richtig =   genau 100 % (5/5)
-            put(B1,3); // knapp erreicht =       60 % (3/5)
-            put(B2,2); // nicht erreicht =       40 % (2/5)
-            put(C1,1); // nicht erreicht =       20 % (1/5)
-            put(C2,2); // nicht erreicht =       40 % (3/5)
+            put(A1,(short)5); // alle richtig =    alle 100 % (die Mindestschwelle = 3 richtige Lösungen von 5)
+            put(A2,(short)5); // alle richtig =   genau 100 % (5/5)
+            put(B1,(short)3); // knapp erreicht =       60 % (3/5)
+            put(B2,(short)2); // nicht erreicht =       40 % (2/5)
+            put(C1,(short)1); // nicht erreicht =       20 % (1/5)
+            put(C2,(short)2); // nicht erreicht =       40 % (3/5)
         }});
         given(mindSchwRepoMock.findAllByOrderByNiveau()).willReturn(mindestschwellen3);
         //when
@@ -778,27 +778,27 @@ class ETErgebnisseEvaluatorTest {
         passedDto = ETErgebnisseDto.builder()
                 .id("PASSED-DTO-ID-20")
                 .aufgabenBogenHash(ABH)
-                .zahlRichtigerAntworten(19)
+                .zahlRichtigerAntworten((short)19)
                 .RichtigeLoesungenNachNiveau(Arrays.asList(A1,A1,A1,A1,A1,A2,A2,A2,A2,A2,B1,B1,B1,B1,B2,B2,C1,C2,C2))
                 .niveauZurZahlRichtiger(new HashMap<>(){{
-                    put(A1,0);
-                    put(A2,0);
-                    put(B1,0);
-                    put(B2,0);
-                    put(C1,0);
-                    put(C2,0);
+                    put(A1,(short)0);
+                    put(A2,(short)0);
+                    put(B1,(short)0);
+                    put(B2,(short)0);
+                    put(C1,(short)0);
+                    put(C2,(short)0);
                 }})
                 .build();
 
         expectedDto = new ETErgebnisseDto(passedDto);
         expectedDto.setMaxErreichtesNiveau(B1_2);
         expectedDto.setNiveauZurZahlRichtiger(new HashMap<>(){{
-            put(A1,5); // alle richtig =    alle 100 % (die Mindestschwelle = 3 richtige Lösungen von 5)
-            put(A2,5); // alle richtig =   genau 100 % (5/5)
-            put(B1,4); // erreicht =             80 % (4/5)
-            put(B2,2); // nicht erreicht =       40 % (2/5)
-            put(C1,1); // nicht erreicht =       20 % (1/5)
-            put(C2,2); // nicht erreicht =       40 % (3/5)
+            put(A1,(short)5); // alle richtig =    alle 100 % (die Mindestschwelle = 3 richtige Lösungen von 5)
+            put(A2,(short)5); // alle richtig =   genau 100 % (5/5)
+            put(B1,(short)4); // erreicht =             80 % (4/5)
+            put(B2,(short)2); // nicht erreicht =       40 % (2/5)
+            put(C1,(short)1); // nicht erreicht =       20 % (1/5)
+            put(C2,(short)2); // nicht erreicht =       40 % (3/5)
         }});
         given(mindSchwRepoMock.findAllByOrderByNiveau()).willReturn(mindestschwellen3);
         //when
@@ -815,27 +815,27 @@ class ETErgebnisseEvaluatorTest {
         passedDto = ETErgebnisseDto.builder()
                 .id("PASSED-DTO-ID-21")
                 .aufgabenBogenHash(ABH)
-                .zahlRichtigerAntworten(18)
+                .zahlRichtigerAntworten((short)18)
                 .RichtigeLoesungenNachNiveau(Arrays.asList(A1,A1,A1,A1,A1,A2,A2,A2,A2,B1,B1,B1,B1,B2,B2,C1,C2,C2))
                 .niveauZurZahlRichtiger(new HashMap<>(){{
-                    put(A1,0);
-                    put(A2,0);
-                    put(B1,0);
-                    put(B2,0);
-                    put(C1,0);
-                    put(C2,0);
+                    put(A1,(short)0);
+                    put(A2,(short)0);
+                    put(B1,(short)0);
+                    put(B2,(short)0);
+                    put(C1,(short)0);
+                    put(C2,(short)0);
                 }})
                 .build();
 
         expectedDto = new ETErgebnisseDto(passedDto);
         expectedDto.setMaxErreichtesNiveau(B1_2);
         expectedDto.setNiveauZurZahlRichtiger(new HashMap<>(){{
-            put(A1,5); // alle richtig =    alle 100 % (die Mindestschwelle = 3 richtige Lösungen von 5)
-            put(A2,4); //  erreicht  =           80 % (4/5)
-            put(B1,4); // erreicht =             80 % (4/5)
-            put(B2,2); // nicht erreicht =       40 % (2/5)
-            put(C1,1); // nicht erreicht =       20 % (1/5)
-            put(C2,2); // nicht erreicht =       40 % (3/5)
+            put(A1,(short)5); // alle richtig =    alle 100 % (die Mindestschwelle = 3 richtige Lösungen von 5)
+            put(A2,(short)4); //  erreicht  =           80 % (4/5)
+            put(B1,(short)4); // erreicht =             80 % (4/5)
+            put(B2,(short)2); // nicht erreicht =       40 % (2/5)
+            put(C1,(short)1); // nicht erreicht =       20 % (1/5)
+            put(C2,(short)2); // nicht erreicht =       40 % (3/5)
         }});
         given(mindSchwRepoMock.findAllByOrderByNiveau()).willReturn(mindestschwellen3);
         //when
@@ -853,27 +853,27 @@ class ETErgebnisseEvaluatorTest {
         passedDto = ETErgebnisseDto.builder()
                 .id("PASSED-DTO-ID-22")
                 .aufgabenBogenHash(ABH)
-                .zahlRichtigerAntworten(18)
+                .zahlRichtigerAntworten((short)18)
                 .RichtigeLoesungenNachNiveau(Arrays.asList(A1,A1,A1,A1,A1,A2,A2,A2,B1,B1,B1,B1,B2,B2,C1,C2,C2,C2))
                 .niveauZurZahlRichtiger(new HashMap<>(){{
-                    put(A1,0);
-                    put(A2,0);
-                    put(B1,0);
-                    put(B2,0);
-                    put(C1,0);
-                    put(C2,0);
+                    put(A1,(short)0);
+                    put(A2,(short)0);
+                    put(B1,(short)0);
+                    put(B2,(short)0);
+                    put(C1,(short)0);
+                    put(C2,(short)0);
                 }})
                 .build();
 
         expectedDto = new ETErgebnisseDto(passedDto);
         expectedDto.setMaxErreichtesNiveau(B1_2);
         expectedDto.setNiveauZurZahlRichtiger(new HashMap<>(){{
-            put(A1,5); // alle richtig =    alle 100 % (die Mindestschwelle = 3 richtige Lösungen von 5)
-            put(A2,3); // knapp erreicht  =      60 % (3/5)
-            put(B1,4); // erreicht =             80 % (4/5)
-            put(B2,2); // nicht erreicht =       40 % (2/5)
-            put(C1,1); // nicht erreicht =       20 % (1/5)
-            put(C2,3); // nicht erreicht =       40 % (3/5)
+            put(A1,(short)5); // alle richtig =    alle 100 % (die Mindestschwelle = 3 richtige Lösungen von 5)
+            put(A2,(short)3); // knapp erreicht  =      60 % (3/5)
+            put(B1,(short)4); // erreicht =             80 % (4/5)
+            put(B2,(short)2); // nicht erreicht =       40 % (2/5)
+            put(C1,(short)1); // nicht erreicht =       20 % (1/5)
+            put(C2,(short)3); // nicht erreicht =       40 % (3/5)
         }});
         given(mindSchwRepoMock.findAllByOrderByNiveau()).willReturn(mindestschwellen3);
         //when
@@ -891,27 +891,27 @@ class ETErgebnisseEvaluatorTest {
         passedDto = ETErgebnisseDto.builder()
                 .id("PASSED-DTO-ID-23")
                 .aufgabenBogenHash(ABH)
-                .zahlRichtigerAntworten(17)
+                .zahlRichtigerAntworten((short)17)
                 .RichtigeLoesungenNachNiveau(Arrays.asList(A1,A1,A1,A1,A1,A2,B1,B2,B2,B2,B2,B2,C1,C2,C2,C2,C2))
                 .niveauZurZahlRichtiger(new HashMap<>(){{
-                    put(A1,0);
-                    put(A2,0);
-                    put(B1,0);
-                    put(B2,0);
-                    put(C1,0);
-                    put(C2,0);
+                    put(A1,(short)0);
+                    put(A2,(short)0);
+                    put(B1,(short)0);
+                    put(B2,(short)0);
+                    put(C1,(short)0);
+                    put(C2,(short)0);
                 }})
                 .build();
 
         expectedDto = new ETErgebnisseDto(passedDto);
         expectedDto.setMaxErreichtesNiveau(A1);
         expectedDto.setNiveauZurZahlRichtiger(new HashMap<>(){{
-            put(A1,5); // alle richtig =    alle 100 % (die Mindestschwelle = 3 richtige Lösungen von 5)
-            put(A2,1); // nicht erreicht  =      20 % (1/5)
-            put(B1,1); // nicht erreicht =        80 % (1/5)
-            put(B2,5); // alle richtig aber egal =40 % (5/5)
-            put(C1,1); // nicht erreicht =       20 % (1/5)
-            put(C2,4); // erreicht aber egal =      80 % (4/5)
+            put(A1,(short)5); // alle richtig =    alle 100 % (die Mindestschwelle = 3 richtige Lösungen von 5)
+            put(A2,(short)1); // nicht erreicht  =      20 % (1/5)
+            put(B1,(short)1); // nicht erreicht =        80 % (1/5)
+            put(B2,(short)5); // alle richtig aber egal =40 % (5/5)
+            put(C1,(short)1); // nicht erreicht =       20 % (1/5)
+            put(C2,(short)4); // erreicht aber egal =      80 % (4/5)
         }});
         given(mindSchwRepoMock.findAllByOrderByNiveau()).willReturn(mindestschwellen3);
         //when
@@ -928,27 +928,27 @@ class ETErgebnisseEvaluatorTest {
         passedDto = ETErgebnisseDto.builder()
                 .id("PASSED-DTO-ID-24")
                 .aufgabenBogenHash(ABH)
-                .zahlRichtigerAntworten(15)
+                .zahlRichtigerAntworten((short)15)
                 .RichtigeLoesungenNachNiveau(Arrays.asList(A1,A1,A1,A1,A2,B1,B1,B1,B1,B1,B2,B2,B2,C1,C2))
                 .niveauZurZahlRichtiger(new HashMap<>(){{
-                    put(A1,0);
-                    put(A2,0);
-                    put(B1,0);
-                    put(B2,0);
-                    put(C1,0);
-                    put(C2,0);
+                    put(A1,(short)0);
+                    put(A2,(short)0);
+                    put(B1,(short)0);
+                    put(B2,(short)0);
+                    put(C1,(short)0);
+                    put(C2,(short)0);
                 }})
                 .build();
 
         expectedDto = new ETErgebnisseDto(passedDto);
         expectedDto.setMaxErreichtesNiveau(B2_1);
         expectedDto.setNiveauZurZahlRichtiger(new HashMap<>(){{
-            put(A1,4); //  erreicht  =       alle 80 % (die Mindestschwelle = 3 richtige Lösungen von 5)
-            put(A2,1); // nicht erreicht  =      20 % (1/5)
-            put(B1,5); // alle richtig =        100 % (5/5)
-            put(B2,3); // knapp erreicht  =60 % (3/5)
-            put(C1,1); // nicht erreicht =       20 % (1/5)
-            put(C2,1); // nciht erreicht =      20 % (1/5)
+            put(A1,(short)4); //  erreicht  =       alle 80 % (die Mindestschwelle = 3 richtige Lösungen von 5)
+            put(A2,(short)1); // nicht erreicht  =      20 % (1/5)
+            put(B1,(short)5); // alle richtig =        100 % (5/5)
+            put(B2,(short)3); // knapp erreicht  =60 % (3/5)
+            put(C1,(short)1); // nicht erreicht =       20 % (1/5)
+            put(C2,(short)1); // nciht erreicht =      20 % (1/5)
         }});
         given(mindSchwRepoMock.findAllByOrderByNiveau()).willReturn(mindestschwellen3);
         //when

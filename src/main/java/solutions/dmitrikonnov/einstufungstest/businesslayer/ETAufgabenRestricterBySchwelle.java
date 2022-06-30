@@ -15,7 +15,7 @@ public class ETAufgabenRestricterBySchwelle implements ETAufgabenRestricter {
 
 
     @Override
-    public List<ETAufgabe> restrict(List<ETAufgabe> selectedAndReshuffeled, Map<ETAufgabenNiveau,Integer> niveauToMax) {
+    public List<ETAufgabe> restrict(List<ETAufgabe> selectedAndReshuffeled, Map<ETAufgabenNiveau,Short> niveauToMax) {
         var actualNiveau = selectedAndReshuffeled.get(0).getAufgabenNiveau();
         var actualMaxSchwelle = niveauToMax.get(actualNiveau);
         int itemsCounter = 0;
@@ -26,9 +26,6 @@ public class ETAufgabenRestricterBySchwelle implements ETAufgabenRestricter {
             strictSelected.add(selectedAndReshuffeled.get(i));
         }
         log.debug("Restricter: actual Maxschwelle: {}, itemsCounter {} .", actualMaxSchwelle,itemsCounter);
-
-        //TODO: refactor so that the number is fetched from DB with respect to each level(niveau)
-       //
 
         return strictSelected;
     }

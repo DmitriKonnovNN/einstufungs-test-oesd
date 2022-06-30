@@ -32,9 +32,9 @@ public class ETErgebnisseDto implements Serializable {
     private  String id;
     private  Integer aufgabenBogenHash;
     private  ETAufgabenNiveau maxErreichtesNiveau;
-    private  Integer zahlRichtigerAntworten;
+    private  Short zahlRichtigerAntworten;
     private  List<ETAufgabenNiveau> RichtigeLoesungenNachNiveau = new ArrayList<>();
     private  Map<Integer, Boolean> idZuRichtigkeitMap = new HashMap<>();
-    private  Map<ETAufgabenNiveau, Integer> niveauZurZahlRichtiger = new HashMap<>();
+    private  Map<ETAufgabenNiveau, Short> niveauZurZahlRichtiger = new HashMap<>();
 
 }

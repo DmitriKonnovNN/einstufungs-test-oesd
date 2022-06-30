@@ -6,5 +6,5 @@ import java.util.Map;
 
 public interface SchwellenCustomRepo {
 
-    Map<ETAufgabenNiveau,Integer> findMaximumSchwellenByNiveaus();
+    Map<ETAufgabenNiveau,Short> findMaximumSchwellenByNiveaus();
 }

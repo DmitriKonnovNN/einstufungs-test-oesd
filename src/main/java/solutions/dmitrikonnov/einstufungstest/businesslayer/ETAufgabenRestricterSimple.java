@@ -12,7 +12,7 @@ public class ETAufgabenRestricterSimple implements ETAufgabenRestricter {
     private static final int aufgabenzahlProNiveau = 3;
 
     @Override
-    public List<ETAufgabe> restrict(List<ETAufgabe> selectedAndReshuffeled, Map<ETAufgabenNiveau, Integer> niveauToMax) {
+    public List<ETAufgabe> restrict(List<ETAufgabe> selectedAndReshuffeled, Map<ETAufgabenNiveau, Short> niveauToMax) {
         log.error("Method is not implemented! No restriction occured!");
         try {
             throw new RuntimeException("List<ETAufgabe> restrict(List<ETAufgabe> selectedAndReshuffeled, Map<ETAufgabenNiveau, Integer> niveauToMax) ");

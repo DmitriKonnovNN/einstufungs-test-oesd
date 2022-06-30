@@ -38,7 +38,7 @@ public class ETAntwortenPruefer {
 
         mindestSchwellen.forEach(schwelle -> ergebnisseDto
                 .getNiveauZurZahlRichtiger()
-                .put(schwelle.getNiveau(),0));
+                .put(schwelle.getNiveau(),(short)0));
 
         ergebnisseDto.setAufgabenBogenHash(cachedAufgabenBogen.getAufgabenBogenHash());
 
@@ -52,7 +52,7 @@ public class ETAntwortenPruefer {
             }
             });
 
-        ergebnisseDto.setZahlRichtigerAntworten(richtigeLoesungenNachNiveauTemp.size());
+        ergebnisseDto.setZahlRichtigerAntworten((short)richtigeLoesungenNachNiveauTemp.size());
         ergebnisseDto.getRichtigeLoesungenNachNiveau().addAll(
                 richtigeLoesungenNachNiveauTemp
                         .stream()

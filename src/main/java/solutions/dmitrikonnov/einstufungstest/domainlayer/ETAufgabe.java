@@ -28,8 +28,6 @@ public class ETAufgabe {
             generator = "et_aufgabe_seq")
     private Integer aufgabeId;
 
-
-
     private String aufgabenStellung;
 
     /*
@@ -69,8 +67,10 @@ public class ETAufgabe {
     @Enumerated(EnumType.STRING)
     private ETAufgabenNiveau aufgabenNiveau;
 
-    private Integer gewichtung;
+    @Enumerated(EnumType.STRING)
+    private ETAufgabenFrontEndType frontEndType;
 
+    private Integer gewichtung;
     private Long counter;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -82,9 +82,6 @@ public class ETAufgabe {
     @Column (insertable = false, updatable = false)
     @org.hibernate.annotations.Generated (GenerationTime.ALWAYS)
     private Date lastModified;
-
-
-
 
 
 }
