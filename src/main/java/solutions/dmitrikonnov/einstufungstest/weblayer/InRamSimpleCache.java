@@ -48,9 +48,14 @@ public class InRamSimpleCache {
     @Async
     protected void populateCache(){
         for (int i = cacheAllocSize; i > 0 ; i--) {
-            toServeCache.offer(Optional.ofNullable(aufgabenService.getAufgabenListe()));
+            var aufgabenBogen = aufgabenService.getAufgabenListe();
+            if(aufgabenBogen==null) {
+                log.warn("No Bogen in Cache!");
+                break;
+            }
+            toServeCache.offer(Optional.of(aufgabenBogen));
         }
-        log.debug("Cache (allocated to {} ) has been populated with {} elements",cacheAllocSize ,toServeCache.size());
+        log.info("Cache (allocated to {} ) has been populated with {} elements",cacheAllocSize ,toServeCache.size());
 
     }
 
@@ -60,7 +65,13 @@ public class InRamSimpleCache {
         return currentSize < cacheAllocSize/3;
     }
     private ETAufgabenBogen getBogenForced(){
-       return aufgabenService.getAufgabenListe();
+        var bogen = aufgabenService.getAufgabenListe();
+        if(bogen == null) {
+            log.error("No Bogen set up!");
+        throw new RuntimeException("No Bogen set up!");
+        }
+       return bogen;
+
     }
 
     public void warmUpCache(){

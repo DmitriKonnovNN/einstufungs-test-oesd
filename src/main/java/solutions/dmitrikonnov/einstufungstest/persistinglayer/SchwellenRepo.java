@@ -2,7 +2,7 @@ package solutions.dmitrikonnov.einstufungstest.persistinglayer;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenNiveau;
-import solutions.dmitrikonnov.einstufungstest.domainlayer.ETMindestschwelle;
+import solutions.dmitrikonnov.einstufungstest.domainlayer.entities.ETMindestschwelle;
 
 import java.util.List;
 import java.util.Optional;

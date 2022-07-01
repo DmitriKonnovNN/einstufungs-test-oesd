@@ -7,6 +7,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.ActiveProfiles;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.*;
+import solutions.dmitrikonnov.einstufungstest.domainlayer.entities.ETAufgabe;
+import solutions.dmitrikonnov.einstufungstest.domainlayer.entities.ETItem;
 
 import java.util.*;
 

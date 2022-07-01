@@ -11,7 +11,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.ActiveProfiles;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenNiveau;
-import solutions.dmitrikonnov.einstufungstest.domainlayer.ETErgebnisse;
+import solutions.dmitrikonnov.einstufungstest.domainlayer.entities.ETErgebnisse;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETErgebnisseDto;
 
 import java.util.*;

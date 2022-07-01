@@ -1,3 +1,8 @@
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
+  port: 8080
 spring:
   datasource:
     password: P@ssw0rd
@@ -36,3 +41,4 @@ logging:
 #            sql:
 #              BasicBinder: TRACE
 
+debug: true

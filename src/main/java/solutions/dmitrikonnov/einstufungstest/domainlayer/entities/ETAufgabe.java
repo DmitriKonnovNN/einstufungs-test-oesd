@@ -1,7 +1,12 @@
-package solutions.dmitrikonnov.einstufungstest.domainlayer;
+package solutions.dmitrikonnov.einstufungstest.domainlayer.entities;
 
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenerationTime;
+import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenFrontEndType;
+import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenNiveau;
+import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenTyp;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -37,6 +42,7 @@ public class ETAufgabe {
     *
     * */
     @OneToMany (cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "aufgabe")
+    @Fetch(FetchMode.SUBSELECT)
     private Set<ETItem> items; // Set or List?
 
     /*

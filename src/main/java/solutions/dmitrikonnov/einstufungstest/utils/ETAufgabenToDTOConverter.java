@@ -1,7 +1,7 @@
 package solutions.dmitrikonnov.einstufungstest.utils;
 
 import org.springframework.stereotype.Service;
-import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabe;
+import solutions.dmitrikonnov.einstufungstest.domainlayer.entities.ETAufgabe;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabeDto;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETItemDto;
 

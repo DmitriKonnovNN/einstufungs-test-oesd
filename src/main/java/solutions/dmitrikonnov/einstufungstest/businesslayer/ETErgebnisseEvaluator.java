@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenNiveau;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETErgebnisseDto;
-import solutions.dmitrikonnov.einstufungstest.domainlayer.ETMindestschwelle;
+import solutions.dmitrikonnov.einstufungstest.domainlayer.entities.ETMindestschwelle;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETSchwellenErgebnis;
 import solutions.dmitrikonnov.einstufungstest.persistinglayer.SchwellenRepo;
 import solutions.dmitrikonnov.einstufungstest.utils.TriFunction;

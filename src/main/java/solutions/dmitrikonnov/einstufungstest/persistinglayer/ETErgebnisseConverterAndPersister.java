@@ -7,7 +7,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenNiveau;
-import solutions.dmitrikonnov.einstufungstest.domainlayer.ETErgebnisse;
+import solutions.dmitrikonnov.einstufungstest.domainlayer.entities.ETErgebnisse;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETErgebnisseDto;
 
 import java.util.Map;

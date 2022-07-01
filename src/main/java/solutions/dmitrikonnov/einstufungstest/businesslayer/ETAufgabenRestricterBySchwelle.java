@@ -2,7 +2,7 @@ package solutions.dmitrikonnov.einstufungstest.businesslayer;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabe;
+import solutions.dmitrikonnov.einstufungstest.domainlayer.entities.ETAufgabe;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenNiveau;
 
 import java.util.ArrayList;

@@ -8,6 +8,7 @@ import javax.persistence.Tuple;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+
 public class SchwellenCustomRepoImpl implements SchwellenCustomRepo {
 
     @PersistenceContext
@@ -15,13 +16,17 @@ public class SchwellenCustomRepoImpl implements SchwellenCustomRepo {
     @Override
     public Map<ETAufgabenNiveau, Short> findMaximumSchwellenByNiveaus() {
         return  entityManager
-                .createQuery("select ETMindestschwelle.niveau AS niveau," +
-                        " ETMindestschwelle.maximumSchwelle as maxschwelle " +
-                        " from ETMindestschwelle", Tuple.class)
+                .createQuery("select e.niveau AS niveau," +
+                        " e.maximumSchwelle as maxschwelle " +
+                        " from ETMindestschwelle e", Tuple.class)
                 .getResultStream()
                 .collect(Collectors.toMap(
                         tuple -> (ETAufgabenNiveau) tuple.get("niveau"),
                         tuple -> (Short) tuple.get("maxschwelle")
                 ));
     }
+
+
+
+
 }

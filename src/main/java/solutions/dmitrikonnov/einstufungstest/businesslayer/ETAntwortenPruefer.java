@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.*;
+import solutions.dmitrikonnov.einstufungstest.domainlayer.entities.ETMindestschwelle;
 import solutions.dmitrikonnov.einstufungstest.persistinglayer.SchwellenRepo;
 import solutions.dmitrikonnov.einstufungstest.utils.AntwortBogenCheckedEvent;
 

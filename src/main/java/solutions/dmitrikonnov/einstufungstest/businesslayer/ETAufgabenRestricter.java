@@ -1,6 +1,6 @@
 package solutions.dmitrikonnov.einstufungstest.businesslayer;
 
-import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabe;
+import solutions.dmitrikonnov.einstufungstest.domainlayer.entities.ETAufgabe;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenNiveau;
 
 import java.util.List;

@@ -1,6 +1,5 @@
 package solutions.dmitrikonnov.einstufungstest.persistinglayer;
 
-import org.junit.Ignore;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,11 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenNiveau;
-import solutions.dmitrikonnov.einstufungstest.domainlayer.ETMindestschwelle;
+import solutions.dmitrikonnov.einstufungstest.domainlayer.entities.ETMindestschwelle;
 
 @DataJpaTest
 @ActiveProfiles("unit-test")
-@Ignore
 class MindestSchwelleRepoTest {
 
     @Autowired

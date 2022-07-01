@@ -3,7 +3,7 @@ package solutions.dmitrikonnov.einstufungstest.jobs;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import solutions.dmitrikonnov.einstufungstest.businesslayer.ETItemRepo;
-import solutions.dmitrikonnov.einstufungstest.domainlayer.ETErgebnisse;
+import solutions.dmitrikonnov.einstufungstest.domainlayer.entities.ETErgebnisse;
 import solutions.dmitrikonnov.einstufungstest.persistinglayer.ETErgebnisseRepo;
 
 import java.util.Date;

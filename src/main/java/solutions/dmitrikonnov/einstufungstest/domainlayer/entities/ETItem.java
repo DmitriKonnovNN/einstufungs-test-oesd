@@ -1,6 +1,8 @@
-package solutions.dmitrikonnov.einstufungstest.domainlayer;
+package solutions.dmitrikonnov.einstufungstest.domainlayer.entities;
 
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenerationTime;
 
 import javax.persistence.*;
@@ -46,13 +48,20 @@ public class ETItem {
 
     private String itemAufgabenInhalt;
 
-    @ElementCollection
-    @CollectionTable(name = "et_moegl_antw_set")
+    @Fetch(FetchMode.SUBSELECT)
+    @ElementCollection(fetch = FetchType.LAZY)
+    @CollectionTable(
+            name = "et_moegl_antw_set",
+            joinColumns = @JoinColumn(name="ITEM_ID"))
     private Set<String> moeglicheAntworten;
 
 
-    @ElementCollection
-    @CollectionTable (name = "et_loesungen_set")
+
+    @Fetch(FetchMode.SUBSELECT)
+    @ElementCollection (fetch = FetchType.LAZY)
+    @CollectionTable (
+            name = "et_loesungen_set",
+            joinColumns = @JoinColumn(name="ITEM_ID"))
     private List<String> loesungen;
 
     private Long counter;

@@ -1,7 +1,7 @@
 package solutions.dmitrikonnov.einstufungstest.businesslayer;
 
 import org.springframework.stereotype.Service;
-import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabe;
+import solutions.dmitrikonnov.einstufungstest.domainlayer.entities.ETAufgabe;
 
 import java.util.Collections;
 import java.util.List;

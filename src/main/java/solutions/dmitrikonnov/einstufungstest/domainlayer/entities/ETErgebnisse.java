@@ -1,8 +1,9 @@
-package solutions.dmitrikonnov.einstufungstest.domainlayer;
+package solutions.dmitrikonnov.einstufungstest.domainlayer.entities;
 
 import lombok.*;
 import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.GenericGenerator;
+import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenNiveau;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -31,26 +32,25 @@ public class ETErgebnisse {
     private Integer aufgabenBogenHash;
 
     @ElementCollection
-    @CollectionTable (name = "et_r_loesungen_nach_niveau"/*,
-    joinColumns = @JoinColumn ("ETERGEBNISSE_ID")*/)
+    @CollectionTable (name = "et_r_loesungen_nach_niveau", joinColumns = @JoinColumn (name = "ET_ERGEBNISSE_ID"))
     @Column(name = "R_LOESUNGEN")
     private List<String> richtigeLoesungenNachNiveau;
 
-    //@Column (updatable = false)
+    @Column (updatable = false)
     @Enumerated(EnumType.STRING)
     private ETAufgabenNiveau maxErreichtesNiveau = ETAufgabenNiveau.A0;
 
-    //@Column(updatable = false)
+    @Column(updatable = false)
     private Short zahlRichtigerAntworten;
 
     @ElementCollection
-    @CollectionTable (name = "et_ergebnisse_mapping"/*,joinColumns = @JoinColumn ("ETERGEBNISSE_ID") */)
+    @CollectionTable (name = "et_ergebnisse_mapping",joinColumns = @JoinColumn (name ="ET_ERGEBNISSE_ID"))
     @MapKeyColumn (name = "et_item_id")
     @Column (name = "et_item_correctness")
     private Map<Integer, Boolean> idZuRichtigkeitMap;
 
     @ElementCollection
-    @CollectionTable (name = "et_niveau_richtige_map"/*, joinColumns = @JoinColumn ("ETERGEBNISSE_ID")*/)
+    @CollectionTable (name = "et_niveau_richtige_map", joinColumns = @JoinColumn (name ="ET_ERGEBNISSE_ID"))
     @MapKeyColumn (name = "et_niveau")
     @Column (name = "et_zahl_richtiger")
     private Map<String, Short> niveauZurZahlRichtiger;

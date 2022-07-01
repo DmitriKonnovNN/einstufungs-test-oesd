@@ -1,11 +1,13 @@
 package solutions.dmitrikonnov.einstufungstest.businesslayer;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabe;
+import solutions.dmitrikonnov.einstufungstest.domainlayer.entities.ETAufgabe;
 import solutions.dmitrikonnov.einstufungstest.persistinglayer.SchwellenRepo;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,6 +17,7 @@ import java.util.stream.Collectors;
  * anschließend zweimal reshuffelt wird.*/
 @Service
 @AllArgsConstructor
+@Slf4j
 public class ETAufgabenAufsetzer {
 
     private final ETAufgabenRepo ETAufgabenRepo;
@@ -26,7 +29,13 @@ public class ETAufgabenAufsetzer {
     //TODO: try out parallstream() instead of just stream()
     public List<ETAufgabe> listeAufsetzen() {
         var maxSchwellenMap = schwellenRepo.findMaximumSchwellenByNiveaus();
-        return ETAufgabenRepo.findAllByOrderByAufgabenNiveauAsc()
+        if(maxSchwellenMap.isEmpty())log.warn("SchwellenRepo is empty!");
+        var allAufgaben = ETAufgabenRepo.findAllByOrderByAufgabenNiveauAsc();
+        if(allAufgaben.isEmpty()){
+            log.error("No Aufgaben found!");
+            return Collections.emptyList();
+        }
+        return allAufgaben
                 .stream()
                 .collect(Collectors.groupingBy(ETAufgabe::getAufgabenNiveau))
                 .values().stream().map(aufgabenReshuffler::reshuffle)
