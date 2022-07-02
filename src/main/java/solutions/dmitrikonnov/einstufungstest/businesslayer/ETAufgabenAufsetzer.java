@@ -29,7 +29,9 @@ public class ETAufgabenAufsetzer {
     //TODO: try out parallstream() instead of just stream()
     public List<ETAufgabe> listeAufsetzen() {
         var maxSchwellenMap = schwellenRepo.findMaximumSchwellenByNiveaus();
-        if(maxSchwellenMap.isEmpty())log.warn("SchwellenRepo is empty!");
+        if(maxSchwellenMap.isEmpty()){
+            log.warn("SchwellenRepo is empty!");
+        return Collections.emptyList();}
         var allAufgaben = ETAufgabenRepo.findAllByOrderByAufgabenNiveauAsc();
         if(allAufgaben.isEmpty()){
             log.error("No Aufgaben found!");

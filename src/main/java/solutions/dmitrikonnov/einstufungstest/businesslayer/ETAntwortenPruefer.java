@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.*;
-import solutions.dmitrikonnov.einstufungstest.domainlayer.entities.ETMindestschwelle;
+import solutions.dmitrikonnov.einstufungstest.domainlayer.entities.ETSchwelle;
 import solutions.dmitrikonnov.einstufungstest.persistinglayer.SchwellenRepo;
 import solutions.dmitrikonnov.einstufungstest.utils.AntwortBogenCheckedEvent;
 
@@ -34,7 +34,7 @@ public class ETAntwortenPruefer {
         final Long cachedBogenId = cachedAufgabenBogen.getAufgabenBogenId();
         final Integer cachedBogenHash = cachedAufgabenBogen.getAufgabenBogenHash();
         final Map<Integer, ArrayList<String>> itemHashZuAntwortMap = antwortBogen.getItemHashZuAntwortMap();
-        final List<ETMindestschwelle> mindestSchwellen = schwellenRepo.findAllByOrderByNiveau();
+        final List<ETSchwelle> mindestSchwellen = schwellenRepo.findAllByOrderByNiveau();
         final List<ETAufgabenNiveau> richtigeLoesungenNachNiveauTemp = new ArrayList<>();
 
         mindestSchwellen.forEach(schwelle -> ergebnisseDto

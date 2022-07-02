@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenNiveau;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETErgebnisseDto;
-import solutions.dmitrikonnov.einstufungstest.domainlayer.entities.ETMindestschwelle;
+import solutions.dmitrikonnov.einstufungstest.domainlayer.entities.ETSchwelle;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETSchwellenErgebnis;
 import solutions.dmitrikonnov.einstufungstest.persistinglayer.SchwellenRepo;
 import solutions.dmitrikonnov.einstufungstest.utils.TriFunction;
@@ -40,7 +40,7 @@ public class ETErgebnisseEvaluator {
 
 
     public ETErgebnisseDto evaluate(ETErgebnisseDto ergebnisse) {
-        List<ETMindestschwelle> mindestSchwellen = schwellenRepo.findAllByOrderByNiveau();
+        List<ETSchwelle> mindestSchwellen = schwellenRepo.findAllByOrderByNiveau();
 
         if (noneCorrect(ergebnisse)){
             mindestSchwellen.forEach(record -> setNachNiveauAlleFalsch(record.getNiveau(),ergebnisse.getNiveauZurZahlRichtiger()));
@@ -58,7 +58,7 @@ public class ETErgebnisseEvaluator {
     }
 
 
-    protected ETErgebnisseDto evaluate2 (ETErgebnisseDto ergebnisseDto, List<ETMindestschwelle> mindestSchwellen){
+    protected ETErgebnisseDto evaluate2 (ETErgebnisseDto ergebnisseDto, List<ETSchwelle> mindestSchwellen){
 
         var entrySetErgebnisse = ergebnisseDto.getNiveauZurZahlRichtiger().entrySet();
 

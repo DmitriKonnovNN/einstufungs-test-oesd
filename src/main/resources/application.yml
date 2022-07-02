@@ -1,3 +1,9 @@
+info:
+  app:
+    name: Einstufungstest Application
+    description: none
+    version: snapshot 1.0
+
 server:
   error:
     include-message: always
@@ -40,5 +46,7 @@ logging:
 #          descriptor:
 #            sql:
 #              BasicBinder: TRACE
+  file:
+    path: ./logs
 
-debug: true
+debug: false

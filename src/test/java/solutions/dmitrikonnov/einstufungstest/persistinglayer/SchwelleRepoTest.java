@@ -8,11 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenNiveau;
-import solutions.dmitrikonnov.einstufungstest.domainlayer.entities.ETMindestschwelle;
+import solutions.dmitrikonnov.einstufungstest.domainlayer.entities.ETSchwelle;
 
 @DataJpaTest
 @ActiveProfiles("unit-test")
-class MindestSchwelleRepoTest {
+class SchwelleRepoTest {
 
     @Autowired
     private SchwellenRepo underTest;
@@ -28,7 +28,7 @@ class MindestSchwelleRepoTest {
     @Test
     void itShouldCheckIf_AllSchwellenFoundOrderByNiveauAscended() {
         //given
-        ETMindestschwelle mindestschwelle = ETMindestschwelle.builder()
+        ETSchwelle mindestschwelle = ETSchwelle.builder()
                 .id((short)1)
                 .niveau(ETAufgabenNiveau.A1)
                 .maximumSchwelle((short)5)

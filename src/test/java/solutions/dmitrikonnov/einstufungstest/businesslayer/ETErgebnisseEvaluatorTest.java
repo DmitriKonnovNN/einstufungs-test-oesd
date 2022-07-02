@@ -10,7 +10,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.ActiveProfiles;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETErgebnisseDto;
-import solutions.dmitrikonnov.einstufungstest.domainlayer.entities.ETMindestschwelle;
+import solutions.dmitrikonnov.einstufungstest.domainlayer.entities.ETSchwelle;
 import solutions.dmitrikonnov.einstufungstest.persistinglayer.SchwellenRepo;
 import java.util.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -24,8 +24,8 @@ class ETErgebnisseEvaluatorTest {
 
     @Mock
     private SchwellenRepo mindSchwRepoMock;
-    private static List<ETMindestschwelle> mindestschwellen2;
-    private static List<ETMindestschwelle> mindestschwellen3;
+    private static List<ETSchwelle> mindestschwellen2;
+    private static List<ETSchwelle> mindestschwellen3;
     private ETErgebnisseEvaluator underTest;
     private ETErgebnisseDto passedDto;
     private ETErgebnisseDto expectedDto;
@@ -34,12 +34,12 @@ class ETErgebnisseEvaluatorTest {
 
     @BeforeAll
     static void setUpMindestSchwelle() {
-        ETMindestschwelle schwelleA1 = ETMindestschwelle.builder().id((short)1).niveau(A1).mindestSchwelle((short)2).maximumSchwelle((short)4).build();
-        ETMindestschwelle schwelleA2 = ETMindestschwelle.builder().id((short)2).niveau(A2).mindestSchwelle((short)2).maximumSchwelle((short)4).build();
-        ETMindestschwelle schwelleB1 = ETMindestschwelle.builder().id((short)3).niveau(B1).mindestSchwelle((short)2).maximumSchwelle((short)4).build();
-        ETMindestschwelle schwelleB2 = ETMindestschwelle.builder().id((short)4).niveau(B2).mindestSchwelle((short)2).maximumSchwelle((short)4).build();
-        ETMindestschwelle schwelleC1 = ETMindestschwelle.builder().id((short)5).niveau(C1).mindestSchwelle((short)2).maximumSchwelle((short)4).build();
-        ETMindestschwelle schwelleC2 = ETMindestschwelle.builder().id((short)6).niveau(C2).mindestSchwelle((short)2).maximumSchwelle((short)4).build();
+        ETSchwelle schwelleA1 = ETSchwelle.builder().id((short)1).niveau(A1).mindestSchwelle((short)2).maximumSchwelle((short)4).build();
+        ETSchwelle schwelleA2 = ETSchwelle.builder().id((short)2).niveau(A2).mindestSchwelle((short)2).maximumSchwelle((short)4).build();
+        ETSchwelle schwelleB1 = ETSchwelle.builder().id((short)3).niveau(B1).mindestSchwelle((short)2).maximumSchwelle((short)4).build();
+        ETSchwelle schwelleB2 = ETSchwelle.builder().id((short)4).niveau(B2).mindestSchwelle((short)2).maximumSchwelle((short)4).build();
+        ETSchwelle schwelleC1 = ETSchwelle.builder().id((short)5).niveau(C1).mindestSchwelle((short)2).maximumSchwelle((short)4).build();
+        ETSchwelle schwelleC2 = ETSchwelle.builder().id((short)6).niveau(C2).mindestSchwelle((short)2).maximumSchwelle((short)4).build();
 
         mindestschwellen2 = new ArrayList<>();
         mindestschwellen2.add(schwelleA1);
@@ -49,12 +49,12 @@ class ETErgebnisseEvaluatorTest {
         mindestschwellen2.add(schwelleC1);
         mindestschwellen2.add(schwelleC2);
 
-        ETMindestschwelle schwelle3A1 = ETMindestschwelle.builder().id((short)1).niveau(A1).mindestSchwelle((short)3).maximumSchwelle((short)5).build();
-        ETMindestschwelle schwelle3A2 = ETMindestschwelle.builder().id((short)2).niveau(A2).mindestSchwelle((short)3).maximumSchwelle((short)5).build();
-        ETMindestschwelle schwelle3B1 = ETMindestschwelle.builder().id((short)3).niveau(B1).mindestSchwelle((short)3).maximumSchwelle((short)5).build();
-        ETMindestschwelle schwelle3B2 = ETMindestschwelle.builder().id((short)4).niveau(B2).mindestSchwelle((short)3).maximumSchwelle((short)5).build();
-        ETMindestschwelle schwelle3C1 = ETMindestschwelle.builder().id((short)5).niveau(C1).mindestSchwelle((short)3).maximumSchwelle((short)5).build();
-        ETMindestschwelle schwelle3C2 = ETMindestschwelle.builder().id((short)6).niveau(C2).mindestSchwelle((short)3).maximumSchwelle((short)5).build();
+        ETSchwelle schwelle3A1 = ETSchwelle.builder().id((short)1).niveau(A1).mindestSchwelle((short)3).maximumSchwelle((short)5).build();
+        ETSchwelle schwelle3A2 = ETSchwelle.builder().id((short)2).niveau(A2).mindestSchwelle((short)3).maximumSchwelle((short)5).build();
+        ETSchwelle schwelle3B1 = ETSchwelle.builder().id((short)3).niveau(B1).mindestSchwelle((short)3).maximumSchwelle((short)5).build();
+        ETSchwelle schwelle3B2 = ETSchwelle.builder().id((short)4).niveau(B2).mindestSchwelle((short)3).maximumSchwelle((short)5).build();
+        ETSchwelle schwelle3C1 = ETSchwelle.builder().id((short)5).niveau(C1).mindestSchwelle((short)3).maximumSchwelle((short)5).build();
+        ETSchwelle schwelle3C2 = ETSchwelle.builder().id((short)6).niveau(C2).mindestSchwelle((short)3).maximumSchwelle((short)5).build();
 
         mindestschwellen3 = new ArrayList<>();
         mindestschwellen3.add(schwelle3A1);

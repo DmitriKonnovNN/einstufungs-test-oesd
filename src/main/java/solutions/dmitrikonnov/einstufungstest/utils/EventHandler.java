@@ -31,7 +31,7 @@ public class EventHandler {
 
     @EventListener (ApplicationReadyEvent.class)
     public void onApplicationEvent (ApplicationReadyEvent event) {
-        cache.warmUpCache();
+        cache.warmUp();
     }
     //TODO: As well, try out: ContextRefreshedEvent, ApplicationStartedEvent
 }

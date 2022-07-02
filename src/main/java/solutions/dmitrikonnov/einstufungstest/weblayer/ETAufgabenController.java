@@ -16,7 +16,7 @@ import solutions.dmitrikonnov.einstufungstest.utils.AufgabenBogenFetchedFromCach
 @AllArgsConstructor
 public class ETAufgabenController {
     private final ETAufgabenService aufgabenService;
-    private final InRamSimpleCache simpleCache;
+    private final InRamSimpleCache cache;
     private final ApplicationEventPublisher publisher;
 
 
@@ -24,7 +24,7 @@ public class ETAufgabenController {
     public ResponseEntity<ETAufgabenBogenDto> getAufgaben (){
 
 
-        var bogen = simpleCache.getPreparedAufgabenbogen();
+        var bogen = cache.getPreparedAufgabenbogen();
         publisher.publishEvent(new AufgabenBogenFetchedFromCache(this));
 
         return ResponseEntity.status(HttpStatus.OK)
@@ -35,7 +35,7 @@ public class ETAufgabenController {
     @PostMapping()
     public ResponseEntity<ETEndResultForFE> checkAndGetResults(@RequestBody ETAntwortBogenDto antwortBogen){
 
-        var cachedBogen = simpleCache.fetch(antwortBogen.getAntwortBogenId());
+        var cachedBogen = cache.fetch(antwortBogen.getAntwortBogenId());
         var result = aufgabenService.checkAntwortBogenAndGetTestErgebnisse(antwortBogen,cachedBogen);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(result);

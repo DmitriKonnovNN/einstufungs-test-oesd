@@ -5,6 +5,7 @@ import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenFrontEndType
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenNiveau;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenTyp;
 
+import javax.validation.constraints.NotBlank;
 import java.util.Set;
 
 /**
@@ -17,7 +18,9 @@ public class ETAufgabeConstructDTO {
     private String aufgabenStellung;
     private Set<ETItemConstructDTO> items;
     private String aufgabenInhalt;
+    @NotBlank
     private ETAufgabenTyp aufgabenTyp;
+    @NotBlank
     private ETAufgabenNiveau aufgabenNiveau;
     private ETAufgabenFrontEndType frontEndType;
     private Integer gewichtung;

@@ -6,6 +6,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import solutions.dmitrikonnov.einstufungstest.businesslayer.ETAufgabenService;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenBogen;
+import solutions.dmitrikonnov.einstufungstest.exceptions.NoTaskSetToServeException;
 
 import java.util.Map;
 import java.util.Optional;
@@ -68,13 +69,13 @@ public class InRamSimpleCache {
         var bogen = aufgabenService.getAufgabenListe();
         if(bogen == null) {
             log.error("No Bogen set up!");
-        throw new RuntimeException("No Bogen set up!");
+        throw new NoTaskSetToServeException("No Bogen set up!");
         }
        return bogen;
 
     }
 
-    public void warmUpCache(){
+    public void warmUp(){
         log.debug("Cache warm-up started");
         populateCache();
     }

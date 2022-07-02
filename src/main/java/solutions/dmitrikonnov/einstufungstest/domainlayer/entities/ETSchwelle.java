@@ -1,7 +1,6 @@
 package solutions.dmitrikonnov.einstufungstest.domainlayer.entities;
 
 import lombok.*;
-import solutions.dmitrikonnov.einstufungstest.businesslayer.ETSchwelle;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenNiveau;
 
 import javax.persistence.*;
@@ -14,8 +13,8 @@ import javax.persistence.*;
 @EqualsAndHashCode
 @ToString
 @Builder
-@Table(name = "ET_MINDEST_SCHWELLE")
-public class ETMindestschwelle implements ETSchwelle {
+@Table(name = "ET_SCHWELLE")
+public class ETSchwelle {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

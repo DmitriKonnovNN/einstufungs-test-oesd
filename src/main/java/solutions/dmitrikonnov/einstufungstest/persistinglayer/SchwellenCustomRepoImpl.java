@@ -18,7 +18,7 @@ public class SchwellenCustomRepoImpl implements SchwellenCustomRepo {
         return  entityManager
                 .createQuery("select e.niveau AS niveau," +
                         " e.maximumSchwelle as maxschwelle " +
-                        " from ETMindestschwelle e", Tuple.class)
+                        " from ETSchwelle e", Tuple.class)
                 .getResultStream()
                 .collect(Collectors.toMap(
                         tuple -> (ETAufgabenNiveau) tuple.get("niveau"),
