@@ -20,21 +20,21 @@ import java.util.concurrent.LinkedBlockingQueue;
 @Slf4j
 public class InRamSimpleCache {
     private final int cacheAllocSize = 12;
-    private final Map<Long, ETAufgabenBogen> toCheckCache = new ConcurrentHashMap<>();
+    private final Map<Integer, ETAufgabenBogen> toCheckCache = new ConcurrentHashMap<>();
     private final Queue<Optional<ETAufgabenBogen>> toServeCache = new LinkedBlockingQueue<>(cacheAllocSize);
     private final ETAufgabenService aufgabenService;
 
 
-    private void saveToCheck(Long id, ETAufgabenBogen bogen){
+    private void saveToCheck(Integer id, ETAufgabenBogen bogen){
         bogen.setCachedAt(System.currentTimeMillis());
         toCheckCache.put(id, bogen);
     }
 
-    public ETAufgabenBogen fetch(Long id){
+    public ETAufgabenBogen fetch(Integer id){
         return toCheckCache.get(id);
     }
 
-    public void evict(Long id) {
+    public void evict(Integer id) {
         toCheckCache.remove(id);
     }
 
@@ -43,7 +43,7 @@ public class InRamSimpleCache {
         var bogen = Objects.requireNonNull(
                 toServeCache.poll())
                 .orElseGet(this::getBogenForced);
-        saveToCheck(bogen.getAufgabenBogenId(),bogen);
+        saveToCheck(bogen.getAufgabenBogenHash(),bogen);
         return bogen;
     }
     public void checkIfAlmostEmptyAndPopulate (){
@@ -61,7 +61,6 @@ public class InRamSimpleCache {
             toServeCache.offer(Optional.of(aufgabenBogen));
         }
         log.info("Cache (allocated to {} ) has been populated with {} elements",cacheAllocSize ,toServeCache.size());
-        toServeCache.forEach(o-> System.out.println(o.get()));
     }
 
     private boolean isAlmostEmpty (){

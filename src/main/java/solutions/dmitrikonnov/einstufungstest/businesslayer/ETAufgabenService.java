@@ -4,13 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAntwortBogenDto;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenBogen;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETEndResultForFE;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.entities.ETAufgabe;
 import solutions.dmitrikonnov.einstufungstest.persistinglayer.ETErgebnisseConverterAndPersister;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -26,7 +26,7 @@ public class ETAufgabenService {
     private final ETAufgabenBogenAufsetzer bogenAufsetzer;
 
 
-
+    @Transactional(readOnly = true)
     public ETAufgabenBogen getAufgabenListe (){
         List<ETAufgabe> aufgesetzteListe = aufsetzer.listeAufsetzen();
         if(aufgesetzteListe.isEmpty()) return null;

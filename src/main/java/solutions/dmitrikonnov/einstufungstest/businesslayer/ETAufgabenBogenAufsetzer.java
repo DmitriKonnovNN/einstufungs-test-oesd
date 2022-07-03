@@ -20,14 +20,10 @@ public class ETAufgabenBogenAufsetzer {
 
     public ETAufgabenBogen aufsetzen (List<ETAufgabe> aufgaben) {
         final Integer aufgabenBogenHash = aufgaben.hashCode();
-        sequenceRepo.nextVal();
-        final Long aufgabenBogenId = sequenceRepo.getNextVal();
-        log.error("$sequenceRepo.nextVal() called. Returned value: {} .", aufgabenBogenId);
 
         return ETAufgabenBogen.builder()
                 .aufgabenBogenHash(aufgabenBogenHash)
-                .aufgabenBogenId(aufgabenBogenId)
-                .aufgabenListe(aufgabeToDtoConverter.convert(aufgaben,aufgabenBogenHash,aufgabenBogenId))
+                .aufgabenListe(aufgabeToDtoConverter.convert(aufgaben,aufgabenBogenHash))
                 .itemZuLoesungen(extractItems(aufgaben))
                 .itemZuNiveau(extractNiveaus(aufgaben))
                 .build();

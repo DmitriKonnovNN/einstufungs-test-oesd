@@ -31,7 +31,6 @@ public class ETAntwortenPruefer {
         final Map<Integer,List<String>> cachedItemZuloesungen = cachedAufgabenBogen.getItemZuLoesungen();
         final ETErgebnisseDto ergebnisseDto = new ETErgebnisseDto();
         final Map<Integer, ETAufgabenNiveau> itemIdZuNiveau = cachedAufgabenBogen.getItemZuNiveau();
-        final Long cachedBogenId = cachedAufgabenBogen.getAufgabenBogenId();
         final Integer cachedBogenHash = cachedAufgabenBogen.getAufgabenBogenHash();
         final Map<Integer, ArrayList<String>> itemHashZuAntwortMap = antwortBogen.getItemHashZuAntwortMap();
         final List<ETSchwelle> mindestSchwellen = schwellenRepo.findAllByOrderByNiveau();
@@ -59,7 +58,7 @@ public class ETAntwortenPruefer {
                         .stream()
                         .sorted()
                         .collect(Collectors.toList()));
-        publisher.publishEvent(new AntwortBogenCheckedEvent(this, cachedBogenId,ergebnisseDto.toString()));
+        publisher.publishEvent(new AntwortBogenCheckedEvent(this, cachedBogenHash,ergebnisseDto.toString()));
         return new ETErgebnisseDto(ergebnisseDto);
     }
 

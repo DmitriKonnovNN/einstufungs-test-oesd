@@ -48,9 +48,6 @@ class ETAntwortenPrueferTest {
 
     @BeforeEach
     void setUp() {
-        Random r = new Random();
-        long range = 1234567L;
-        final Long ID = (long)(r.nextDouble()*range);
 
         int ABH = faker.number().numberBetween(1,10000);
         underTest = new ETAntwortenPruefer(publisherMock,mindSchwRepoMock);
@@ -203,7 +200,7 @@ class ETAntwortenPrueferTest {
 
 
         givenAufgabenListe.addAll(Arrays.asList(aufgabe1, aufgabe2, aufgabe3, aufgabe4, aufgabe5,aufgabe6));
-        givenAufgabenDTOListe = converter.convert(givenAufgabenListe,ABH,ID);
+        givenAufgabenDTOListe = converter.convert(givenAufgabenListe,ABH);
 
         Map<Integer, List<String>> itemZuLoesungen = new HashMap<>(){{
             put(item1.getItemId(),item1.getLoesungen());
@@ -255,7 +252,6 @@ class ETAntwortenPrueferTest {
         }
 */
         givenCachedAufgabenBogen = new ETAufgabenBogen(
-                ID,
                 ABH,
                 givenAufgabenDTOListe,
                 System.currentTimeMillis(),
@@ -281,7 +277,7 @@ class ETAntwortenPrueferTest {
         }};
 
 
-        givenAntwortBogen = new ETAntwortBogenDto(ID,givenItemHashZuAMap);
+        givenAntwortBogen = new ETAntwortBogenDto(ABH,givenItemHashZuAMap);
         expectedDto = ETErgebnisseDto.builder()
                 .aufgabenBogenHash(ABH)
                 .zahlRichtigerAntworten((short)6)
@@ -311,7 +307,7 @@ class ETAntwortenPrueferTest {
                 .build();
 
         //TODO: check that the correct event has been thrown
-        expectedEvent = new AntwortBogenCheckedEvent(underTest,ID,expectedDto.toString());
+        expectedEvent = new AntwortBogenCheckedEvent(underTest,ABH,expectedDto.toString());
     }
 
     @AfterEach
