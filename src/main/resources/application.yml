@@ -20,6 +20,7 @@ spring:
       ddl-auto: update
     properties:
       hibernate:
+#        enable_lazy_load_no_trans: true
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
         jdbc:
           lob:
@@ -36,6 +37,7 @@ spring:
               LOG_QUERIES_SLOWER_THAN_MS: 3
         search:
           version: 5.11.7.Final
+
 logging:
   level:
     org:
@@ -46,7 +48,7 @@ logging:
 #          descriptor:
 #            sql:
 #              BasicBinder: TRACE
-  file:
-    path: ./logs
+#  file:
+#    path: ./logs
 
-debug: false
+debug: true

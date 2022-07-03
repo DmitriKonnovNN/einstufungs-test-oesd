@@ -9,6 +9,7 @@ import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenBogen;
 import solutions.dmitrikonnov.einstufungstest.exceptions.NoTaskSetToServeException;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentHashMap;
@@ -39,7 +40,9 @@ public class InRamSimpleCache {
 
     public ETAufgabenBogen getPreparedAufgabenbogen(){
 
-        var bogen = toServeCache.poll().orElse(getBogenForced());
+        var bogen = Objects.requireNonNull(
+                toServeCache.poll())
+                .orElseGet(this::getBogenForced);
         saveToCheck(bogen.getAufgabenBogenId(),bogen);
         return bogen;
     }
@@ -52,12 +55,13 @@ public class InRamSimpleCache {
             var aufgabenBogen = aufgabenService.getAufgabenListe();
             if(aufgabenBogen==null) {
                 log.warn("No Bogen in Cache!");
+                toServeCache.offer(Optional.empty());
                 break;
             }
             toServeCache.offer(Optional.of(aufgabenBogen));
         }
         log.info("Cache (allocated to {} ) has been populated with {} elements",cacheAllocSize ,toServeCache.size());
-
+        toServeCache.forEach(o-> System.out.println(o.get()));
     }
 
     private boolean isAlmostEmpty (){
@@ -69,6 +73,7 @@ public class InRamSimpleCache {
         var bogen = aufgabenService.getAufgabenListe();
         if(bogen == null) {
             log.error("No Bogen set up!");
+            toServeCache.offer(Optional.empty());
         throw new NoTaskSetToServeException("No Bogen set up!");
         }
        return bogen;

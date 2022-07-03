@@ -10,15 +10,19 @@ import solutions.dmitrikonnov.einstufungstest.domainlayer.construct.ETSchwellenC
 import solutions.dmitrikonnov.einstufungstest.domainlayer.entities.ETAufgabe;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.entities.ETItem;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.entities.ETSchwelle;
+import solutions.dmitrikonnov.einstufungstest.exceptions.TaskNotFoundException;
 import solutions.dmitrikonnov.einstufungstest.exceptions.ThresholdNotFoundException;
 import solutions.dmitrikonnov.einstufungstest.persistinglayer.SchwellenRepo;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Service
 @AllArgsConstructor
 @Slf4j
+@Transactional
 public class ETConstructorService {
 
     private final ETAufgabenRepo aufgabenRepo;
@@ -27,11 +31,23 @@ public class ETConstructorService {
 
 
     public ETAufgabe addAufgabe(ETAufgabeConstructDTO aufgabe){
-      return null;
+        if(aufgabe.getItems().isEmpty()){
+            var aufgabeEntity = setUpLoneETAufgabeEntity(aufgabe);
+            log.debug("Ready to save to DB: " + aufgabeEntity.toString());
+            return aufgabenRepo.save(aufgabeEntity);
+        }
+        var aufgabeEntity = setUpLoneETAufgabeEntity(aufgabe);
+        aufgabe.getItems().forEach(itemDto->
+            aufgabeEntity.addItem(setUpLoneETItem(itemDto)));
+        log.debug("Ready to save to DB: " + aufgabeEntity.toString());
+        return aufgabeEntity;
     }
 
-    public ETItem addItemToAufgabe (ETItemConstructDTO item, Integer aufgabeId){
-        return null;
+    public void addItemsToAufgabe (List<ETItemConstructDTO> items, Integer aufgabeId){
+        var aufgabe = aufgabenRepo.findById(aufgabeId)
+                .orElseThrow(()-> new TaskNotFoundException(aufgabeId));
+        items.forEach(item->aufgabe.addItem(setUpLoneETItem(item)));
+        aufgabenRepo.save(aufgabe);
     }
 
     public void deleteItemInAufgabe (Integer itemId, Integer aufgabeId) {
@@ -51,8 +67,9 @@ public class ETConstructorService {
     }
 
     public ETSchwelle findSchwelleByNiveau(ETAufgabenNiveau niveau){
-       return schwellenRepo.findByNiveau(niveau)
-               .orElseThrow(()-> new ThresholdNotFoundException(niveau));
+        return  schwellenRepo.findByNiveau(niveau)
+                .orElseThrow(()-> new ThresholdNotFoundException(niveau));
+
     }
 
     public ETSchwelle addSchwelle(ETSchwellenConstructDTO schwelle) {
@@ -84,5 +101,24 @@ public class ETConstructorService {
                     schwelle.getMaximumSchwelle().shortValue());
         }
         else throw new ThresholdNotFoundException(schwelle.getNiveau());
+    }
+
+    private ETAufgabe setUpLoneETAufgabeEntity(ETAufgabeConstructDTO dto) {
+        return ETAufgabe.builder()
+                .aufgabenInhalt(dto.getAufgabenInhalt())
+                .aufgabenNiveau(dto.getAufgabenNiveau())
+                .aufgabenStellung(dto.getAufgabenStellung())
+                .aufgabenTyp(dto.getAufgabenTyp())
+                .frontEndType(dto.getFrontEndType())
+                .gewichtung(dto.getGewichtung())
+                .build();
+    }
+
+    private ETItem setUpLoneETItem(ETItemConstructDTO dto) {
+        return ETItem.builder()
+                .itemAufgabenInhalt(dto.getItemAufgabenInhalt())
+                .moeglicheAntworten(Set.copyOf(dto.getMoeglicheAntworten()))
+                .loesungen(dto.getLoesungen())
+                .build();
     }
 }

@@ -6,7 +6,8 @@ import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenNiveau;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenTyp;
 
 import javax.validation.constraints.NotBlank;
-import java.util.Set;
+import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * this class is suposed to be sent from client to set up the task (ETAufgabe)
@@ -15,14 +16,19 @@ import java.util.Set;
 @Data
 public class ETAufgabeConstructDTO {
 
+    @NotBlank
     private String aufgabenStellung;
-    private Set<ETItemConstructDTO> items;
+    @NotNull
+    private List<ETItemConstructDTO> items;
+
     private String aufgabenInhalt;
-    @NotBlank
+
     private ETAufgabenTyp aufgabenTyp;
-    @NotBlank
+    @NotNull
     private ETAufgabenNiveau aufgabenNiveau;
+
     private ETAufgabenFrontEndType frontEndType;
+
     private Integer gewichtung;
 
 }

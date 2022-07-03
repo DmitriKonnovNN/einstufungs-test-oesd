@@ -3,16 +3,17 @@ package solutions.dmitrikonnov.einstufungstest.domainlayer.construct;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
-import java.util.Set;
 
 @Data
 public class ETItemConstructDTO {
 
-    private Integer aufgabeId;
-    private String itemAufgabenInhalt;
     @NotBlank
-    private Set<String> moeglicheAntworten;
+    private String itemAufgabenInhalt;
+    @NotEmpty
+    private List<String> moeglicheAntworten;
+    @NotEmpty
     private List<String> loesungen;
 
 }

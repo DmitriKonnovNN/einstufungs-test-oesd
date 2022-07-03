@@ -26,7 +26,7 @@ public class ETAufgabenService {
     private final ETAufgabenBogenAufsetzer bogenAufsetzer;
 
 
-    @Transactional
+
     public ETAufgabenBogen getAufgabenListe (){
         List<ETAufgabe> aufgesetzteListe = aufsetzer.listeAufsetzen();
         if(aufgesetzteListe.isEmpty()) return null;

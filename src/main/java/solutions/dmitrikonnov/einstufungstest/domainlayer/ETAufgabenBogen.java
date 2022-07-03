@@ -19,6 +19,7 @@ import java.util.Map;
 @Setter
 @Getter
 @Builder
+@ToString
 public class ETAufgabenBogen {
 
     @Id

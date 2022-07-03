@@ -42,7 +42,7 @@ public class ETAufgabe {
     *
     * */
     @OneToMany (cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "aufgabe")
-    @Fetch(FetchMode.SUBSELECT)
+    @Fetch(FetchMode.JOIN)
     private Set<ETItem> items; // Set or List?
 
     /*

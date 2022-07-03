@@ -7,11 +7,13 @@ import org.springframework.web.bind.annotation.*;
 import solutions.dmitrikonnov.einstufungstest.businesslayer.ETConstructorService;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenNiveau;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.construct.ETAufgabeConstructDTO;
+import solutions.dmitrikonnov.einstufungstest.domainlayer.construct.ETItemConstructDTO;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.construct.ETSchwellenConstructDTO;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.entities.ETAufgabe;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.entities.ETSchwelle;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -19,11 +21,16 @@ import java.util.Map;
 @AllArgsConstructor
 public class ETConstructorController {
     private final ETConstructorService service;
-    @PostMapping()
-    public ResponseEntity<ETAufgabe> addTask(@RequestBody ETAufgabeConstructDTO dto){
+    @PostMapping("/tasks")
+    public ResponseEntity<ETAufgabe> addTask(@Valid @RequestBody ETAufgabeConstructDTO dto){
         var result = service.addAufgabe(dto);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(result);
+    }
+
+    @PostMapping("/items-to-task/{id}")
+    public void addItemToTask (@RequestBody List<@Valid ETItemConstructDTO> items, @PathVariable Integer id) {
+        service.addItemsToAufgabe(items, id);
     }
 
     @PostMapping("/limits")
@@ -32,7 +39,7 @@ public class ETConstructorController {
     }
 
     @PutMapping("/limits")
-    public ResponseEntity<ETSchwelle> updateLimit (@Valid @RequestBody ETSchwellenConstructDTO schwelle){
+    public ResponseEntity<ETSchwelle> updateLimit ( @Valid @RequestBody ETSchwellenConstructDTO schwelle){
         return ResponseEntity.status(HttpStatus.OK).body(service.updateSchwelle(schwelle));
     }
     @PatchMapping("/limits")

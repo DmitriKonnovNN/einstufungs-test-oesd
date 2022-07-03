@@ -20,8 +20,9 @@ public class ETAufgabenBogenAufsetzer {
 
     public ETAufgabenBogen aufsetzen (List<ETAufgabe> aufgaben) {
         final Integer aufgabenBogenHash = aufgaben.hashCode();
-        final Long aufgabenBogenId = sequenceRepo.nextVal();
-        log.debug("$sequenceRepo.nextVal() called. Returned value: {} .", aufgabenBogenId);
+        sequenceRepo.nextVal();
+        final Long aufgabenBogenId = sequenceRepo.getNextVal();
+        log.error("$sequenceRepo.nextVal() called. Returned value: {} .", aufgabenBogenId);
 
         return ETAufgabenBogen.builder()
                 .aufgabenBogenHash(aufgabenBogenHash)
