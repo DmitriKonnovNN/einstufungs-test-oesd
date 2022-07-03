@@ -38,7 +38,7 @@ class ETAntwortenPrueferTest {
     private ETAntwortenPruefer underTest;
     private ETAntwortBogenDto givenAntwortBogen;
     private ETAufgabenBogen givenCachedAufgabenBogen;
-    private Map<Integer, ArrayList<String>> givenItemHashZuAMap;
+    private Map<Integer, List<String>> givenItemHashZuAMap;
     private List<ETAufgabe> givenAufgabenListe = new ArrayList<>();
     private List<ETSchwelle> mindestschwellen;
     private ETErgebnisseDto expectedDto;

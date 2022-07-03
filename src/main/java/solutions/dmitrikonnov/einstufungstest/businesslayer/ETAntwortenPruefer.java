@@ -32,7 +32,7 @@ public class ETAntwortenPruefer {
         final ETErgebnisseDto ergebnisseDto = new ETErgebnisseDto();
         final Map<Integer, ETAufgabenNiveau> itemIdZuNiveau = cachedAufgabenBogen.getItemZuNiveau();
         final Integer cachedBogenHash = cachedAufgabenBogen.getAufgabenBogenHash();
-        final Map<Integer, ArrayList<String>> itemHashZuAntwortMap = antwortBogen.getItemHashZuAntwortMap();
+        final Map<Integer, List<String>> itemHashZuAntwortMap = antwortBogen.getItemHashZuAntwortMap();
         final List<ETSchwelle> mindestSchwellen = schwellenRepo.findAllByOrderByNiveau();
         final List<ETAufgabenNiveau> richtigeLoesungenNachNiveauTemp = new ArrayList<>();
 
@@ -45,7 +45,7 @@ public class ETAntwortenPruefer {
         itemHashZuAntwortMap.forEach((hashedId, list) -> {
             var itemId = hashedId - cachedBogenHash;
             var cLoesungen = cachedItemZuloesungen.get(itemId);
-            Boolean correct = cLoesungen.equals(list);
+            Boolean correct = list.equals(cLoesungen);
             ergebnisseDto.getIdZuRichtigkeitMap().put(itemId, correct);
             if(correct){
                 richtigeLoesungenNachNiveauTemp.add(itemIdZuNiveau.get(itemId));
