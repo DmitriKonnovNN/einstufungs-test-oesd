@@ -3,14 +3,14 @@ package solutions.dmitrikonnov.einstufungstest.businesslayer;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabeDto;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenBogen;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenNiveau;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.entities.ETAufgabe;
 import solutions.dmitrikonnov.einstufungstest.utils.ETAufgabenToDTOConverter;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -20,12 +20,14 @@ public class ETAufgabenBogenAufsetzer {
 
     public ETAufgabenBogen aufsetzen (List<ETAufgabe> aufgaben) {
         final Integer aufgabenBogenHash = aufgaben.hashCode();
+        final var dtos = aufgabeToDtoConverter.convert(aufgaben,aufgabenBogenHash);
+        final var shuffeled = shuffleAufgabenAndItems(dtos);
 
         return ETAufgabenBogen.builder()
                 .aufgabenBogenHash(aufgabenBogenHash)
                 .itemZuLoesungen(extractItems(aufgaben))
                 .itemZuNiveau(extractNiveaus(aufgaben))
-                .aufgabenListe(aufgabeToDtoConverter.convert(aufgaben,aufgabenBogenHash))
+                .aufgabenListe(shuffeled)
                 .build();
     }
 
@@ -52,5 +54,18 @@ public class ETAufgabenBogenAufsetzer {
         }
         return itemIdZuNiveau;
     }
+
+    private List<ETAufgabeDto> shuffleAufgabenAndItems (List<ETAufgabeDto> dtos) {
+        return dtos.stream()
+                .peek(aufgdto -> Collections.shuffle(aufgdto.getItems()))
+                .collect(Collectors.groupingBy(ETAufgabeDto::getNiveau, TreeMap::new, Collectors.toList()))
+                .values()
+                .stream()
+                .peek(Collections::shuffle)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
+    }
+
+
 
 }

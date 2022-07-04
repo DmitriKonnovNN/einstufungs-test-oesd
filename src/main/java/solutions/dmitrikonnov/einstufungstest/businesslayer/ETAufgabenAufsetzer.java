@@ -22,8 +22,6 @@ import java.util.stream.Collectors;
 public class ETAufgabenAufsetzer {
 
     private final ETAufgabenRepo ETAufgabenRepo;
-    private final ETAufgabenReshuffler aufgabenReshuffler;
-    private final ET_ItemsShuffler antwortenReshuffler;
     private final ETAufgabenRestricter aufgabenRestricter;
     private final SchwellenRepo schwellenRepo;
 
@@ -41,9 +39,9 @@ public class ETAufgabenAufsetzer {
         return allAufgaben
                 .stream()
                 .collect(Collectors.groupingBy(ETAufgabe::getAufgabenNiveau, TreeMap::new, Collectors.toList()))
-                .values().stream().map(aufgabenReshuffler::reshuffle)
+                .values()
+                .stream()
                 .map(aufgaben->aufgabenRestricter.restrict(aufgaben,maxSchwellenMap))
-                .map(antwortenReshuffler::reshuffleItems)
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
 
