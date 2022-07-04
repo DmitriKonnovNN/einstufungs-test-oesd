@@ -3,29 +3,29 @@ package solutions.dmitrikonnov.einstufungstest.businesslayer;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import solutions.dmitrikonnov.einstufungstest.domainlayer.AufgabenBogenSequenceRepo;
-import solutions.dmitrikonnov.einstufungstest.domainlayer.entities.ETAufgabe;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenBogen;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenNiveau;
+import solutions.dmitrikonnov.einstufungstest.domainlayer.entities.ETAufgabe;
 import solutions.dmitrikonnov.einstufungstest.utils.ETAufgabenToDTOConverter;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 @AllArgsConstructor
 @Slf4j
 public class ETAufgabenBogenAufsetzer {
     private final ETAufgabenToDTOConverter aufgabeToDtoConverter;
-    private final AufgabenBogenSequenceRepo sequenceRepo;
 
     public ETAufgabenBogen aufsetzen (List<ETAufgabe> aufgaben) {
         final Integer aufgabenBogenHash = aufgaben.hashCode();
 
         return ETAufgabenBogen.builder()
                 .aufgabenBogenHash(aufgabenBogenHash)
-                .aufgabenListe(aufgabeToDtoConverter.convert(aufgaben,aufgabenBogenHash))
                 .itemZuLoesungen(extractItems(aufgaben))
                 .itemZuNiveau(extractNiveaus(aufgaben))
+                .aufgabenListe(aufgabeToDtoConverter.convert(aufgaben,aufgabenBogenHash))
                 .build();
     }
 

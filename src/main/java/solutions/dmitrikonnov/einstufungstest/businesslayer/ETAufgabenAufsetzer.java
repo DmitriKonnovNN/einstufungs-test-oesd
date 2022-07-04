@@ -9,6 +9,7 @@ import solutions.dmitrikonnov.einstufungstest.persistinglayer.SchwellenRepo;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 /**
@@ -22,7 +23,7 @@ public class ETAufgabenAufsetzer {
 
     private final ETAufgabenRepo ETAufgabenRepo;
     private final ETAufgabenReshuffler aufgabenReshuffler;
-    private final ETAntwortenReshuffler antwortenReshuffler;
+    private final ET_ItemsShuffler antwortenReshuffler;
     private final ETAufgabenRestricter aufgabenRestricter;
     private final SchwellenRepo schwellenRepo;
 
@@ -39,12 +40,16 @@ public class ETAufgabenAufsetzer {
         }
         return allAufgaben
                 .stream()
-                .collect(Collectors.groupingBy(ETAufgabe::getAufgabenNiveau))
+                .collect(Collectors.groupingBy(ETAufgabe::getAufgabenNiveau, TreeMap::new, Collectors.toList()))
                 .values().stream().map(aufgabenReshuffler::reshuffle)
                 .map(aufgaben->aufgabenRestricter.restrict(aufgaben,maxSchwellenMap))
-                .map(antwortenReshuffler::reshuffleAntworten)
+                .map(antwortenReshuffler::reshuffleItems)
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
 
     }
+
+    //TODO: refactor:
+    // i) after first collect we need the unchanged order or we have to sort once again
+    // ii)
 }
