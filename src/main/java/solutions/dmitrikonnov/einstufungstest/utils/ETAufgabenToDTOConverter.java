@@ -15,15 +15,14 @@ import java.util.stream.Collectors;
 @Service
 public class ETAufgabenToDTOConverter {
 
-    public List<ETAufgabeDto> convert(List<ETAufgabe> aufgaben,Integer bogenHash,Long bogenId) {
+    public List<ETAufgabeDto> convert(List<ETAufgabe> aufgaben,Integer bogenHash) {
         return aufgaben.stream()
-               .map(aufgabe -> convert1(aufgabe,bogenHash, bogenId))
+               .map(aufgabe -> convert1(aufgabe,bogenHash))
                .collect(Collectors.toList());
 
     }
     private  ETAufgabeDto convert1 (ETAufgabe entity,
-                                    Integer bogenHash,
-                                    Long bogenId) {
+                                    Integer bogenHash) {
 
         return ETAufgabeDto.builder()
                 .aufgabenStellung(entity.getAufgabenStellung())
@@ -36,7 +35,7 @@ public class ETAufgabenToDTOConverter {
                         .itemAufgabenInhalt(item.getItemAufgabenInhalt())
                         .moeglicheAntworten(item.getMoeglicheAntworten())
                         .build()).collect(Collectors.toList()))
-                .aufgabenBogenId(bogenId).build();
+                .build();
     }
 }
 

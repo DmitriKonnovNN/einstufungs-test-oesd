@@ -28,7 +28,7 @@ public class ETAufgabenController {
         publisher.publishEvent(new AufgabenBogenFetchedFromCache(this));
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(new ETAufgabenBogenDto(bogen.getAufgabenBogenId(),
+                .body(new ETAufgabenBogenDto(bogen.getAufgabenBogenHash(),
                         bogen.getAufgabenListe() ));
     }
 

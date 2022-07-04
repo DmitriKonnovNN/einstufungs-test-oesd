@@ -1,7 +1,6 @@
 package solutions.dmitrikonnov.einstufungstest.domainlayer.entities;
 
 import lombok.*;
-import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.GenericGenerator;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenNiveau;
 
@@ -59,11 +58,6 @@ public class ETErgebnisse {
     @Column (updatable = false)
     @org.hibernate.annotations.CreationTimestamp
     private Date createdOn;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column (insertable = false, updatable = false)
-    @org.hibernate.annotations.Generated (GenerationTime.ALWAYS)
-    private Date lastModified;
 
 
 

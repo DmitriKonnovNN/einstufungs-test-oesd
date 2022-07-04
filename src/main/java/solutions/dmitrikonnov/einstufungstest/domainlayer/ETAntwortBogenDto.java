@@ -3,7 +3,7 @@ package solutions.dmitrikonnov.einstufungstest.domainlayer;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -13,6 +13,6 @@ import java.util.Map;
 public class ETAntwortBogenDto implements Serializable {
 
     private static final long serialVersionUID = -1798070786993154676L;
-    private final Long antwortBogenId;
-    private final Map<Integer, ArrayList<String>> itemHashZuAntwortMap;
+    private final Integer antwortBogenId;
+    private final Map<Integer, List<String>> itemHashZuAntwortMap;
 }

@@ -3,33 +3,31 @@ package solutions.dmitrikonnov.einstufungstest.businesslayer;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import solutions.dmitrikonnov.einstufungstest.domainlayer.AufgabenBogenSequenceRepo;
-import solutions.dmitrikonnov.einstufungstest.domainlayer.entities.ETAufgabe;
+import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabeDto;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenBogen;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenNiveau;
+import solutions.dmitrikonnov.einstufungstest.domainlayer.entities.ETAufgabe;
 import solutions.dmitrikonnov.einstufungstest.utils.ETAufgabenToDTOConverter;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 @Slf4j
 public class ETAufgabenBogenAufsetzer {
     private final ETAufgabenToDTOConverter aufgabeToDtoConverter;
-    private final AufgabenBogenSequenceRepo sequenceRepo;
 
     public ETAufgabenBogen aufsetzen (List<ETAufgabe> aufgaben) {
         final Integer aufgabenBogenHash = aufgaben.hashCode();
-        sequenceRepo.nextVal();
-        final Long aufgabenBogenId = sequenceRepo.getNextVal();
-        log.error("$sequenceRepo.nextVal() called. Returned value: {} .", aufgabenBogenId);
+        final var dtos = aufgabeToDtoConverter.convert(aufgaben,aufgabenBogenHash);
+        final var shuffeled = shuffleAufgabenAndItems(dtos);
 
         return ETAufgabenBogen.builder()
                 .aufgabenBogenHash(aufgabenBogenHash)
-                .aufgabenBogenId(aufgabenBogenId)
-                .aufgabenListe(aufgabeToDtoConverter.convert(aufgaben,aufgabenBogenHash,aufgabenBogenId))
                 .itemZuLoesungen(extractItems(aufgaben))
                 .itemZuNiveau(extractNiveaus(aufgaben))
+                .aufgabenListe(shuffeled)
                 .build();
     }
 
@@ -56,5 +54,18 @@ public class ETAufgabenBogenAufsetzer {
         }
         return itemIdZuNiveau;
     }
+
+    private List<ETAufgabeDto> shuffleAufgabenAndItems (List<ETAufgabeDto> dtos) {
+        return dtos.stream()
+                .peek(aufgdto -> Collections.shuffle(aufgdto.getItems()))
+                .collect(Collectors.groupingBy(ETAufgabeDto::getNiveau, TreeMap::new, Collectors.toList()))
+                .values()
+                .stream()
+                .peek(Collections::shuffle)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
+    }
+
+
 
 }

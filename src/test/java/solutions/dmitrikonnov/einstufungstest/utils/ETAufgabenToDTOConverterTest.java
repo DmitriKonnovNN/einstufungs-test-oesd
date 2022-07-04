@@ -61,7 +61,6 @@ class ETAufgabenToDTOConverterTest {
                 .build();
 
         ETAufgabeDto expectedDto = ETAufgabeDto.builder()
-                .aufgabenBogenId(ID)
                 .aufgabenHash(4+ABH)
                 .aufgabenStellung("Ergänzen Sie den Satz!")
                 .niveau(A1)
@@ -70,7 +69,7 @@ class ETAufgabenToDTOConverterTest {
         expectedListOfDto.add(expectedDto);
 
         //when
-        var actualResult = underTest.convert(givenAufgabenListe,ABH,ID);
+        var actualResult = underTest.convert(givenAufgabenListe,ABH);
         //then
         assertThat(actualResult).isEqualTo(expectedListOfDto);
 
@@ -157,7 +156,6 @@ class ETAufgabenToDTOConverterTest {
                 .build();
         ETAufgabeDto expectedAufgabeDto2 = ETAufgabeDto.builder()
                 .aufgabenHash(8+ABH)
-                .aufgabenBogenId(ID)
                 .aufgabenStellung("Ergänzen Sie den Satz!")
                 .niveau(A1)
                 .items(Collections.singletonList(expectedItem2))
@@ -181,7 +179,6 @@ class ETAufgabenToDTOConverterTest {
                 .build();
         ETAufgabeDto expectedAufgabeDto5 = ETAufgabeDto.builder()
                 .aufgabenHash(1+ABH)
-                .aufgabenBogenId(ID)
                 .aufgabenInhalt("Maximilian\n" +
                         "Servus! Mein Name ist Maximilian Gruber. Ich komme aus Österreich und wohne in Wien. Ich habe eine Ausbildung zum Mechatroniker gemacht und arbeite jetzt in einer Autowerkstatt. Ich mag Autos! In der Freizeit spiele ich Fußball, fahre Rad und höre Musik. Ein Tag ohne Musik ist kein guter Tag!\n" +
                         "\n" +
@@ -199,7 +196,7 @@ class ETAufgabenToDTOConverterTest {
         givenAufgabenListe.addAll(Arrays.asList(aufgabe2,aufgabe5));
         expectedListOfDto.addAll(Arrays.asList(expectedAufgabeDto2,expectedAufgabeDto5));
         //when
-        var actualResult = underTest.convert(givenAufgabenListe,ABH, ID);
+        var actualResult = underTest.convert(givenAufgabenListe,ABH);
         //then
         assertThat(actualResult).isEqualTo(expectedListOfDto);
 

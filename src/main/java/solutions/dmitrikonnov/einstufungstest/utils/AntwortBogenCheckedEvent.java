@@ -9,9 +9,9 @@ public class AntwortBogenCheckedEvent extends ApplicationEvent {
 
     private final String CHECKED_MSG = "Antwortbogen has been checked. Cache is ready to get evicted";
     private final String tempResult;
-    private final Long bogenId;
+    private final Integer bogenId;
 
-    public AntwortBogenCheckedEvent(Object source, Long bogenId ,String msg) {
+    public AntwortBogenCheckedEvent(Object source, Integer bogenId ,String msg) {
         super(source);
         this.bogenId = bogenId;
         this.tempResult = msg;
