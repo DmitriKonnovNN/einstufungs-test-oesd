@@ -47,7 +47,4 @@ public class ETAufgabenAufsetzer {
 
     }
 
-    //TODO: refactor:
-    // i) after first collect we need the unchanged order or we have to sort once again
-    // ii)
 }
