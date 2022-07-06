@@ -7,7 +7,7 @@ public class ETEndResultForFEinCaceOfException extends ETEndResultForFE{
     private final ETErgebnisseDto ergebnisseDto;
     private final String EXCEPTION_MSG =
             "Please, save the whole result report!" +
-            "\n Bitte, behalten Sie den ganzen Ergebnissebericht";
+            "\n Bitte, behalten Sie den ganzen Ergebnisbericht";
 
     public ETEndResultForFEinCaceOfException(String id,
                                       ETAufgabenNiveau erreichtesNiveau,

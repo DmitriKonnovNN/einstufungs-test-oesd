@@ -40,6 +40,7 @@ public class InRamSimpleCache {
 
     public ETAufgabenBogen getPreparedAufgabenbogen(){
 
+
         var bogen = Objects.requireNonNull(
                 toServeCache.poll())
                 .orElseGet(this::getBogenForced);
@@ -51,6 +52,7 @@ public class InRamSimpleCache {
     }
     @Async
     protected void populateCache(){
+
         for (int i = cacheAllocSize; i > 0 ; i--) {
             var aufgabenBogen = aufgabenService.getAufgabenListe();
             if(aufgabenBogen==null) {

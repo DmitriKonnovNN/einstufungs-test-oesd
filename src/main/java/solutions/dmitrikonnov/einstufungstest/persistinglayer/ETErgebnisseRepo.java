@@ -8,15 +8,15 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-public interface ETErgebnisseRepo extends JpaRepository<ETErgebnisse, UUID>,ETErgebnisseCustomRepo {
+public interface ETErgebnisseRepo extends JpaRepository<ETErgebnisse, UUID>,ETErgebnisseCustomRepo,Pingable<ETErgebnisse> {
 
 
     List<ETErgebnisse> findAllByCreatedOnBefore(Date createdOn);
 
 
-    @Query(value="SELECT eem.et_aufg_id AS id FROM et_ergebnisse_mapping AS eem " +
+    @Query(value = "SELECT eem.et_aufg_id AS id FROM et_ergebnisse_mapping AS eem " +
             "INNER JOIN et_ergebnisse AS ee ON ee.id = eem.et_ergebnisse_id " +
             "WHERE eem.et_aufg_correctness = true AND ee.created_on < : createdOn ", nativeQuery = true)
-    List <Integer> findAllIdsOfCorrectAnsweredItems(Date createdOn);
+    List<Integer> findAllIdsOfCorrectAnsweredItems(Date createdOn);
 
 }

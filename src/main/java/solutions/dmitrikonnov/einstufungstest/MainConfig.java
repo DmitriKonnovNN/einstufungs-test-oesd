@@ -16,6 +16,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableAspectJAutoProxy
 @EnableScheduling
 @OpenAPIDefinition
+//@EnableJpaRepositories(repositoryBaseClass = PingableImpl.class)
 public class MainConfig {
 
     @Bean

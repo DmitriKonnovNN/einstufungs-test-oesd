@@ -2,6 +2,7 @@ package solutions.dmitrikonnov.einstufungstest.businesslayer;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAntwortBogenDto;
@@ -28,6 +29,7 @@ public class ETAufgabenService {
     private final ETErgebnisseEvaluator evaluator;
     private final ETErgebnisseConverterAndPersister converterAndPersister;
     private final ETAufgabenBogenAufsetzer bogenAufsetzer;
+    private final ApplicationEventPublisher publisher;
 
 
     @Transactional(readOnly = true)
@@ -52,7 +54,8 @@ public class ETAufgabenService {
                     .id(ergebnisseUUID.get(5, TimeUnit.SECONDS))
                     .build();
         } catch (InterruptedException | ExecutionException | TimeoutException e) {
-            log.error(Arrays.toString(e.getStackTrace()));
+            log.error(Arrays.toString(e.getStackTrace()));//TODO: we need here some logic to notify person in charge about the fact of data base's gone.
+
             return new ETEndResultForFEinCaceOfException(
                     ergebnisseDto1.getId(),
                     ergebnisseDto1.getMaxErreichtesNiveau(),

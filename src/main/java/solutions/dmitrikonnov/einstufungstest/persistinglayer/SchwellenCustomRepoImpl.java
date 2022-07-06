@@ -1,5 +1,6 @@
 package solutions.dmitrikonnov.einstufungstest.persistinglayer;
 
+import lombok.extern.slf4j.Slf4j;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenNiveau;
 
 import javax.persistence.EntityManager;
@@ -9,10 +10,12 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 
+@Slf4j
 public class SchwellenCustomRepoImpl implements SchwellenCustomRepo {
 
     @PersistenceContext
     private EntityManager entityManager;
+
     @Override
     public Map<ETAufgabenNiveau, Short> findMaximumSchwellenByNiveaus() {
         return  entityManager
@@ -25,8 +28,6 @@ public class SchwellenCustomRepoImpl implements SchwellenCustomRepo {
                         tuple -> (Short) tuple.get("maxschwelle")
                 ));
     }
-
-
 
 
 }

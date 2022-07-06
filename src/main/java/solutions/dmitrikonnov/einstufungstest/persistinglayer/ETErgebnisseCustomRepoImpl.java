@@ -1,6 +1,8 @@
 package solutions.dmitrikonnov.einstufungstest.persistinglayer;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -8,6 +10,8 @@ import java.util.Date;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@Slf4j
+@Transactional(readOnly = true)
 public class ETErgebnisseCustomRepoImpl implements ETErgebnisseCustomRepo{
 
 
@@ -22,8 +26,7 @@ public class ETErgebnisseCustomRepoImpl implements ETErgebnisseCustomRepo{
                 .getResultStream()
                 .collect(Collectors.toMap(
                         entry -> (Integer)entry.getKey(),
-                        entry-> (Boolean)entry.getValue()
-                ));
-
+                        entry-> (Boolean)entry.getValue()));
     }
+
 }
