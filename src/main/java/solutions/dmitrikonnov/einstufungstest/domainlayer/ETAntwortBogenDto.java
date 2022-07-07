@@ -1,5 +1,6 @@
 package solutions.dmitrikonnov.einstufungstest.domainlayer;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -13,6 +14,9 @@ import java.util.Map;
 public class ETAntwortBogenDto implements Serializable {
 
     private static final long serialVersionUID = -1798070786993154676L;
+    @JsonProperty("antwortBogenId")
     private final Integer antwortBogenId;
+    @JsonProperty("itemHashZuAntwortMap")
     private final Map<Integer, List<String>> itemHashZuAntwortMap;
+
 }
