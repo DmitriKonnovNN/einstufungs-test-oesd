@@ -1,5 +1,6 @@
 package solutions.dmitrikonnov.einstufungstest.persistinglayer;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -14,6 +15,7 @@ import java.util.Optional;
 public interface SchwellenRepo extends JpaRepository<ETSchwelle,Integer>,SchwellenCustomRepo {
 
 
+    @Cacheable (value = "schwellen", unless = "#a0=='Foundation'")
     List<ETSchwelle> findAllByOrderByNiveau();
     Optional<ETSchwelle> findByNiveau (ETAufgabenNiveau niveau);
     @Transactional
