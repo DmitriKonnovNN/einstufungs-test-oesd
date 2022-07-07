@@ -9,10 +9,7 @@ import solutions.dmitrikonnov.einstufungstest.domainlayer.ETSchwellenErgebnis;
 import solutions.dmitrikonnov.einstufungstest.persistinglayer.SchwellenRepo;
 import solutions.dmitrikonnov.einstufungstest.utils.TriFunction;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.BiPredicate;
 import java.util.stream.Collectors;
 
@@ -40,7 +37,7 @@ public class ETErgebnisseEvaluator {
 
 
     public ETErgebnisseDto evaluate(ETErgebnisseDto ergebnisse) {
-        List<ETSchwelle> mindestSchwellen = schwellenRepo.findAllByOrderByNiveau();
+        List<ETSchwelle> mindestSchwellen = schwellenRepo.findAllByOrderByNiveau() ;
 
         if (noneCorrect(ergebnisse)){
             mindestSchwellen.forEach(record -> setNachNiveauAlleFalsch(record.getNiveau(),ergebnisse.getNiveauZurZahlRichtiger()));

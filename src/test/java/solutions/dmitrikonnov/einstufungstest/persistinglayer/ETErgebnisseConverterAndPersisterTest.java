@@ -49,7 +49,6 @@ class ETErgebnisseConverterAndPersisterTest {
         ETAufgabenNiveau MEN = A2;
         Short ZR = 5;
         List<ETAufgabenNiveau> RLNN = new ArrayList<>(List.of(A1, A1, A2, A2, B1));
-        List<String> RNNNSTRING = new ArrayList<>(List.of("A1", "A1", "A2", "A2", "B1"));
         Map<Integer, Boolean> IDZUR = new HashMap<>(){{
             put(faker.random().nextInt(1,10000),true);
             put(faker.random().nextInt(1,10000),true);
@@ -94,7 +93,6 @@ class ETErgebnisseConverterAndPersisterTest {
                 .aufgabenBogenHash(ABH)
                 .maxErreichtesNiveau(MEN)
                 .zahlRichtigerAntworten(ZR)
-                .richtigeLoesungenNachNiveau(RNNNSTRING)
                 .idZuRichtigkeitMap(IDZUR)
                 .niveauZurZahlRichtiger(NZZRSTRING)
                 .build();

@@ -30,11 +30,6 @@ public class ETErgebnisse {
 
     private Integer aufgabenBogenHash;
 
-    @ElementCollection
-    @CollectionTable (name = "et_r_loesungen_nach_niveau", joinColumns = @JoinColumn (name = "ET_ERGEBNISSE_ID"))
-    @Column(name = "R_LOESUNGEN")
-    private List<String> richtigeLoesungenNachNiveau;
-
     @Column (updatable = false)
     @Enumerated(EnumType.STRING)
     private ETAufgabenNiveau maxErreichtesNiveau = ETAufgabenNiveau.A0;

@@ -38,11 +38,11 @@ spring:
         search:
           version: 5.11.7.Final
 
-logging:
-  level:
-    org:
-      hibernate:
-        stat: debug
+#logging:
+#  level:
+#    org:
+#      hibernate:
+#        stat: debug
 #        SQL: TRACE
 #        type:
 #          descriptor:

@@ -27,9 +27,6 @@ public class ETErgebnisseConverterAndPersister {
 
         ETErgebnisse ergebnisse = ETErgebnisse.builder()
                 .aufgabenBogenHash(ergebnisseDto.getAufgabenBogenHash())
-                .richtigeLoesungenNachNiveau(ergebnisseDto.getRichtigeLoesungenNachNiveau()
-                        .stream().map(ETAufgabenNiveau::toString)
-                        .collect(Collectors.toList()))
                 .zahlRichtigerAntworten(ergebnisseDto.getZahlRichtigerAntworten())
                 .maxErreichtesNiveau(ergebnisseDto.getMaxErreichtesNiveau())
                 .niveauZurZahlRichtiger(ergebnisseDto.getNiveauZurZahlRichtiger().entrySet()

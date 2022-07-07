@@ -7,7 +7,7 @@ import java.util.Map;
 
 public interface SchwellenCustomRepo{
 
-    @Cacheable(value = "schwellen")
+    @Cacheable(value = "schwelleByNiveau")
     Map<ETAufgabenNiveau,Short> findMaximumSchwellenByNiveaus();
 
 }

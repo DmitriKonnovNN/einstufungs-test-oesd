@@ -33,7 +33,7 @@ public class ETAntwortenPruefer {
         final Map<Integer, ETAufgabenNiveau> itemIdZuNiveau = cachedAufgabenBogen.getItemZuNiveau();
         final Integer cachedBogenHash = cachedAufgabenBogen.getAufgabenBogenHash();
         final Map<Integer, List<String>> itemHashZuAntwortMap = antwortBogen.getItemHashZuAntwortMap();
-        final List<ETSchwelle> mindestSchwellen = schwellenRepo.findAllByOrderByNiveau();
+        final List<ETSchwelle> mindestSchwellen = schwellenRepo.findAllByOrderByNiveau() ;
         final List<ETAufgabenNiveau> richtigeLoesungenNachNiveauTemp = new ArrayList<>();
 
         mindestSchwellen.forEach(schwelle -> ergebnisseDto

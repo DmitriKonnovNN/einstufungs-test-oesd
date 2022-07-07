@@ -16,13 +16,13 @@ import java.util.Optional;
 public interface SchwellenRepo extends JpaRepository<ETSchwelle,Integer>,SchwellenCustomRepo {
 
 
-    //@Cacheable (value = "schwellen")
+    @Cacheable (value = "schwelle")
     List<ETSchwelle> findAllByOrderByNiveau();
 
-    @Cacheable (value = "schwellen",key="#niveau", unless = "#a0=='zero-arg-not-cached'")
+    @Cacheable (value = "schwelle",key="#niveau", unless = "#a0=='zero-arg-not-cached'")
     Optional<ETSchwelle> findByNiveau (ETAufgabenNiveau niveau);
 
-    @CachePut (value = "schwellen",key="#niveau")
+    @CachePut (value = "schwelle",key="#niveau")
     @Transactional
     @Modifying
     @Query("update ETSchwelle e set e.maximumSchwelle = :max, e.mindestSchwelle = :min where e.niveau = :niveau ")
@@ -30,7 +30,7 @@ public interface SchwellenRepo extends JpaRepository<ETSchwelle,Integer>,Schwell
                                                @Param("min") short min,
                                                @Param("max")short max);
 
-    @Cacheable (value = "schwellen", key="#niveau", unless = "#a0=='zero-arg-not-cached'")
+    @Cacheable (value = "schwelle", key="#niveau", unless = "#a0=='zero-arg-not-cached'")
     boolean existsByNiveau(ETAufgabenNiveau niveau);
 
 }

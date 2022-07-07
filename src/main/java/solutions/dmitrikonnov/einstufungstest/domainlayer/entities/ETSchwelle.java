@@ -1,9 +1,11 @@
 package solutions.dmitrikonnov.einstufungstest.domainlayer.entities;
 
 import lombok.*;
+import org.springframework.cache.Cache;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenNiveau;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @NoArgsConstructor
