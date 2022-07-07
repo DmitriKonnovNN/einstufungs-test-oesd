@@ -26,7 +26,7 @@ public class EventHandler {
     @Async
     @EventListener(AufgabenBogenFetchedFromCache.class)
     public void onApplicationEvent(AufgabenBogenFetchedFromCache event){
-        cache.checkIfAlmostEmptyAndPopulate();
+        cache.fillUpIfAlmostEmpty();
     }
 
     @EventListener (ApplicationReadyEvent.class)

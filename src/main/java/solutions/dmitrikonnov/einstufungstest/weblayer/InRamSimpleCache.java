@@ -19,9 +19,10 @@ import java.util.concurrent.LinkedBlockingQueue;
 @AllArgsConstructor
 @Slf4j
 public class InRamSimpleCache {
-    private final int cacheAllocSize = 12;
+    private final int bufferAllocSize = 12;
+    //TODO: this should be stored IN-MEMORY
     private final Map<Integer, ETAufgabenBogen> toCheckCache = new ConcurrentHashMap<>();
-    private final Queue<Optional<ETAufgabenBogen>> toServeCache = new LinkedBlockingQueue<>(cacheAllocSize);
+    private final Queue<Optional<ETAufgabenBogen>> toServeBuffer = new LinkedBlockingQueue<>(bufferAllocSize);
     private final ETAufgabenService aufgabenService;
 
 
@@ -42,39 +43,39 @@ public class InRamSimpleCache {
 
 
         var bogen = Objects.requireNonNull(
-                toServeCache.poll())
+                toServeBuffer.poll())
                 .orElseGet(this::getBogenForced);
         saveToCheck(bogen.getAufgabenBogenHash(),bogen);
         return bogen;
     }
-    public void checkIfAlmostEmptyAndPopulate (){
-        if(isAlmostEmpty()) populateCache();
+    public void fillUpIfAlmostEmpty(){
+        if(isAlmostEmpty()) fillUpBuffer();
     }
     @Async
-    protected void populateCache(){
+    protected void fillUpBuffer(){
 
-        for (int i = cacheAllocSize; i > 0 ; i--) {
+        for (int i = bufferAllocSize; i > 0 ; i--) {
             var aufgabenBogen = aufgabenService.getAufgabenListe();
             if(aufgabenBogen==null) {
-                log.warn("No Bogen in Cache!");
-                toServeCache.offer(Optional.empty());
+                log.warn("No Bogen in ServeBuffer!");
+                toServeBuffer.offer(Optional.empty());
                 break;
             }
-            toServeCache.offer(Optional.of(aufgabenBogen));
+            toServeBuffer.offer(Optional.of(aufgabenBogen));
         }
-        log.info("Cache (allocated to {} ) has been populated with {} elements",cacheAllocSize ,toServeCache.size());
+        log.info("ServeBuffer (allocated to {} ) has been filled up with {} elements", bufferAllocSize, toServeBuffer.size());
     }
 
     private boolean isAlmostEmpty (){
-        int currentSize = toServeCache.size();
+        int currentSize = toServeBuffer.size();
         log.debug("Size of Aufg-Cache : {}", currentSize);
-        return currentSize < cacheAllocSize/3;
+        return currentSize < bufferAllocSize /3;
     }
     private ETAufgabenBogen getBogenForced(){
         var bogen = aufgabenService.getAufgabenListe();
         if(bogen == null) {
             log.error("No Bogen set up!");
-            toServeCache.offer(Optional.empty());
+            toServeBuffer.offer(Optional.empty());
         throw new NoTaskSetToServeException("No Bogen set up!");
         }
        return bogen;
@@ -82,8 +83,8 @@ public class InRamSimpleCache {
     }
 
     public void warmUp(){
-        log.debug("Cache warm-up started");
-        populateCache();
+        log.debug("Buffer warm-up started");
+        fillUpBuffer();
     }
 
 }

@@ -1,5 +1,6 @@
 package solutions.dmitrikonnov.einstufungstest.persistinglayer;
 
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -15,9 +16,13 @@ import java.util.Optional;
 public interface SchwellenRepo extends JpaRepository<ETSchwelle,Integer>,SchwellenCustomRepo {
 
 
-    @Cacheable (value = "schwellen", unless = "#a0=='Foundation'")
+    @Cacheable (value = "schwellen")
     List<ETSchwelle> findAllByOrderByNiveau();
+
+    @Cacheable (value = "schwellen",key="#niveau", unless = "#a0=='zero-arg-not-cached'")
     Optional<ETSchwelle> findByNiveau (ETAufgabenNiveau niveau);
+
+    @CachePut (value = "schwelle",key="#niveau")
     @Transactional
     @Modifying
     @Query("update ETSchwelle e set e.maximumSchwelle = :max, e.mindestSchwelle = :min where e.niveau = :niveau ")
@@ -25,6 +30,7 @@ public interface SchwellenRepo extends JpaRepository<ETSchwelle,Integer>,Schwell
                                                @Param("min") short min,
                                                @Param("max")short max);
 
+    @Cacheable (value = "schwellen", key="#niveau", unless = "#a0=='zero-arg-not-cached'")
     boolean existsByNiveau(ETAufgabenNiveau niveau);
 
 }

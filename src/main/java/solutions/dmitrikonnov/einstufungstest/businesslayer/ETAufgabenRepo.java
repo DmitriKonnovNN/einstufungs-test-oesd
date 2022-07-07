@@ -11,7 +11,7 @@ import java.util.Set;
 
 public interface ETAufgabenRepo extends JpaRepository<ETAufgabe, Integer> {
 
-    @Cacheable (value = "aufgaben",  unless = "#a0=='Foundation'")
+    @Cacheable (value = "aufgaben",  unless = "#a0=='zero-arg-not-cached'")
     Set<ETAufgabe> findAllByOrderByAufgabenNiveauAsc();
     List<ETAufgabe> findAllByAufgabenNiveau(ETAufgabenNiveau niveau);
     List<ETAufgabe> findAll();
