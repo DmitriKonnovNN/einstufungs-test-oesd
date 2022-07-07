@@ -20,7 +20,7 @@ public class EventHandler {
     public void onApplicationEvent(AntwortBogenCheckedEvent event){
         log.info("Event {} --- time {} .", event.getCHECKED_MSG(),event.getTimestamp());
         log.debug("Temporary result of check {}", event.getTempResult());
-        cache.evict(event.getBogenId());
+       // cache.evict(event.getBogenId()); // TODO: no explicit eviction any longer needed: replace by redis with TTL!
 
     }
     @Async

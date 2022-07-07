@@ -41,6 +41,7 @@ public class ETAufgabenAufsetzer {
                 .collect(Collectors.groupingBy(ETAufgabe::getAufgabenNiveau, TreeMap::new, Collectors.toList()))
                 .values()
                 .stream()
+                .peek(Collections::shuffle)
                 .map(aufgaben->aufgabenRestricter.restrict(aufgaben,maxSchwellenMap))
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());

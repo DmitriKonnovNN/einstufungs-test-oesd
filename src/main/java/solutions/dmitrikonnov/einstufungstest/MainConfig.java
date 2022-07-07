@@ -18,7 +18,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 @OpenAPIDefinition
 //@EnableJpaRepositories(repositoryBaseClass = PingableImpl.class)
-@EnableCaching
+//@EnableCaching()
 public class MainConfig {
 
     @Bean

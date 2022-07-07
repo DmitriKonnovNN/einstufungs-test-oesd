@@ -21,7 +21,7 @@ public class ETAufgabenBogenAufsetzer {
     public ETAufgabenBogen aufsetzen (List<ETAufgabe> aufgaben) {
         final Integer aufgabenBogenHash = aufgaben.hashCode();
         final var dtos = aufgabeToDtoConverter.convert(aufgaben,aufgabenBogenHash);
-        final var shuffeled = shuffleAufgabenAndItems(dtos);
+        final var shuffeled = shuffleItems(dtos);
 
         return ETAufgabenBogen.builder()
                 .aufgabenBogenHash(aufgabenBogenHash)
@@ -55,7 +55,7 @@ public class ETAufgabenBogenAufsetzer {
         return itemIdZuNiveau;
     }
 
-    private List<ETAufgabeDto> shuffleAufgabenAndItems (List<ETAufgabeDto> dtos) {
+    private List<ETAufgabeDto> shuffleItems(List<ETAufgabeDto> dtos) {
         return dtos.stream()
                 .peek(aufgdto -> Collections.shuffle(aufgdto.getItems()))
                 .collect(Collectors.groupingBy(ETAufgabeDto::getNiveau, TreeMap::new, Collectors.toList()))
