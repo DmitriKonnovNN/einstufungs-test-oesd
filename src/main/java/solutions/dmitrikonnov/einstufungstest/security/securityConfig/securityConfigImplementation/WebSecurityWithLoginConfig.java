@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 @Component("webSecurityWithLoginConfig")
 @AllArgsConstructor
 @Order(101)
-//@Lazy
+@Lazy
 public class WebSecurityWithLoginConfig extends WebSecurityConfigurerAdapter {
 
     private static final String[]  RESOURCES = new String[]{
@@ -25,7 +25,7 @@ public class WebSecurityWithLoginConfig extends WebSecurityConfigurerAdapter {
     private final DaoAuthenticationProvider daoAuthenticationProvider;
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth) {
        auth.authenticationProvider(daoAuthenticationProvider);
     }
     @Override
