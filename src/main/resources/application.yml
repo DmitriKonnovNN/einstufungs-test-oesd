@@ -37,6 +37,38 @@ spring:
               LOG_QUERIES_SLOWER_THAN_MS: 3
         search:
           version: 5.11.7.Final
+  mail:
+    host: localhost
+    port: 1025
+    username: hello
+    password: hello
+
+    properties:
+      mail:
+        smtp:
+          ssl:
+            trust: "*"
+          auth: true
+          starttls:
+            enable: true
+          connectiontimeout: 5000
+          timeout: 3000
+          writetimeout: 5000
+
+app:
+  userServiceImpl:
+    tokenExpirationTime : 2
+  userService:
+    maxTokenExpirationTime:
+      min : 60
+      hours: 24
+      days: 30
+  jwt:
+    token:
+      secretKey: P@s$w0rDP@ssw0rdP@s$w0rDP@ssw0rdP@s$w0rDP@ssw0rd
+  security:
+    webSecurityAdapterQualifier: webSecurityWithLoginConfig
+    daoAuthenticationProvider: inDataBase
 
 #logging:
 #  level:
@@ -51,4 +83,4 @@ spring:
 #  file:
 #    path: ./logs
 
-debug: true
+debug: false

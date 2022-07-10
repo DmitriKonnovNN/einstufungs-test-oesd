@@ -6,14 +6,18 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
 import org.springframework.boot.autoconfigure.cache.CacheManagerCustomizer;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableAsync
@@ -22,6 +26,10 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @OpenAPIDefinition
 //@EnableJpaRepositories(repositoryBaseClass = PingableImpl.class)
 @EnableCaching()
+@EnableTransactionManagement
+/*@ConfigurationProperties(prefix = "yml")*/
+@EnableConfigurationProperties
+@PropertySource(value = "classpath:etapplication.properties")
 public class MainConfig {
 
 /*  @Bean

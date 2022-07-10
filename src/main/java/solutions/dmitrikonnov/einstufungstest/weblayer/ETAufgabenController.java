@@ -13,7 +13,6 @@ import solutions.dmitrikonnov.einstufungstest.utils.AufgabenBogenFetchedFromCach
 
 @RestController
 @RequestMapping("api/v2.0.0/et_ufzgi")
-
 public class ETAufgabenController {
     private final ETAufgabenService aufgabenService;
     private final InRamSimpleCache cache;
