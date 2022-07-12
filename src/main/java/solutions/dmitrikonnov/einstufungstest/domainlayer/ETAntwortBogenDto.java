@@ -18,5 +18,7 @@ public class ETAntwortBogenDto implements Serializable {
     private final Integer antwortBogenId;
     @JsonProperty("itemHashZuAntwortMap")
     private final Map<Integer, List<String>> itemHashZuAntwortMap;
+    @JsonProperty ("createdAt")
+    private final long createdAt;
 
 }

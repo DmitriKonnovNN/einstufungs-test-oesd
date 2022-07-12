@@ -1,9 +1,6 @@
 package solutions.dmitrikonnov.einstufungstest.weblayer;
 
-import org.apache.tomcat.jni.Time;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationEventPublisher;
@@ -19,27 +16,31 @@ import solutions.dmitrikonnov.einstufungstest.utils.AufgabenBogenFetchedFromCach
 
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Controller with SIMPLE CACHE*/
 
 @RestController
-@RequestMapping("api/v2.0.0/et_ufzgi")
-public class ETAufgabenController {
+@Deprecated
+@RequestMapping("api/v1.9.9/et_ufzgi")
+public class ETAufgabenControllerDepricated {
     private final long TIME_FOR_TEST_Millis;
     private final ETAufgabenService aufgabenService;
-    private final ApplicationEventPublisher publisher;
     private final AufgabenBogenCache cache;
+    private final ApplicationEventPublisher publisher;
     private final ApplicationContext context;
+
     private boolean isEnable;
 
-    public ETAufgabenController(@Autowired ETAufgabenService aufgabenService,
-                                @Autowired ApplicationEventPublisher publisher,
-                                @Value("${app.cache.toCheckCache.config.caffeine}")  String qualifier,
-                                @Autowired ApplicationContext context,
-                                @Value("${app.controller.timeForTest}") String time) {
+    public ETAufgabenControllerDepricated(@Autowired ETAufgabenService aufgabenService,
+                                          @Value("${app.cache.toCheckCache.config.inRam}")  String qualifier,
+                                          @Autowired ApplicationEventPublisher publisher,
+                                          @Value("${app.controller.timeForTest}") String time,
+                                          @Autowired ApplicationContext context) {
         this.context = context;
-        this.TIME_FOR_TEST_Millis = TimeUnit.MINUTES.toMillis(Long.parseLong(time));
+        this.TIME_FOR_TEST_Millis = TimeUnit.MINUTES.toMillis(Long.valueOf(time));
         this.aufgabenService = aufgabenService;
-        this.publisher = publisher;
         this.cache = (AufgabenBogenCache)context.getBean(qualifier);
+        this.publisher = publisher;
         this.isEnable = true;
     }
 
@@ -60,15 +61,13 @@ public class ETAufgabenController {
 
     @PostMapping()
     public ResponseEntity<ETEndResultForFE> checkAndGetResults(@RequestBody ETAntwortBogenDto antwortBogen){
-
-        if(System.currentTimeMillis()- antwortBogen.getCreatedAt()>TIME_FOR_TEST_Millis) {
+        if(System.currentTimeMillis()-antwortBogen.getCreatedAt()> TIME_FOR_TEST_Millis) {
             throw new TimeForTestExpiredException("Zeit für den Test ist um.");
         }
         var cachedBogen = cache.fetch(antwortBogen.getAntwortBogenId());
         var result = aufgabenService.checkAntwortBogenAndGetTestErgebnisse(antwortBogen,cachedBogen);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(result);
-
     }
 
     protected void setEnable(boolean enable) {

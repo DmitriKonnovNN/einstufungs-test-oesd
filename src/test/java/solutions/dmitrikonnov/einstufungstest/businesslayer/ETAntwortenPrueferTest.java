@@ -277,7 +277,7 @@ class ETAntwortenPrueferTest {
         }};
 
 
-        givenAntwortBogen = new ETAntwortBogenDto(ABH,givenItemHashZuAMap);
+        givenAntwortBogen = new ETAntwortBogenDto(ABH,givenItemHashZuAMap,1);
         expectedDto = ETErgebnisseDto.builder()
                 .aufgabenBogenHash(ABH)
                 .zahlRichtigerAntworten((short)6)
