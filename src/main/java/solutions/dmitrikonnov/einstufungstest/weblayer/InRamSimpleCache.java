@@ -10,6 +10,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import solutions.dmitrikonnov.einstufungstest.businesslayer.ETAufgabenService;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenBogen;
+import solutions.dmitrikonnov.einstufungstest.domainlayer.buffer.ET_Buffer;
 import solutions.dmitrikonnov.einstufungstest.exceptions.NoTaskSetToServeException;
 
 import java.util.Map;
@@ -21,13 +22,12 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 @Service ("inRamSimpleCache")
 @Slf4j
-public class InRamSimpleCache extends AufgabenBogenCache {
+@AllArgsConstructor
+public class InRamSimpleCache implements AufgabenBogenCache {
 
     private final Map<Integer, ETAufgabenBogen> toCheckCache = new ConcurrentHashMap<>();
+    private final ET_Buffer buffer;
 
-    public InRamSimpleCache(@Autowired ETAufgabenService aufgabenService) {
-        super(aufgabenService);
-    }
     public void saveToCheck(Integer id, ETAufgabenBogen bogen){
         bogen.setCachedAt(System.currentTimeMillis());
         toCheckCache.put(id, bogen);
@@ -41,4 +41,10 @@ public class InRamSimpleCache extends AufgabenBogenCache {
         toCheckCache.remove(id);
     }
 
+    @Override
+    public ETAufgabenBogen getPreparedAufgabenbogen() {
+        var b = buffer.getPreparedAufgabenbogen();
+        saveToCheck(b.getAufgabenBogenHash(),b);
+        return b;
+    }
 }

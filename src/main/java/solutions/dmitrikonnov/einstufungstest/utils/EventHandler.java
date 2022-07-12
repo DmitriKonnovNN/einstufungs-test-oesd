@@ -6,6 +6,7 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import solutions.dmitrikonnov.einstufungstest.domainlayer.buffer.ET_Buffer;
 import solutions.dmitrikonnov.einstufungstest.weblayer.InRamSimpleCache;
 
 @Service
@@ -13,7 +14,7 @@ import solutions.dmitrikonnov.einstufungstest.weblayer.InRamSimpleCache;
 @AllArgsConstructor
 public class EventHandler {
 
-    private final InRamSimpleCache cache;
+    private final ET_Buffer buffer;
 
     @Async
     @EventListener (AntwortBogenCheckedEvent.class)
@@ -26,12 +27,12 @@ public class EventHandler {
     @Async
     @EventListener(AufgabenBogenFetchedFromCache.class)
     public void onApplicationEvent(AufgabenBogenFetchedFromCache event){
-        cache.fillUpIfAlmostEmpty();
+        buffer.fillUpIfAlmostEmpty();
     }
 
     @EventListener (ApplicationReadyEvent.class)
     public void onApplicationEvent (ApplicationReadyEvent event) {
-        cache.warmUp();
+        buffer.warmUp();
     }
     //TODO: As well, try out: ContextRefreshedEvent, ApplicationStartedEvent
 }
