@@ -16,7 +16,7 @@ import solutions.dmitrikonnov.einstufungstest.security.securityConfig.PasswordEn
 @Component("inMemory")
 @AllArgsConstructor
 @Lazy
-public class UserDetailsServiceImplementationInMemoryStorage implements UserDetailsServiceResolverInterface {
+public class UDSImplementationInMemory implements UDSResolverInterface {
 
 
     PasswordEncoder bCryptPasswordEncoder;

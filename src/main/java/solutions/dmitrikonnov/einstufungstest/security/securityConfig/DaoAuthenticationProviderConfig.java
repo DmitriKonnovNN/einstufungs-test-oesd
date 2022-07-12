@@ -9,14 +9,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import solutions.dmitrikonnov.einstufungstest.security.securityConfig.userDetailsService.UserDetailsServiceQualifierResolver;
+import solutions.dmitrikonnov.einstufungstest.security.securityConfig.userDetailsService.UDSQualifierResolver;
 
 
 @Configuration
 public class DaoAuthenticationProviderConfig  {
 
     PasswordEncoder bCryptPasswordEncoder;
-    UserDetailsServiceQualifierResolver resolver;
+    UDSQualifierResolver resolver;
     UserDetailsService userDetailsService;
     Logger log = LoggerFactory.getLogger(this.getClass());
     private final String DAO_PROV_CONF_MSG = "Current Dao Authentication Provider Configuration : %s";
@@ -24,9 +24,9 @@ public class DaoAuthenticationProviderConfig  {
 
     public DaoAuthenticationProviderConfig(@Autowired PasswordEncoder bCryptPasswordEncoder,
                                            @Value ("${app.security.daoAuthenticationProvider}") String qualifier,
-                                           @Autowired UserDetailsServiceQualifierResolver resolver) {
+                                           @Autowired UDSQualifierResolver resolver) {
         this.resolver = resolver;
-        this.userDetailsService = resolver.resolveQualifier(qualifier);
+        this.userDetailsService = resolver.resolve(qualifier);
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         log.warn(String.format(DAO_PROV_CONF_MSG, qualifier));
 

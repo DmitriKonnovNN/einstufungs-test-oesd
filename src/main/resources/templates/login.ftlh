@@ -28,8 +28,10 @@
         <p>
             Remember me?
             <input type="checkbox" id="remember-me" name="remember-me" class="form-control">
+
         </p>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+<#--        <input type = "hidden" name = "_csrf" value="${_csrf.token}"/>-->
     </form>
 </div>
 </body></html>

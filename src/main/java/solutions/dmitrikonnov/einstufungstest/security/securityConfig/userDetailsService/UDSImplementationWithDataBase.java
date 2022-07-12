@@ -10,7 +10,7 @@ import solutions.dmitrikonnov.einstufungstest.verwaltung.user.UserServiceImpl;
 
 @Component("inDataBase")
 @AllArgsConstructor (onConstructor_ = {@Autowired} )
-public class UserDetailsServiceImplementationWithDataBase implements UserDetailsServiceResolverInterface {
+public class UDSImplementationWithDataBase implements UDSResolverInterface {
 
     @Qualifier ("userServiceImpl")
     private final UserServiceImpl userServiceImpl;

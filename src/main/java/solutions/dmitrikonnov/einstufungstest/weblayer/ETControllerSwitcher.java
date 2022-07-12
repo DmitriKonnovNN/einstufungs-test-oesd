@@ -11,11 +11,13 @@ import solutions.dmitrikonnov.einstufungstest.persistinglayer.ETErgebnisseRepo;
 @Slf4j
 public class ETControllerSwitcher {
     ETErgebnisseRepo ergebnisseRepo;
+    ETAufgabenControllerDepricated aufgabenControllerSC;
     ETAufgabenController aufgabenController;
+
     protected void switchOffController (){
         {
             log.error("EtAufgabenController has been switched OFF because unavailable repo!");
-            aufgabenController.setEnable(false);
+            aufgabenControllerSC.setEnable(false);
         }
     }
 

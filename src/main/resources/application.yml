@@ -55,21 +55,6 @@ spring:
           timeout: 3000
           writetimeout: 5000
 
-app:
-  userServiceImpl:
-    tokenExpirationTime : 2
-  userService:
-    maxTokenExpirationTime:
-      min : 60
-      hours: 24
-      days: 30
-  jwt:
-    token:
-      secretKey: P@s$w0rDP@ssw0rdP@s$w0rDP@ssw0rdP@s$w0rDP@ssw0rd
-  security:
-    webSecurityAdapterQualifier: webSecurityWithLoginConfig
-    daoAuthenticationProvider: inDataBase
-
 #logging:
 #  level:
 #    org:
@@ -83,4 +68,5 @@ app:
 #  file:
 #    path: ./logs
 
-debug: false
+debug: true
+

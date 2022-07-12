@@ -8,6 +8,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.stereotype.Component;
 
@@ -33,10 +34,12 @@ public class WebSecurityWithLoginConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .csrf().disable()
+/*                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                .and()*/
                 .authorizeRequests()
                     .antMatchers(RESOURCES).permitAll()
                     .antMatchers("api/v*/users/**").hasAnyRole("ROOT","SUPERADMIN")
-                    .antMatchers("/actuator/**").hasAnyRole("ROOT","SUPERADMIN")
+                    .antMatchers("/actuator/**","swagger-ui/**", "/swagger-resources/**","/swagger-ui.html**","/swagger-ui/","/swagger-ui*/**").hasAnyRole("ROOT","SUPERADMIN")
                     .antMatchers("api/v*/constructors/**").hasAnyRole("ROOT", "SUPERADMIN")
                     .antMatchers("api/v*/et_ufzgi/**").hasAnyRole("ROOT", "SUPERADMIN","ADMIN")
                     .antMatchers("/api/v*/registration/**").permitAll()

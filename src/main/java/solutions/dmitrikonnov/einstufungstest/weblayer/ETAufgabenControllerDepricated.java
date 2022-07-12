@@ -2,6 +2,7 @@ package solutions.dmitrikonnov.einstufungstest.weblayer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,21 +13,27 @@ import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenBogenDto;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETEndResultForFE;
 import solutions.dmitrikonnov.einstufungstest.utils.AufgabenBogenFetchedFromCache;
 
+/**
+ * Controller with SIMPLE CACHE*/
 
 @RestController
-@RequestMapping("api/v2.0.0/et_ufzgi")
-public class ETAufgabenController {
+@Deprecated
+@RequestMapping("api/v1.9.9/et_ufzgi")
+public class ETAufgabenControllerDepricated {
     private final ETAufgabenService aufgabenService;
-    private final ApplicationEventPublisher publisher;
     private final AufgabenBogenCache cache;
+    private final ApplicationEventPublisher publisher;
+    private final AufgabenBogenCacheQualifierResolver resolver;
     private boolean isEnable;
 
-    public ETAufgabenController(@Autowired ETAufgabenService aufgabenService,
-                                  @Autowired ApplicationEventPublisher publisher,
-                                @Qualifier("bufferAndCaffeineCache")@Autowired AufgabenBogenCache cache) {
+    public ETAufgabenControllerDepricated(@Autowired ETAufgabenService aufgabenService,
+                                          @Value("${app.cache.toCheckCache.config.inRam}")  String qualifier,
+                                          @Autowired ApplicationEventPublisher publisher,
+                                          @Autowired AufgabenBogenCacheQualifierResolver resolver) {
         this.aufgabenService = aufgabenService;
+        this.resolver = resolver;
+        this.cache = resolver.resolve(qualifier);
         this.publisher = publisher;
-        this.cache = cache;
         this.isEnable = true;
     }
 

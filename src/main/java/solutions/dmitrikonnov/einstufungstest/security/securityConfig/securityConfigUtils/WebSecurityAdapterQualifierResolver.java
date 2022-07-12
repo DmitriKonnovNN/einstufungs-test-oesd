@@ -7,12 +7,12 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 @Configuration
 @AllArgsConstructor
-public class SecurityConfigWebAdapterQualifierResolver {
+public class WebSecurityAdapterQualifierResolver {
 
     private final ApplicationContext context;
 
 
-    public WebSecurityConfigurerAdapter getAdapterQualifier(String qualifier)
+    public WebSecurityConfigurerAdapter resolve(String qualifier)
     {
         return (WebSecurityConfigurerAdapter) context.getBean(qualifier);
     }

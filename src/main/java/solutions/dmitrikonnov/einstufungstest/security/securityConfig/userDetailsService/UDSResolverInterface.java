@@ -2,7 +2,7 @@ package solutions.dmitrikonnov.einstufungstest.security.securityConfig.userDetai
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-public interface UserDetailsServiceResolverInterface {
+public interface UDSResolverInterface {
 
     public UserDetailsService getUserDetailsService();
 }

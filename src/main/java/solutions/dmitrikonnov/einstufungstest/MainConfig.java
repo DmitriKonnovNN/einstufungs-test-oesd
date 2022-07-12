@@ -1,23 +1,21 @@
 package solutions.dmitrikonnov.einstufungstest;
 
+import com.github.benmanes.caffeine.cache.Caffeine;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.models.ExternalDocumentation;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
-import org.springframework.boot.autoconfigure.cache.CacheManagerCustomizer;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.cache.caffeine.CaffeineCacheManager;
+import org.springframework.context.annotation.*;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import java.util.concurrent.TimeUnit;
 
 @Configuration
 @EnableAsync
@@ -25,9 +23,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableScheduling
 @OpenAPIDefinition
 //@EnableJpaRepositories(repositoryBaseClass = PingableImpl.class)
-@EnableCaching()
+
 @EnableTransactionManagement
-/*@ConfigurationProperties(prefix = "yml")*/
 @EnableConfigurationProperties
 @PropertySource(value = "classpath:etapplication.properties")
 public class MainConfig {
@@ -42,11 +39,11 @@ public class MainConfig {
         };
     }*/
 
-   /* @Bean*/
-/*    CacheManager cacheManager() {
-        ConcurrentMapCacheManager cacheManager = new ConcurrentMapCacheManager();
-        return new ConcurrentMapCacheManager("http");
-    }*/
+
+
+
+
+
 
     @Bean
     public OpenAPI springShopOpenAPI() {
@@ -57,7 +54,7 @@ public class MainConfig {
                         .license(new License().name("Apache 2.0").url("http://springdoc.org")))
                 .externalDocs(new ExternalDocumentation()
                         .description("Einstufungstest für ÖSD")
-                        .url("https://dmitrikonnov.solutions"));
+                        .url("/"));
     }
 
     //http://localhost:8080/swagger-ui/index.html

@@ -8,13 +8,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 @AllArgsConstructor
 public class ETVerwaltungMVC {
 
-    @GetMapping("'/")
+    @GetMapping("/")
     public String greetUser(){
-        return "verwaltung";
+        return "/index";
     }
 
     @GetMapping("/login")
     public String getLoginView (){
         return "login";
+    }
+
+    @GetMapping("/verwaltung")
+    public String greetVerwaltung(){
+        return "/verwaltung";
     }
 }

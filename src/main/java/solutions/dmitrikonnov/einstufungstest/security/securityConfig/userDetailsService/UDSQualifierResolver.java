@@ -8,14 +8,14 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 @Configuration
 @AllArgsConstructor
-public class UserDetailsServiceQualifierResolver {
+public class UDSQualifierResolver {
 
     ApplicationContext context;
 
 
-    public UserDetailsService resolveQualifier (String qualifier) {
+    public UserDetailsService resolve(String qualifier) {
         return context.
-                getBean(qualifier, UserDetailsServiceResolverInterface.class)
+                getBean(qualifier, UDSResolverInterface.class)
                 .getUserDetailsService();
     }
 
