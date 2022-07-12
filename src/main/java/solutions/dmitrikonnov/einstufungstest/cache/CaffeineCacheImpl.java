@@ -52,6 +52,7 @@ public class CaffeineCacheImpl {
         final Caffeine<Object, Object> caffeineBuilder = Caffeine.newBuilder()
                 .expireAfterWrite(cacheSpec.getTimeout(), TimeUnit.MINUTES).maximumSize(cacheSpec.getMax())
                 .ticker(ticker);
+        if(name.equals("aufgaben"))caffeineBuilder.softValues();
         return new CaffeineCache(name, caffeineBuilder.build());
     }
 
