@@ -7,10 +7,9 @@ import solutions.dmitrikonnov.einstufungstest.domainlayer.ETErgebnisseDto;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.entities.ETSchwelle;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETSchwellenErgebnis;
 import solutions.dmitrikonnov.einstufungstest.persistinglayer.SchwellenRepo;
-import solutions.dmitrikonnov.einstufungstest.utils.TriFunction;
+import solutions.dmitrikonnov.einstufungstest.utils.BiPredicateToResult;
 
 import java.util.*;
-import java.util.function.BiPredicate;
 import java.util.stream.Collectors;
 
 import static solutions.dmitrikonnov.einstufungstest.domainlayer.ETSchwellenErgebnis.*;
@@ -21,19 +20,14 @@ public class ETErgebnisseEvaluator {
 
     private final SchwellenRepo schwellenRepo;
 
-    private final BiPredicate <Short,Short> alleRichtig = (max, richtig) -> richtig.equals(max);
-    private final BiPredicate<Short,Short> erreicht = (schwelle, richtig) -> richtig > schwelle;
-    private final BiPredicate<Short,Short> knappErreicht = (schwelle,richtig) -> richtig.equals(schwelle);
-    private final BiPredicate<Short,Short> nichtErreicht = (schwelle,richtig) -> richtig < schwelle && richtig > 0;
-    private final BiPredicate<Short,Short> keineRichtig = (schwelle,richtig) -> richtig == 0;
-
-    private final TriFunction<Short, Short, Short, ETSchwellenErgebnis> evaluateLevel = (richtig, mindestSchwelle, maximum) -> {
-        if(alleRichtig.test(maximum,richtig)) return ALLE_RICHTIG;
-        if(erreicht.test(mindestSchwelle,richtig)) return ERREICHT;
-        if(knappErreicht.test(mindestSchwelle,richtig)) return KNAPP_ERREICHT;
-        if(nichtErreicht.test(mindestSchwelle,richtig)) return NICHT_ERREICHT;
-        return KEINE_RICHTIG;
-    };
+    private final BiPredicateToResult<ETSchwelle,Short> allCorrect =
+            (schwelle, richtig)-> (richtig>=(schwelle.getMaximumSchwelle()))?ALLE_RICHTIG:KEINE_RICHTIG;
+    private final BiPredicateToResult<ETSchwelle,Short> reached =
+            (schwelle, richtig)-> (richtig>schwelle.getMindestSchwelle())?ERREICHT:KEINE_RICHTIG;
+    private final BiPredicateToResult<ETSchwelle,Short> almostReached =
+            (schwelle, richtig)-> (richtig.equals(schwelle.getMindestSchwelle()))?KNAPP_ERREICHT:KEINE_RICHTIG;
+    private final BiPredicateToResult<ETSchwelle,Short> notReached =
+            (schwelle, richtig)-> (richtig <schwelle.getMindestSchwelle() && richtig >0)?NICHT_ERREICHT:KEINE_RICHTIG;
 
 
     public ETErgebnisseDto evaluate(ETErgebnisseDto ergebnisse) {
@@ -68,7 +62,11 @@ public class ETErgebnisseEvaluator {
         mindestSchwellen.forEach(schwelle -> {
             ETAufgabenNiveau niveau = schwelle.getNiveau();
             List <ETSchwellenErgebnis> list = entrySetErgebnisse.stream().filter(naSet -> naSet.getKey().equals(niveau))
-                    .map(naSet -> evaluateLevel.apply(naSet.getValue(),schwelle.getMindestSchwelle(), schwelle.getMaximumSchwelle()))
+                    .map(naSet -> allCorrect
+                             .or(reached)
+                             .or(almostReached)
+                             .or(notReached)
+                             .test(schwelle,naSet.getValue()))
                     .collect(Collectors.toUnmodifiableList());
             ergebnisMap.put(niveau,list.get(0));
 
@@ -160,4 +158,29 @@ public class ETErgebnisseEvaluator {
 
         map.put(niveau,richtige);
     }
+
+    //.map(naSet -> evaluateLevel.apply(naSet.getValue(),schwelle))
+     /*private final BiPredicate <ETSchwelle,Short> alleRichtig = (schwelle, richtig) -> richtig.equals(schwelle.getMaximumSchwelle());
+    private final BiPredicate<ETSchwelle,Short> erreicht = (schwelle, richtig) -> richtig > schwelle.getMindestSchwelle();
+    private final BiPredicate<ETSchwelle,Short> knappErreicht = (schwelle,richtig) -> richtig.equals(schwelle.getMindestSchwelle());
+    private final BiPredicate<ETSchwelle,Short> nichtErreicht = (schwelle,richtig) -> richtig < schwelle.getMindestSchwelle() && richtig > 0;
+    private final BiPredicate<ETSchwelle,Short> keineRichtig = (schwelle,richtig) -> richtig == 0;*/
+
+    /*
+    private final BiFunction<Short, ETSchwelle, ETSchwellenErgebnis> evaluateLevel = (richtig, schwelle) -> {
+
+        return allright
+                .or(reached)
+                .or(allmostReached)
+                .or(notReached)
+                .test(schwelle,richtig);
+
+//        if(alleRichtig.test(schwelle,richtig)) return ALLE_RICHTIG;
+//        if(erreicht.test(schwelle,richtig)) return ERREICHT;
+//        if(knappErreicht.test(schwelle,richtig)) return KNAPP_ERREICHT;
+//        if(nichtErreicht.test(schwelle,richtig)) return NICHT_ERREICHT;
+//        return KEINE_RICHTIG;
+    };
+*/
+
 }

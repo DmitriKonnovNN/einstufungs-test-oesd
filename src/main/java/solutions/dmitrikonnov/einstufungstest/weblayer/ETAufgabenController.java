@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +23,7 @@ import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("api/v2.0.0/et_ufzgi")
+@Primary
 public class ETAufgabenController implements SwitchableController {
     private final long TIME_FOR_TEST_Millis;
     private final ETAufgabenService aufgabenService;

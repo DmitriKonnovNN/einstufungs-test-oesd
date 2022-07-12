@@ -6,15 +6,14 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import solutions.dmitrikonnov.einstufungstest.domainlayer.buffer.ET_Buffer;
-import solutions.dmitrikonnov.einstufungstest.weblayer.InRamSimpleCache;
+import solutions.dmitrikonnov.einstufungstest.domainlayer.buffer.ETBuffer;
 
 @Service
 @Slf4j
 @AllArgsConstructor
 public class EventHandler {
 
-    private final ET_Buffer buffer;
+    private final ETBuffer buffer;
 
     @Async
     @EventListener (AntwortBogenCheckedEvent.class)

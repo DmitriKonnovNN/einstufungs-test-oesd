@@ -1,24 +1,12 @@
 package solutions.dmitrikonnov.einstufungstest.weblayer;
-
 import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import solutions.dmitrikonnov.einstufungstest.businesslayer.ETAufgabenService;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenBogen;
-import solutions.dmitrikonnov.einstufungstest.domainlayer.buffer.ET_Buffer;
-import solutions.dmitrikonnov.einstufungstest.exceptions.NoTaskSetToServeException;
-
+import solutions.dmitrikonnov.einstufungstest.domainlayer.buffer.ETBuffer;
 import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Queue;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.LinkedBlockingQueue;
+
 
 @Service ("inRamSimpleCache")
 @Slf4j
@@ -26,7 +14,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class InRamSimpleCache implements AufgabenBogenCache {
 
     private final Map<Integer, ETAufgabenBogen> toCheckCache = new ConcurrentHashMap<>();
-    private final ET_Buffer buffer;
+    private final ETBuffer buffer;
 
     public void saveToCheck(Integer id, ETAufgabenBogen bogen){
         bogen.setCachedAt(System.currentTimeMillis());

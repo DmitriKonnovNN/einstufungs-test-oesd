@@ -100,6 +100,7 @@ public class SignUpUserAndGetUUIDTokenImpl implements SignUpUserAndGetToken <Str
 
 
     private String generateToken(ETVerwaltungsUser ETVerwaltungsUser){
+
         String token = UUID.randomUUID().toString();
         ConfirmationToken confirmationToken = new ConfirmationToken(
                 token,
