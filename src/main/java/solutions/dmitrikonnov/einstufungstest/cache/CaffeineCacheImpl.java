@@ -31,7 +31,7 @@ public class CaffeineCacheImpl {
         CacheSpec aufgaben = new CacheSpec("aufgaben",1440, 10_000);
         CacheSpec schwelle = new CacheSpec("schwelle",10_080, 10_0000);
         CacheSpec schwelleByNiveau = new CacheSpec("schwelle-by-niveau",10_080, 10_0000);
-        CacheSpec toCheckCache = new CacheSpec("to-check-cache",3,600);
+        CacheSpec toCheckCache = new CacheSpec("to-check-cache",90,600);
         Map<String, CacheSpec> specs = new HashMap<>(){{
             put(aufgaben.getName(),aufgaben);
             put(schwelle.getName(),schwelle);

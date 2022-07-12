@@ -34,7 +34,6 @@ public class ETAufgabenService {
 
 
     @Transactional(readOnly = true)
-    @Cacheable(cacheNames = "to-check-cache")
     public ETAufgabenBogen getAufgabenListe (){
         List<ETAufgabe> aufgesetzteListe = aufsetzer.listeAufsetzen();
         if(aufgesetzteListe.isEmpty()) return null;

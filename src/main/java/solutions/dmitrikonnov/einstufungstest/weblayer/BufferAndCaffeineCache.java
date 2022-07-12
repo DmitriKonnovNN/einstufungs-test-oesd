@@ -3,6 +3,7 @@ package solutions.dmitrikonnov.einstufungstest.weblayer;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -12,23 +13,25 @@ import solutions.dmitrikonnov.einstufungstest.domainlayer.buffer.ET_Buffer;
 import solutions.dmitrikonnov.einstufungstest.exceptions.TimeForTestExpiredException;
 
 import java.util.Objects;
+import java.util.Optional;
 
 @Service ("bufferAndCaffeineCache")
 @Slf4j
 @AllArgsConstructor
 public class BufferAndCaffeineCache implements AufgabenBogenCache{
     private final ET_Buffer buffer;
+    private final CacheManager cacheManager;
 
     @Override
-    @CachePut (cacheNames = "to-check-cache", key = "#id")
     public void saveToCheck(Integer id, ETAufgabenBogen bogen) {
-        log.debug("save to check-cache: id {}", id);
+        var cache = cacheManager.getCache("to-check-cache");
+        cache.put(id, bogen);
     }
 
     @Override
-    @Cacheable (cacheNames = "to-check-cache", key = "#id" )
+    @Cacheable (cacheNames = "to-check-cache", key = "#id")
     public ETAufgabenBogen fetch(Integer id) {
-        throw  new TimeForTestExpiredException("Zeit für den Test ist um.");
+        return serviceMock(id);
     }
 
     @Override
@@ -40,5 +43,12 @@ public class BufferAndCaffeineCache implements AufgabenBogenCache{
         var b = buffer.getPreparedAufgabenbogen();
         saveToCheck(b.getAufgabenBogenHash(),b);
         return b;
+    }
+    /**
+     * mocks the actual AufgabenBogenService to make the cache either return the cached value or throw
+     * a related exception.
+     * */
+    private ETAufgabenBogen serviceMock (Integer id) {
+        throw new TimeForTestExpiredException("Zeit für den Test ist um.");
     }
 }
