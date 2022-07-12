@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 @RestController
 @Deprecated
 @RequestMapping("api/v1.9.9/et_ufzgi")
-public class ETAufgabenControllerDepricated {
+public class ETAufgabenControllerDepricated implements SwitchableController {
     private final long TIME_FOR_TEST_Millis;
     private final ETAufgabenService aufgabenService;
     private final AufgabenBogenCache cache;
@@ -70,7 +70,7 @@ public class ETAufgabenControllerDepricated {
                 .body(result);
     }
 
-    protected void setEnable(boolean enable) {
+    public void setEnable(boolean enable) {
         isEnable = enable;
     }
 }

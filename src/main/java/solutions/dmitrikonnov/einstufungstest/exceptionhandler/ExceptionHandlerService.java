@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import solutions.dmitrikonnov.einstufungstest.exceptions.ThresholdNotFoundException;
+import solutions.dmitrikonnov.einstufungstest.exceptions.TimeForTestExpiredException;
 
 @RestController
 @ControllerAdvice
@@ -19,5 +20,10 @@ public class ExceptionHandlerService {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<String> ThresholdNotFoundException (ThresholdNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+    @ExceptionHandler(TimeForTestExpiredException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<String> TimeForTestExpiredException(TimeForTestExpiredException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
 }

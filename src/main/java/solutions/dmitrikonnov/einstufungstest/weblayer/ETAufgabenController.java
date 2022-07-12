@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("api/v2.0.0/et_ufzgi")
-public class ETAufgabenController {
+public class ETAufgabenController implements SwitchableController {
     private final long TIME_FOR_TEST_Millis;
     private final ETAufgabenService aufgabenService;
     private final ApplicationEventPublisher publisher;
@@ -71,7 +71,7 @@ public class ETAufgabenController {
 
     }
 
-    protected void setEnable(boolean enable) {
+     public void setEnable(boolean enable) {
         isEnable = enable;
     }
 }
