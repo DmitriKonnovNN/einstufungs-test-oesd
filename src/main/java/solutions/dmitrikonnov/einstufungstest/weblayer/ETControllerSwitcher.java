@@ -11,7 +11,7 @@ import solutions.dmitrikonnov.einstufungstest.persistinglayer.Pingable;
 @Service
 @Slf4j
 public class ETControllerSwitcher {
-    Pingable<ETErgebnisse> ergebnisseRepo;
+    Pingable ergebnisseRepo;
     SwitchableController controller;
 
     protected void switchOffController (){

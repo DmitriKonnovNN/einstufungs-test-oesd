@@ -7,7 +7,8 @@ import solutions.dmitrikonnov.einstufungstest.domainlayer.ETErgebnisseDto;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.entities.ETSchwelle;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETSchwellenErgebnis;
 import solutions.dmitrikonnov.einstufungstest.persistinglayer.SchwellenRepo;
-import solutions.dmitrikonnov.einstufungstest.utils.BiPredicateToResult;
+
+import static solutions.dmitrikonnov.einstufungstest.utils.ResultsEvaluator.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -20,19 +21,9 @@ public class ETErgebnisseEvaluator {
 
     private final SchwellenRepo schwellenRepo;
 
-    private final BiPredicateToResult<ETSchwelle,Short> allCorrect =
-            (schwelle, richtig)-> (richtig>=(schwelle.getMaximumSchwelle()))?ALLE_RICHTIG:KEINE_RICHTIG;
-    private final BiPredicateToResult<ETSchwelle,Short> reached =
-            (schwelle, richtig)-> (richtig>schwelle.getMindestSchwelle())?ERREICHT:KEINE_RICHTIG;
-    private final BiPredicateToResult<ETSchwelle,Short> almostReached =
-            (schwelle, richtig)-> (richtig.equals(schwelle.getMindestSchwelle()))?KNAPP_ERREICHT:KEINE_RICHTIG;
-    private final BiPredicateToResult<ETSchwelle,Short> notReached =
-            (schwelle, richtig)-> (richtig <schwelle.getMindestSchwelle() && richtig >0)?NICHT_ERREICHT:KEINE_RICHTIG;
-
 
     public ETErgebnisseDto evaluate(ETErgebnisseDto ergebnisse) {
         List<ETSchwelle> mindestSchwellen = schwellenRepo.findAllByOrderByNiveau() ;
-
         if (noneCorrect(ergebnisse)){
             mindestSchwellen.forEach(record -> setNachNiveauAlleFalsch(record.getNiveau(),ergebnisse.getNiveauZurZahlRichtiger()));
             ergebnisse.setMaxErreichtesNiveau(ETAufgabenNiveau.A0);
@@ -62,11 +53,13 @@ public class ETErgebnisseEvaluator {
         mindestSchwellen.forEach(schwelle -> {
             ETAufgabenNiveau niveau = schwelle.getNiveau();
             List <ETSchwellenErgebnis> list = entrySetErgebnisse.stream().filter(naSet -> naSet.getKey().equals(niveau))
-                    .map(naSet -> allCorrect
-                             .or(reached)
-                             .or(almostReached)
-                             .or(notReached)
-                             .test(schwelle,naSet.getValue()))
+                    .map(naSet->
+                            isAllCorrect()
+                            .or(isReached())
+                            .or(isJustReached())
+                            .or(isNotReached())
+                            .apply(schwelle, naSet.getValue())
+                    )
                     .collect(Collectors.toUnmodifiableList());
             ergebnisMap.put(niveau,list.get(0));
 

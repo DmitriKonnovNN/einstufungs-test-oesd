@@ -4,6 +4,7 @@ import com.github.javafaker.Faker;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -76,7 +77,7 @@ class ETErgebnisseEvaluatorTest {
     }
 
 
-    @Test
+    @RepeatedTest(value = 2)
     void evaluate2_reachedLevel_shouldBe_A0_if_noneCorrect() {
         //given
         passedDto = ETErgebnisseDto.builder()
@@ -103,7 +104,7 @@ class ETErgebnisseEvaluatorTest {
 
     }
 
-    @Test
+    @RepeatedTest(value = 2)
     void evaluate3_reachedLevel_shouldBe_A1_1_ifOnlyA1Erreicht (){
         //given
         passedDto = ETErgebnisseDto.builder()
@@ -139,7 +140,7 @@ class ETErgebnisseEvaluatorTest {
 
     }
 
-    @Test
+    @RepeatedTest(value = 2)
     void evaluate4_reachedLevel_shouldBe_A1_1_ifCorrect_2_0_2() {
         //given
         passedDto = ETErgebnisseDto.builder()
@@ -175,7 +176,7 @@ class ETErgebnisseEvaluatorTest {
 
     }
 
-    @Test
+    @RepeatedTest(value = 2)
     void evaluate5_reachedLevel_shouldBe_A2_1_ifCorrect_2_1_2() {
         //given
         passedDto = ETErgebnisseDto.builder()
@@ -211,7 +212,7 @@ class ETErgebnisseEvaluatorTest {
 
     }
 
-    @Test
+    @RepeatedTest(value = 2)
     void evaluate6_reachedLevel_shouldBe_A0_ifOnlyOneCorrect() {
         //given
         passedDto = ETErgebnisseDto.builder()
@@ -247,7 +248,7 @@ class ETErgebnisseEvaluatorTest {
 
     }
 
-    @Test
+    @RepeatedTest(value = 2)
     void evaluate6_reachedLevel_shouldBe_A2_1_ifCorrect_3_0_3() {
         //given
         passedDto = ETErgebnisseDto.builder()
@@ -283,7 +284,7 @@ class ETErgebnisseEvaluatorTest {
 
     }
 
-    @Test
+    @RepeatedTest(value = 2)
     void evaluate7_reachedLevel_shouldBe_BA2_ifCorrect_3_1_3() {
         //given
         passedDto = ETErgebnisseDto.builder()
@@ -319,7 +320,7 @@ class ETErgebnisseEvaluatorTest {
 
     }
 
-    @Test
+    @RepeatedTest(value = 2)
     void evaluate8_reachedLevel_shouldBe_A1_1_evenIfCorrect_2_1_1_0_2_2() {
         //given
         passedDto = ETErgebnisseDto.builder()
@@ -355,7 +356,7 @@ class ETErgebnisseEvaluatorTest {
 
     }
 
-    @Test
+    @RepeatedTest(value = 2)
     void evaluate9_reachedLevel_shouldBe_B2_1_if_3_2_2_1_2_2() {
         //given
         passedDto = ETErgebnisseDto.builder()
@@ -393,7 +394,7 @@ class ETErgebnisseEvaluatorTest {
 
     }
 
-    @Test
+    @RepeatedTest(value = 2)
     void evaluate10_given_minLevel_3_reachedLevel_shouldBe_B1_1_if_4_3_3_2_2_2() {
         //given
         passedDto = ETErgebnisseDto.builder()
@@ -431,7 +432,7 @@ class ETErgebnisseEvaluatorTest {
 
     }
 
-    @Test
+    @RepeatedTest(value = 2)
     void evaluate11_given_minLevel_3_reachedLevel_shouldBe_B1_1_if_4_3_3_2_2_2() {
         //given
         passedDto = ETErgebnisseDto.builder()
@@ -468,7 +469,7 @@ class ETErgebnisseEvaluatorTest {
         log.debug(passedDto.toString());
 
     }
-    @Test
+    @RepeatedTest(value = 2)
     void evaluate12_given_minLevel_3_reachedLevel_shouldBe_B1_1_if_3_3_1_3_3_3() {
         //given
         passedDto = ETErgebnisseDto.builder()
@@ -508,7 +509,7 @@ class ETErgebnisseEvaluatorTest {
 
 
 
-    @Test
+    @RepeatedTest(value = 2)
     void evaluate13_given_minLevel_3_reachedLevel_shouldBe_A2_evenIf_3_3_1_2_3_5() {
         //given
         passedDto = ETErgebnisseDto.builder()
@@ -546,7 +547,7 @@ class ETErgebnisseEvaluatorTest {
 
     }
 
-    @Test
+    @RepeatedTest(value = 2)
     void evaluate14_given_minLevel_3_reachedLevel_shouldBe_B1_if_4_4_3_1_1_0() {
         //given
         passedDto = ETErgebnisseDto.builder()
@@ -583,7 +584,7 @@ class ETErgebnisseEvaluatorTest {
         log.debug(passedDto.toString());
 
     }
-    @Test
+    @RepeatedTest(value = 2)
     void evaluate15_given_minLevel_3_reachedLevel_shouldBe_A2_1_if_4_2_3_1_0_0() {
         //given
         passedDto = ETErgebnisseDto.builder()
@@ -621,7 +622,7 @@ class ETErgebnisseEvaluatorTest {
 
 
     }
-    @Test
+    @RepeatedTest(value = 2)
     void evaluate16_given_minLevel_3_reachedLevel_shouldBe_A2_1_if_3_3_1_2_3_3() {
         //given
         passedDto = ETErgebnisseDto.builder()
@@ -659,7 +660,7 @@ class ETErgebnisseEvaluatorTest {
 
     }
 
-    @Test
+    @RepeatedTest(value = 2)
     void evaluate17_given_minLevel_3_reachedLevel_shouldBe_A2_if_3_5_2_2_2_2() {
         //given
         passedDto = ETErgebnisseDto.builder()
@@ -697,7 +698,7 @@ class ETErgebnisseEvaluatorTest {
 
     }
 
-    @Test
+    @RepeatedTest(value = 2)
     void evaluate18_given_minLevel_3_reachedLevel_shouldBe_A1_2_if_0_5_2_2_2_2() {
         //given
         passedDto = ETErgebnisseDto.builder()
@@ -735,7 +736,7 @@ class ETErgebnisseEvaluatorTest {
 
     }
 
-    @Test
+    @RepeatedTest(value = 2)
     void evaluate19_given_minLevel_3_reachedLevel_shouldBe_B1_1_if_5_5_3_2_1_1() {
         //given
         passedDto = ETErgebnisseDto.builder()
@@ -772,7 +773,7 @@ class ETErgebnisseEvaluatorTest {
         log.debug(passedDto.toString());
 
     }
-    @Test
+    @RepeatedTest(value = 2)
     void evaluate20_given_minLevel_3_reachedLevel_shouldBe_B1_2_if_5_5_4_2_1_1() {
         //given
         passedDto = ETErgebnisseDto.builder()
@@ -809,7 +810,7 @@ class ETErgebnisseEvaluatorTest {
         log.debug(passedDto.toString());
 
     }
-    @Test
+    @RepeatedTest(value = 2)
     void evaluate21_given_minLevel_3_reachedLevel_shouldBe_B1_2_if_5_4_4_2_1_2() {
         //given
         passedDto = ETErgebnisseDto.builder()
@@ -847,7 +848,7 @@ class ETErgebnisseEvaluatorTest {
 
     }
 
-    @Test
+    @RepeatedTest(value = 2)
     void evaluate22_given_minLevel_3_reachedLevel_shouldBe_B1_2_if_5_3_4_2_1_3() {
         //given
         passedDto = ETErgebnisseDto.builder()
@@ -885,7 +886,7 @@ class ETErgebnisseEvaluatorTest {
 
     }
 
-    @Test
+    @RepeatedTest(value = 2)
     void evaluate23_given_minLevel_3_reachedLevel_shouldBe_A1_if_5_1_1_5_1_4() {
         //given
         passedDto = ETErgebnisseDto.builder()
@@ -922,7 +923,7 @@ class ETErgebnisseEvaluatorTest {
         log.debug(passedDto.toString());
 
     }
-    @Test
+    @RepeatedTest(value = 2)
     void evaluate24_given_minLevel_3_reachedLevel_shouldBe_B2_1_if_4_1_5_3_1_1() {
         //given
         passedDto = ETErgebnisseDto.builder()

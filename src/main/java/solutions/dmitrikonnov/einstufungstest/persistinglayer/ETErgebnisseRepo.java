@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-public interface ETErgebnisseRepo extends JpaRepository<ETErgebnisse, UUID>,ETErgebnisseCustomRepo,Pingable<ETErgebnisse> {
+public interface ETErgebnisseRepo extends JpaRepository<ETErgebnisse, UUID>,ETErgebnisseCustomRepo,Pingable {
 
 
     List<ETErgebnisse> findAllByCreatedOnBefore(Date createdOn);

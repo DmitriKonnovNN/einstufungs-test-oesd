@@ -2,7 +2,7 @@ package solutions.dmitrikonnov.einstufungstest.persistinglayer;
 
 
 
-public interface Pingable <T>  {
+public interface Pingable {
 
-    int ping(Class<T> clazz);
+    <T> int ping(Class<T> clazz);
 }
