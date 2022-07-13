@@ -58,7 +58,7 @@ public class ETErgebnisseEvaluator {
                             .or(isReached())
                             .or(isJustReached())
                             .or(isNotReached())
-                            .apply(schwelle, naSet.getValue())
+                            .evaluate(schwelle, naSet.getValue())
                     )
                     .collect(Collectors.toUnmodifiableList());
             ergebnisMap.put(niveau,list.get(0));

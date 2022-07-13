@@ -5,6 +5,7 @@ import solutions.dmitrikonnov.einstufungstest.domainlayer.ETSchwellenErgebnis;
 import java.util.Objects;
 
 @FunctionalInterface
+@Deprecated
 public interface BiPredicateToResult<T,U> {
 
     ETSchwellenErgebnis test(T t, U u);
