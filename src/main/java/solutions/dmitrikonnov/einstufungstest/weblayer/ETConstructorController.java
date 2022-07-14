@@ -44,6 +44,10 @@ public class ETConstructorController {
     public byte[] downloadTodoImage(@PathVariable("id") int id) {
         return service.downloadTodoImage(id);
     }
+    @DeleteMapping(value = "tasks/{id}/image")
+    public ResponseEntity<String> deleteImageById(@PathVariable("id") int id){
+        return ResponseEntity.status(HttpStatus.OK).body(service.deleteImageById(id));
+    }
 
     @PostMapping("/items-to-task/{id}")
     public void addItemToTask (@RequestBody List<@Valid ETItemConstructDTO> items, @PathVariable Integer id) {

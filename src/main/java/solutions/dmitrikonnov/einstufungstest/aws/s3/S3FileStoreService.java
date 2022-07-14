@@ -41,14 +41,23 @@ public class S3FileStoreService {
         }
     }
 
-    public byte[] download(String path, String key) {
+    public byte[] download(String path, String fileName) {
         try {
-            S3Object object = amazonS3.getObject(path, key);
+            S3Object object = amazonS3.getObject(path, fileName);
             S3ObjectInputStream objectContent = object.getObjectContent();
             return IOUtils.toByteArray(objectContent);
         } catch (AmazonServiceException | IOException e) {
 
             throw new IllegalStateException("Failed to download the file", e);
+        }
+    }
+
+    public void delete (String fileName){
+        try {
+            amazonS3.deleteObject(BucketName.AUFGABE_MEDIADATA.getBucketName(), fileName);
+        }
+        catch (AmazonServiceException e){
+            throw new IllegalStateException("Deletion failed!", e);
         }
     }
 

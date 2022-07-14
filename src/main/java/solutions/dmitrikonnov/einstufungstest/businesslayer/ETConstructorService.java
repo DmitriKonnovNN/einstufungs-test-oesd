@@ -72,6 +72,16 @@ public class ETConstructorService {
         return s3store.download(fileAndPath[1],fileAndPath[0]);
     }
 
+    public String deleteImageById (int id) {
+        var a = aufgabenRepo.findById(id).orElseThrow(()-> {
+            throw new NotFoundException("Keine Aufgabe mit id %d gefunden!");});
+        var fileAndPath = a.getAufgabenInhalt().split(":");
+        s3store.delete(fileAndPath[0]);
+        a.setAufgabenInhalt("");
+        aufgabenRepo.save(a);
+        return String.format("Image for task #%d has been deleted",id);
+    }
+
 
     public ETAufgabe addAufgabe(ETAufgabeConstructDTO aufgabe){
         if(aufgabe.getItems().isEmpty()){
