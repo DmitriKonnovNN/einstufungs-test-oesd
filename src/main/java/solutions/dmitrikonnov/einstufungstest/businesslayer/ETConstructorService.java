@@ -72,7 +72,7 @@ public class ETConstructorService {
         return s3store.download(fileAndPath[1],fileAndPath[0]);
     }
 
-    public String deleteImageById (int id) {
+    public String deleteImageByAufgabenId(int id) {
         var a = aufgabenRepo.findById(id).orElseThrow(()-> {
             throw new NotFoundException("Keine Aufgabe mit id %d gefunden!");});
         var fileAndPath = a.getAufgabenInhalt().split(":");

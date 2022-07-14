@@ -22,6 +22,7 @@ public class S3ConnectionConfig {
     @Value("${aws.s3.region.name}")
     private final String s3RegionName;
 
+
     @Bean
     public AmazonS3 getAmazonS3Client() {
         final BasicAWSCredentials basicAWSCredentials = new BasicAWSCredentials(accessKeyId, accessKeySecret);

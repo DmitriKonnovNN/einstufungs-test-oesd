@@ -13,17 +13,14 @@ import solutions.dmitrikonnov.einstufungstest.domainlayer.construct.ETItemConstr
 import solutions.dmitrikonnov.einstufungstest.domainlayer.construct.ETSchwellenConstructDTO;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.entities.ETAufgabe;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.entities.ETSchwelle;
-import solutions.dmitrikonnov.einstufungstest.exceptions.FileEmptyException;
-import solutions.dmitrikonnov.einstufungstest.exceptions.NotFoundException;
 
 import javax.validation.Valid;
 import java.io.IOException;
-import java.rmi.NoSuchObjectException;
 import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("api/v2.0.0/constructor")
+@RequestMapping("api/v2.1.0/constructor")
 @AllArgsConstructor
 public class ETConstructorController {
     private final ETConstructorService service;
@@ -46,7 +43,7 @@ public class ETConstructorController {
     }
     @DeleteMapping(value = "tasks/{id}/image")
     public ResponseEntity<String> deleteImageById(@PathVariable("id") int id){
-        return ResponseEntity.status(HttpStatus.OK).body(service.deleteImageById(id));
+        return ResponseEntity.status(HttpStatus.OK).body(service.deleteImageByAufgabenId(id));
     }
 
     @PostMapping("/items-to-task/{id}")
