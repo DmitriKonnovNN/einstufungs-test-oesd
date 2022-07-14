@@ -1,5 +1,8 @@
 package solutions.dmitrikonnov.einstufungstest.utils;
 
+import java.util.Map;
+import java.util.SortedMap;
+
 /**
  *  * Represents a predicate (boolean-valued function) of three arguments.
  *
@@ -20,4 +23,6 @@ public interface TriPredicate <T,U,Y> {
      * otherwise {@code false}
      */
     boolean test (T t, U u, Y y);
+
+
 }
