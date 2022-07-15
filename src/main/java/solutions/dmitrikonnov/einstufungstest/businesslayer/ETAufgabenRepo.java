@@ -20,8 +20,8 @@ public interface ETAufgabenRepo extends JpaRepository<ETAufgabe, Integer> {
     List<ETAufgabe> findAllByAufgabenNiveau(ETAufgabenNiveau niveau);
     List<ETAufgabe> findAll();
     @Modifying
-    @Transactional
-    @Query ("update ETAufgabe a set a.aufgabenInhalt = :imageData where a.aufgabeId = :id")
+    @Transactional ()
+    @Query ("update ETAufgabe a set a.aufgabenInhalt = :data where a.aufgabeId = :id")
     void updateImageDataById(@Param("id")int id,
                              @Param("data") String imageData );
 }

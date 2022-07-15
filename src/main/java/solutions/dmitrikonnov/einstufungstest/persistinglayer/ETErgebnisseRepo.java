@@ -1,5 +1,6 @@
 package solutions.dmitrikonnov.einstufungstest.persistinglayer;
 
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.entities.ETErgebnisse;
@@ -8,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+@Primary
 public interface ETErgebnisseRepo extends JpaRepository<ETErgebnisse, UUID>,ETErgebnisseCustomRepo,Pingable {
 
 

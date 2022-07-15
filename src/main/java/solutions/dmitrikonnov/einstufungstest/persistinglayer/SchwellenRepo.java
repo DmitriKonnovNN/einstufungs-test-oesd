@@ -3,6 +3,7 @@ package solutions.dmitrikonnov.einstufungstest.persistinglayer;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -23,7 +24,6 @@ public interface SchwellenRepo extends JpaRepository<ETSchwelle,Integer>,Schwell
     Optional<ETSchwelle> findByNiveau (ETAufgabenNiveau niveau);
 
     @CachePut (value = "schwelle",key="#niveau")
-    @Transactional
     @Modifying
     @Query("update ETSchwelle e set e.maximumSchwelle = :max, e.mindestSchwelle = :min where e.niveau = :niveau ")
     void updateByNiveau(@Param("niveau")ETAufgabenNiveau niveau,

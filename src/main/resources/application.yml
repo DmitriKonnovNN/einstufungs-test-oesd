@@ -15,11 +15,11 @@ spring:
     url: jdbc:mysql://localhost:3306/einstufungs-test?createDatabaseIfNotExist=true&Unicode=true&serverTimezone=UTC
     username: root
     driver-class-name: com.mysql.cj.jdbc.Driver
-  second-datasource:
-    password:
-    url:
-    username:
-    driver-class-name:
+#  second-datasource:
+#    password:
+#    url:
+#    username:
+#    driver-class-name:
   jpa:
     hibernate:
       ddl-auto: update
@@ -42,11 +42,6 @@ spring:
               LOG_QUERIES_SLOWER_THAN_MS: 3
         search:
           version: 5.11.7.Final
-
-sentry:
-  dsn: https://572fc37d0c98457293eedeabfceb7612@o1319089.ingest.sentry.io/6574242
-  in-app-includes: solutions.dmitrikonnov.einstufungstest
-
   mail:
     host: localhost
     port: 1025
@@ -64,6 +59,11 @@ sentry:
           connectiontimeout: 5000
           timeout: 3000
           writetimeout: 5000
+sentry:
+  dsn: https://572fc37d0c98457293eedeabfceb7612@o1319089.ingest.sentry.io/6574242
+  in-app-includes: solutions.dmitrikonnov.einstufungstest
+
+
 
 
 #logging:
@@ -79,5 +79,5 @@ sentry:
 #  file:
 #    path: ./logs
 
-debug: true
+debug: false
 
