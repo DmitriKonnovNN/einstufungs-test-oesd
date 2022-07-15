@@ -60,7 +60,7 @@ spring:
           timeout: 3000
           writetimeout: 5000
 sentry:
-  dsn: https://572fc37d0c98457293eedeabfceb7612@o1319089.ingest.sentry.io/6574242
+  dsn:
   in-app-includes: solutions.dmitrikonnov.einstufungstest
 
 
@@ -79,5 +79,5 @@ sentry:
 #  file:
 #    path: ./logs
 
-debug: false
+debug: true
 
