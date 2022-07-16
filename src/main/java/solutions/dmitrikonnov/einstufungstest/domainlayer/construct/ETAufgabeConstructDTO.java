@@ -7,6 +7,7 @@ import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenTyp;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -14,7 +15,9 @@ import java.util.List;
  * */
 
 @Data
-public class ETAufgabeConstructDTO {
+public class ETAufgabeConstructDTO implements Serializable {
+    private static final long serialVersionUID = -1798070786993154676L;
+
 
     @NotBlank
     private String aufgabenStellung;

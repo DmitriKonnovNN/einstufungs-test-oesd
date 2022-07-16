@@ -80,6 +80,9 @@ public class ETVerwaltungsUser implements UserDetails {
         return password;
     }
 
+    public String getFullnameAndRoles(){return firstName +" "+ lastName + " " + role.getAuthorities();}
+
+
     @Override
     public String getUsername() {
         return email;

@@ -30,6 +30,11 @@ public class ETConstructorController {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(result);
     }
+    @GetMapping("/tasks")
+    public ResponseEntity<List<ETAufgabe>> getAllAufgaben(){
+        return ResponseEntity.status(HttpStatus.OK).body(service.findAllAufgaben());
+    }
+
     @PutMapping(path = "/tasks/{id}/image",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -46,13 +51,15 @@ public class ETConstructorController {
         return ResponseEntity.status(HttpStatus.OK).body(service.deleteImageByAufgabenId(id));
     }
 
-    @PostMapping("/items-to-task/{id}")
-    public void addItemToTask (@RequestBody List<@Valid ETItemConstructDTO> items, @PathVariable Integer id) {
+    @PostMapping("/tasks/{id}/items")
+    public void addItemToTask (@RequestBody List< @Valid ETItemConstructDTO> items, @PathVariable Integer id) {
+
         service.addItemsToAufgabe(items, id);
     }
 
     @PostMapping("/limits")
     public ResponseEntity<ETSchwelle> addLimit(@Valid @RequestBody ETSchwellenConstructDTO schwelle){
+
        return ResponseEntity.status(HttpStatus.CREATED).body(service.addSchwelle(schwelle));
     }
 

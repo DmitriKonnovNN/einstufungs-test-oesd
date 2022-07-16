@@ -1,7 +1,11 @@
 package solutions.dmitrikonnov.einstufungstest.domainlayer.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.hibernate.annotations.GenerationTime;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -14,6 +18,8 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@EntityListeners(AuditingEntityListener.class)
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Table (name = "ET_ITEM", indexes = @Index(columnList = "ET_AUFGABE_ID", name = "ET_ITEM_AUFG_IDX"))
 public class ETItem {
 
@@ -40,6 +46,8 @@ public class ETItem {
             generator = "et_item_id_seq_generator")
     private Integer itemId;
 
+
+    @JsonIgnoreProperties("items")
     @ManyToOne (fetch = FetchType.EAGER)
     @JoinColumn(name ="ET_AUFGABE_ID")
     private ETAufgabe aufgabe;
@@ -74,6 +82,14 @@ public class ETItem {
     @Column (insertable = false, updatable = false)
     @org.hibernate.annotations.Generated (GenerationTime.ALWAYS)
     private Date lastModified;
+
+    @CreatedBy
+    @Column(name = "created_by")
+    private String createdBy;
+
+    @LastModifiedBy
+    @Column (name = "modified_by")
+    private String modifiedBy;
 
     @Override
     public boolean equals(Object o) {

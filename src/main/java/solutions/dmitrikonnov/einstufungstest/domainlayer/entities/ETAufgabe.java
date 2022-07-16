@@ -1,9 +1,14 @@
 package solutions.dmitrikonnov.einstufungstest.domainlayer.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenerationTime;
+import org.hibernate.annotations.GeneratorType;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenFrontEndType;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenNiveau;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenTyp;
@@ -22,6 +27,8 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@EntityListeners(AuditingEntityListener.class)
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Table (name = "ET_AUFGABE", indexes = @Index(columnList = "AUFGABEN_NIVEAU", name = "ET_AUFGABE_NIVEAU_IDX"))
 public class ETAufgabe {
 
@@ -41,6 +48,7 @@ public class ETAufgabe {
     *Vergiss nicht: mappedBy bekommt den Namen, wie das Element im Kind genannt wird, also ggf. im ETItem: "aufgabe"
     *
     * */
+    @JsonIgnoreProperties ("aufgabe")
     @OneToMany (cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "aufgabe")
     @Fetch(FetchMode.JOIN)
     private Set<ETItem> items; // Set or List?
@@ -85,9 +93,17 @@ public class ETAufgabe {
     private Date createdOn;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column (insertable = false, updatable = false)
     @org.hibernate.annotations.Generated (GenerationTime.ALWAYS)
     private Date lastModified;
+
+
+    @CreatedBy
+    @Column(name = "created_by")
+    private String createdBy;
+
+    @LastModifiedBy
+    @Column (name = "modified_by")
+    private String modifiedBy;
 
 
 }

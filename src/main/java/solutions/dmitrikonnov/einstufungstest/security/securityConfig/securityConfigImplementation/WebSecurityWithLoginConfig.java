@@ -40,7 +40,7 @@ public class WebSecurityWithLoginConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers(RESOURCES).permitAll()
                     .antMatchers("api/v*/users/**").hasAnyRole("ROOT","SUPERADMIN")
                     .antMatchers("/actuator/**","swagger-ui/**", "/swagger-resources/**","/swagger-ui.html**","/swagger-ui/","/swagger-ui*/**").hasAnyRole("ROOT","SUPERADMIN")
-                    .antMatchers("api/v*/constructors/**").hasAnyRole("ROOT", "SUPERADMIN")
+                    .antMatchers("api/v*/constructor/**").hasAnyRole("ROOT", "SUPERADMIN")
                     .antMatchers("api/v*/et_ufzgi/**").hasAnyRole("ROOT", "SUPERADMIN","ADMIN")
                     .antMatchers("/api/v*/registration/**").permitAll()
                 .anyRequest()

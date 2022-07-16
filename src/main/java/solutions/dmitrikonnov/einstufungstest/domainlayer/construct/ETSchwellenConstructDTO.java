@@ -4,9 +4,12 @@ import lombok.Data;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenNiveau;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 @Data
-public class ETSchwellenConstructDTO {
+public class ETSchwellenConstructDTO implements Serializable {
+    private static final long serialVersionUID = -1798070786993154676L;
+
     private Integer id;
     @NotNull(message = "Niveau darf nicht leer sein")
     private ETAufgabenNiveau niveau;

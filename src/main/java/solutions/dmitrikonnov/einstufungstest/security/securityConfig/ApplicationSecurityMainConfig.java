@@ -5,16 +5,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.domain.AuditorAware;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import solutions.dmitrikonnov.einstufungstest.security.sUtils.SpringSecurityAuditorAware;
 import solutions.dmitrikonnov.einstufungstest.security.securityConfig.securityConfigUtils.WebSecurityAdapterQualifierResolver;
 
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity (prePostEnabled = true)
+@EnableJpaAuditing (auditorAwareRef="auditorProvider")
 public class ApplicationSecurityMainConfig {
 
     Logger log = LoggerFactory.getLogger(this.getClass());
@@ -42,5 +47,9 @@ public class ApplicationSecurityMainConfig {
         log.warn(String.format(SSC_CONF_MSG,qualifier));
     }
 
+    @Bean
+    AuditorAware<String> auditorProvider() {
+        return new SpringSecurityAuditorAware();
+    }
 
 }
