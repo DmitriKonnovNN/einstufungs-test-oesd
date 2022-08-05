@@ -40,7 +40,7 @@ public class ETAufgabenAufsetzer {
                 .stream()
                 .collect(Collectors.groupingBy(ETAufgabe::getAufgabenNiveau, TreeMap::new, Collectors.toList()))
                 .values()
-                .stream()
+                .parallelStream()
                 .peek(Collections::shuffle)
                 .map(aufgaben->aufgabenRestricter.restrict(aufgaben,maxSchwellenMap))
                 .flatMap(Collection::stream)

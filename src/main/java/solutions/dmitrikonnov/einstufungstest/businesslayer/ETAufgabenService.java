@@ -30,7 +30,6 @@ public class ETAufgabenService {
     private final ETErgebnisseEvaluator evaluator;
     private final ETErgebnisseConverterAndPersister converterAndPersister;
     private final ETAufgabenBogenAufsetzer bogenAufsetzer;
-    private final ApplicationEventPublisher publisher;
 
 
     @Transactional(readOnly = true)

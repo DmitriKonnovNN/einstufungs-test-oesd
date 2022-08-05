@@ -2,10 +2,7 @@ package solutions.dmitrikonnov.einstufungstest.domainlayer.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.GenerationTime;
-import org.hibernate.annotations.GeneratorType;
+import org.hibernate.annotations.*;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -14,6 +11,10 @@ import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenNiveau;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenTyp;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Index;
+import javax.persistence.Table;
 import java.util.Date;
 import java.util.Set;
 
@@ -93,7 +94,7 @@ public class ETAufgabe {
     private Date createdOn;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @org.hibernate.annotations.Generated (GenerationTime.ALWAYS)
+    @UpdateTimestamp
     private Date lastModified;
 
 

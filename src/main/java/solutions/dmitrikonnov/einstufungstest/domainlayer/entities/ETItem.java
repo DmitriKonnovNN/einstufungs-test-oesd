@@ -2,7 +2,7 @@ package solutions.dmitrikonnov.einstufungstest.domainlayer.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
-import org.hibernate.annotations.GenerationTime;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -79,8 +79,7 @@ public class ETItem {
     private Date createdOn;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column (insertable = false, updatable = false)
-    @org.hibernate.annotations.Generated (GenerationTime.ALWAYS)
+    @UpdateTimestamp
     private Date lastModified;
 
     @CreatedBy
