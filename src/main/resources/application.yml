@@ -1,3 +1,9 @@
+spring:
+  profiles:
+    active: local, localdocker, local-k8s, aws-prod, aws-test, aws-k8s
+
+---
+
 info:
   app:
     name: Einstufungstest Application
@@ -10,6 +16,9 @@ server:
     include-binding-errors: always
   port: 8080
 spring:
+  config:
+    activate:
+      on-profile: local
   datasource:
     password: P@ssw0rd
     url: jdbc:mysql://localhost:3306/einstufungs-test?createDatabaseIfNotExist=true&Unicode=true&serverTimezone=UTC
@@ -62,8 +71,6 @@ spring:
 sentry:
   dsn: https://572fc37d0c98457293eedeabfceb7612@o1319089.ingest.sentry.io/6574242
   in-app-includes: solutions.dmitrikonnov.einstufungstest
-
-
 
 
 #logging:
