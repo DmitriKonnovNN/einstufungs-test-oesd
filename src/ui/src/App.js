@@ -1,12 +1,11 @@
-import logo from './logo.svg';
+
 import './App.css';
 import {useEffect,useState} from "react";
 import {fetchTaskSet} from "./client";
 import Layout, {Content, Footer, Header} from "antd/es/layout/layout";
 import {Button, Steps, message, Divider, Card, Col} from 'antd';
 import {StarOutlined} from '@ant-design/icons';
-import Text from "antd/es/typography/Text";
-import Row from "antd/es/descriptions/Row";
+
 const gridStyle = {
     width: '16%',
     textAlign: 'center',
@@ -75,7 +74,7 @@ const steps = [
 
 function App() {
 
-    const [taskSet, setTaskSet] = useState([])
+    //const [taskSet, setTaskSet] = useState([])
     const [current, setCurrent] = useState(0)
     const [precentDone, setPrecentDone] = useState(0)
     const next = () => {
