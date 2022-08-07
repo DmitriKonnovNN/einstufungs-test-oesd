@@ -1,0 +1,19 @@
+version: "3.8"
+services:
+  maildev:
+    image: maildev/maildev
+    container_name: maildev
+    ports:
+      - "1080:1080"
+      - "1025:1025"
+
+  einstufungstest:
+    image: dmitriikonnovnn/einstufungstest-oesd:local-latest
+    container_name: einstufungstest
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+
+    environment:
+      SPRING_PROFILES_ACTIVE: local
+

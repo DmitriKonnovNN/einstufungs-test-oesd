@@ -17,6 +17,10 @@
 		<java.version>11</java.version>
 		<frontend-maven-plugin.version>1.11.2</frontend-maven-plugin.version>
 		<testcontainers.version>1.16.2</testcontainers.version>
+		<app.image.name>einstufungstest-oesd</app.image.name>
+		<app.image.tag/>
+		<node.version>v17.8.0</node.version>
+		<npm.version>8.5.5</npm.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -196,6 +200,10 @@
 	<build>
 		<plugins>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+			</plugin>
+			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
@@ -224,11 +232,217 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>com.github.eirslett</groupId>
-				<artifactId>frontend-maven-plugin</artifactId>
-				<version>${frontend-maven-plugin.version}</version>
+				<groupId>com.google.cloud.tools</groupId>
+				<artifactId>jib-maven-plugin</artifactId>
+				<version>3.2.0</version>
+				<configuration>
+					<from>
+						<image>openjdk:11-jre-slim-buster</image>
+					</from>
+					<container>
+						<ports>
+							<port>8080</port>
+						</ports>
+						<format>
+							OCI
+						</format>
+					</container>
+				</configuration>
 			</plugin>
+<!--			<plugin>-->
+<!--				<groupId>com.github.eirslett</groupId>-->
+<!--				<artifactId>frontend-maven-plugin</artifactId>-->
+<!--				<version>${frontend-maven-plugin.version}</version>-->
+<!--			</plugin>-->
 		</plugins>
 	</build>
+	<profiles>
+		<profile>
+			<id>jib-push-to-dockerhub</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.google.cloud.tools</groupId>
+						<artifactId>jib-maven-plugin</artifactId>
+						<version>3.2.0</version>
+						<configuration>
+							<from>
+								<image>openjdk:11-jre-slim-buster</image>
+							</from>
+							<to>
+								<image>docker.io/dmitriikonnovnn/${app.image.name}:${app.image.tag}</image>
+							</to>
+							<container>
+								<ports>
+									<port>8080</port>
+								</ports>
+								<format>
+									OCI
+								</format>
+							</container>
+						</configuration>
+						<executions>
+							<execution>
+								<id>push-custom-tag</id>
+								<configuration>
+									<to>
+										<image>docker.io/dmitriikonnovnn/${app.image.name}:${app.image.tag}</image>
+									</to>
+								</configuration>
+								<phase>package</phase>
+								<goals>
+									<goal>build</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>push-latest-tag</id>
+								<configuration>
+									<to>
+										<image>docker.io/dmitriikonnovnn/${app.image.name}:latest</image>
+									</to>
+								</configuration>
+								<phase>package</phase>
+								<goals>
+									<goal>build</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>jib-push-to-localmachine</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.google.cloud.tools</groupId>
+						<artifactId>jib-maven-plugin</artifactId>
+						<version>3.2.0</version>
+						<configuration>
+							<from>
+								<image>openjdk:11-jre-slim-buster</image>
+							</from>
+							<container>
+								<ports>
+									<port>8080</port>
+								</ports>
+								<format>
+									OCI
+								</format>
+							</container>
+						</configuration>
+						<executions>
+							<execution>
+								<id>push-latest-tag</id>
+								<configuration>
+									<to>
+										<image>dmitriikonnovnn/${app.image.name}:local-latest</image>
+									</to>
+								</configuration>
+								<phase>package</phase>
+								<goals>
+									<goal>dockerBuild</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>push-custom-tag</id>
+								<configuration>
+									<to>
+										<image>dmitriikonnovnn/${app.image.name}:local-${app.image.tag}</image>
+									</to>
+								</configuration>
+								<phase>package</phase>
+								<goals>
+									<goal>dockerBuild</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>build-frontend</id>
+			<activation>
+				<activeByDefault>true
+				</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.github.eirslett</groupId>
+						<artifactId>frontend-maven-plugin</artifactId>
+						<!-- Use the latest released version:
+                                  https://repo1.maven.org/maven2/com/github/eirslett/frontend-maven-plugin/ -->
+						<version>${frontend-maven-plugin.version}</version>
+						<configuration>
+							<nodeVersion>${node.version}</nodeVersion>
+							<workingDirectory>src/ui</workingDirectory>
+						</configuration>
+						<executions>
+							<execution>
+								<id>install node and npm</id>
+								<goals>
+									<goal>install-node-and-npm</goal>
+								</goals>
+								<configuration>
+									<nodeVersion>${node.version}</nodeVersion>
+									<npmVersion>${npm.version}</npmVersion>
+								</configuration>
+							</execution>
+							<execution>
+								<id>npm install</id>
+								<goals>
+									<goal>npm</goal>
+								</goals>
+								<configuration>
+									<arguments>install</arguments>
+								</configuration>
+							</execution>
+							<execution>
+								<id>npm run build</id>
+								<goals>
+									<goal>npm</goal>
+								</goals>
+								<configuration>
+									<arguments>run build</arguments>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-resources-plugin</artifactId>
+						<version>3.2.0</version>
+						<executions>
+							<execution>
+								<id>copy-build-folder</id>
+								<phase>process-classes</phase>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<configuration>
+									<resources>
+										<resource>
+											<directory>src/ui/build</directory>
+										</resource>
+									</resources>
+									<outputDirectory>${basedir}/target/classes/static</outputDirectory>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
 
 </project>
