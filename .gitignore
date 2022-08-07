@@ -379,4 +379,5 @@ psd
 thumb
 sketch
 
+/src/ui/node/
 # End of https://www.toptal.com/developers/gitignore/api/maven,java,jetbrains,intellij,node,react
