@@ -15,7 +15,7 @@
 	<description>einstufungtest for oesd</description>
 	<properties>
 		<java.version>11</java.version>
-		<frontend-maven-plugin.version>1.11.2</frontend-maven-plugin.version>
+		<frontend-maven-plugin.version>1.12.1</frontend-maven-plugin.version>
 		<testcontainers.version>1.16.2</testcontainers.version>
 		<app.image.name>einstufungstest-oesd</app.image.name>
 		<app.image.tag/>
@@ -379,8 +379,6 @@
 					<plugin>
 						<groupId>com.github.eirslett</groupId>
 						<artifactId>frontend-maven-plugin</artifactId>
-						<!-- Use the latest released version:
-                                  https://repo1.maven.org/maven2/com/github/eirslett/frontend-maven-plugin/ -->
 						<version>${frontend-maven-plugin.version}</version>
 						<configuration>
 							<nodeVersion>${node.version}</nodeVersion>
