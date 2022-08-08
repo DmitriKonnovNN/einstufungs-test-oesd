@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   backend:
-    image: "dmitriikonnovnn/einstufungstest-oesd:8.4.2022.23.38.50"
+    image: "dmitriikonnovnn/einstufungstest-oesd:7.8.2022.19.45.46"
     ports:
       - "80:8080"
     restart: always
