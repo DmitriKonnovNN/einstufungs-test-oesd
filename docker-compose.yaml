@@ -1,4 +1,4 @@
-services:
+ervices:
   maildev:
     image: maildev/maildev
     container_name: maildev
