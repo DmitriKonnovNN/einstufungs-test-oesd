@@ -10,7 +10,7 @@ env:
 
   POSTGRESQL_VERSION: 12.8
   POSTGRESQL_DB: einstufungstest
-  POSTGRESQL_USER: ETDBUser
+  POSTGRESQL_USER: ETBDUser
   POSTGRESQL_PASSWORD: P@ssw0rd
 
   JAVA_VERSION: 11
@@ -18,8 +18,8 @@ env:
   DOCKER_HUB_USERNAME: dmitriikonnovnn
 
   AWS_REGION: us-east-2
-  EB_ENVIRONMENT_NAME: Einstufungstest-oesd-test-env
-  EB_APPLICATION_NAME: oesdmicroservices
+  EB_ENVIRONMENT_NAME: Einstufungstestoesd-env
+  EB_APPLICATION_NAME: einstufungstest-oesd
   EB_DEPLOYMENT_PACKAGE: elasticbeanstalk/docker-compose.yaml
 
 jobs:
@@ -110,7 +110,7 @@ jobs:
         with:
           status: ${{ job.status }}
           fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
-          text: ':tada: :arrow_right: einstufungstest-oesd-test-env.us-east-2.elasticbeanstalk.com'
+          text: ':tada: :arrow_right:Einstufungstestoesd-env.eba-f2rmyzzg.us-east-2.elasticbeanstalk.com'
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         if: always()
