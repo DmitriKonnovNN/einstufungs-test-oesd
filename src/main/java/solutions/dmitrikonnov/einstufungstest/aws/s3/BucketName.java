@@ -7,6 +7,6 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum BucketName {
-    AUFGABE_MEDIADATA ("et-s3-mediadata-storage");
+    AUFGABE_MEDIADATA ("elasticbeanstalk-us-east-2-067464467036/einstufungstest/media");
     private final String bucketName;
 }
