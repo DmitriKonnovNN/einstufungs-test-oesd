@@ -15,5 +15,5 @@ services:
     restart: unless-stopped
 
     environment:
-      SPRING_PROFILES_ACTIVE: local
+      SPRING_PROFILES_ACTIVE: localdocker
 

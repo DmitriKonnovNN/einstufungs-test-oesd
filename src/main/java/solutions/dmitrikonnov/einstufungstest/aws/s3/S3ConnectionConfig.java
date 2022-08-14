@@ -42,45 +42,45 @@ public class S3ConnectionConfig {
 
     @Value("${aws.s3.region.name}")
     private final String s3RegionName;
-
     //private final SystemPropertiesCredentialsProvider credPrvdr;
 
-//    @Bean
-//    public List<String> credentials (){
-//
-//        List<String> keyIdandSecret = null;
-//        try {
-//            CSVReader reader = new CSVReader(new FileReader(fileName));
-//              keyIdandSecret = reader.readAll().stream()
-//                    .skip(1)
-//                    .flatMap(Arrays::stream)
-//                    .collect(Collectors.toUnmodifiableList());
-//            System.out.println(keyIdandSecret.toString());
-//
-//
-//        } catch (FileNotFoundException e) {
-//            log.error("Could not read credentials from CSV. Process failed!");
-//        } catch (IOException e) {
-//            log.error(e.toString());
-//            e.printStackTrace();
-//        } catch (CsvException e) {
-//            log.error(e.toString());
-//        }
-//        return keyIdandSecret;
-//    }
+    @Bean
+    public List<String> credentials (){
+
+        List<String> keyIdandSecret = new ArrayList<>();
+        keyIdandSecret.add("AKIAQ7NJSCJOFGYAD5UH");
+        keyIdandSecret.add("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");
+      /*  try {
+            CSVReader reader = new CSVReader(new FileReader(fileName));
+              keyIdandSecret = reader.readAll().stream()
+                    .skip(1)
+                    .flatMap(Arrays::stream)
+                    .collect(Collectors.toUnmodifiableList());
+            System.out.println(keyIdandSecret.toString());
+
+
+        } catch (FileNotFoundException e) {
+            log.error("Could not read credentials from CSV. Process failed!");
+        } catch (IOException e) {
+            log.error(e.toString());
+            e.printStackTrace();
+        } catch (CsvException e) {
+            log.error(e.toString());
+        }*/
+        return keyIdandSecret;
+    }
 
 
     @Bean
     public AmazonS3 getAmazonS3Client() {
-        {
 
-        }
 
-        //final BasicAWSCredentials basicAWSCredentials = new BasicAWSCredentials(credentials().get(0), credentials().get(1));
+        System.out.println("credentials = " + credentials().get(0));
+        final BasicAWSCredentials basicAWSCredentials = new BasicAWSCredentials(credentials().get(0), credentials().get(1));
         // Get Amazon S3 client and return the S3 client object
         return AmazonS3ClientBuilder
                 .standard()
-                //.withCredentials(new AWSStaticCredentialsProvider(basicAWSCredentials))
+                .withCredentials(new AWSStaticCredentialsProvider(basicAWSCredentials))
                 .withRegion(s3RegionName)
                 .build();
     }
