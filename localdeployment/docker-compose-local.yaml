@@ -8,7 +8,7 @@ services:
       - "1025:1025"
 
   einstufungstest:
-    image: dmitriikonnovnn/einstufungstest-oesd:local-latest
+    image: dmitriikonnovnn/einstufungstest-oesd:v2
     container_name: einstufungstest
     ports:
       - "8080:8080"

@@ -21,7 +21,7 @@ public class ConfirmationTokenService {
     }
 
     public Optional <ConfirmationToken> findTokenByUserId (Long userId) {
-        return confirmationTokenRepository.findFirstByETVerwaltungsUserOrderByIdDesc(userId);}
+        return confirmationTokenRepository.findFirstByETVerwaltungsUserIdOrderByIdDesc(userId);}
 
 
     public int setConfirmedAt (String token) {

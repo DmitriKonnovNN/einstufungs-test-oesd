@@ -1,6 +1,7 @@
 package solutions.dmitrikonnov.einstufungstest.verwaltung.registration;
 
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import solutions.dmitrikonnov.einstufungstest.email.EmailSender;
@@ -18,7 +19,8 @@ public class RegistrationService {
 
     private final UserServiceImpl userServiceImpl;
     private final ConfirmationTokenService confirmationTokenService;
-    private final EmailSender emailSender;
+    @Qualifier ("mailgunService")
+    private final EmailSender mailgunService;
 
 
 
@@ -30,8 +32,8 @@ public class RegistrationService {
                         request.getPassword(),
                         request.getEmail(),
                         UserRole.USER));
-        String link = "http://localhost:8080/api/v2.0.0/registraion/confirm?token=" + token;
-        emailSender.send(request.getEmail()
+        String link = "http://localhost:8080/api/v2.0.0/registration/confirm?token=" + token;
+        mailgunService.send(request.getEmail()
                 ,buildEmail(request.getFirstName(), link));
         return  token;
     }

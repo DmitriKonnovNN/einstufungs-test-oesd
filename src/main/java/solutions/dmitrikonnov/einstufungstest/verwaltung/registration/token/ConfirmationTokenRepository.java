@@ -16,7 +16,7 @@ public interface ConfirmationTokenRepository extends JpaRepository <Confirmation
 
     Optional<ConfirmationToken>findByToken (String token);
 
-    Optional<ConfirmationToken> findFirstByETVerwaltungsUserOrderByIdDesc (Long userId);
+    Optional<ConfirmationToken> findFirstByETVerwaltungsUserIdOrderByIdDesc (Long userId);
 
     @Transactional
     @Modifying

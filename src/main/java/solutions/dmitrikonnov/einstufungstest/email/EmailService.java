@@ -4,6 +4,7 @@ package solutions.dmitrikonnov.einstufungstest.email;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Profile;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
@@ -14,6 +15,7 @@ import javax.mail.internet.MimeMessage;
 
 
 @Service
+@Profile(value = "local")
 @AllArgsConstructor
 public class EmailService implements EmailSender {
     private final JavaMailSender mailSender;
