@@ -18,7 +18,7 @@ env:
   DOCKER_HUB_USERNAME: dmitriikonnovnn
 
   AWS_REGION: us-east-2
-  EB_ENVIRONMENT_NAME: Einstufungstestoesd-env
+  EB_ENVIRONMENT_NAME: Einstufungstestoesd-env-test
   EB_APPLICATION_NAME: einstufungstest-oesd
   EB_DEPLOYMENT_PACKAGE: elasticbeanstalk/docker-compose.yaml
 
@@ -110,7 +110,7 @@ jobs:
         with:
           status: ${{ job.status }}
           fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
-          text: ':tada: :arrow_right:Einstufungstestoesd-env.eba-f2rmyzzg.us-east-2.elasticbeanstalk.com'
+          text: ':tada: :arrow_right:einstufungstest-env-test.us-east-2.elasticbeanstalk.com'
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         if: always()
