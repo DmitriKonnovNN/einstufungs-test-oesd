@@ -49,9 +49,9 @@ public class ETBuffer {
             }
             toServeBuffer.offer(Optional.of(aufgabenBogen));
         }
-        log.info("ServeBuffer (allocated to {} ) has been filled up with {} elements", bufferAllocSize, toServeBuffer.size());
+        log.warn("ServeBuffer (allocated to {} ) has been filled up with {} elements", bufferAllocSize, toServeBuffer.size());
         toServeBuffer.forEach(b-> {
-            log.trace(b.orElseThrow(()->new NoTaskSetToServeException("No Bogen set up!")).getAufgabenBogenHash().toString());
+            log.debug(b.orElseThrow(()->new NoTaskSetToServeException("No Bogen set up!")).getAufgabenBogenHash().toString());
             b.get().getAufgabenListe().stream()
                     .map(ETAufgabeDto::getAufgabenHash)
                     .map(Object::toString)

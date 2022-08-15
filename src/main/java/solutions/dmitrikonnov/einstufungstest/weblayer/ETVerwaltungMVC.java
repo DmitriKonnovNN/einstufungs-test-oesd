@@ -10,7 +10,7 @@ public class ETVerwaltungMVC {
 
     @GetMapping("/")
     public String greetUser(){
-        return "/index";
+        return "index";
     }
 
     @GetMapping("/login")

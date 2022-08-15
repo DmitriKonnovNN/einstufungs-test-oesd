@@ -178,7 +178,7 @@ spring:
       on-profile: aws-test
   datasource:
     password: 5J2X!Bf2s_d9Hj2
-    url: jdbc:postgresql://aadrfyrpixyroo.ckswrjm0ier7.us-east-2.rds.amazonaws.com:5432/einstufungstest
+    url: jdbc:postgresql://aamyheif84t424.ckswrjm0ier7.us-east-2.rds.amazonaws.com:5432/einstufungstest
     username: ETBDUser
     driver-class-name: org.postgresql.Driver
   #  second-datasource:
