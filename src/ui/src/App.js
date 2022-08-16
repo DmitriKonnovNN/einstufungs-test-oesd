@@ -74,7 +74,8 @@ const steps = [
 
 function App() {
 
-    //const [taskSet, setTaskSet] = useState([])
+
+    const [taskSet, setTaskSet] = useState([])
     const [current, setCurrent] = useState(0)
     const [precentDone, setPrecentDone] = useState(0)
     const next = () => {
@@ -86,9 +87,18 @@ function App() {
         setPrecentDone(precentDone - 100/7)
     };
 
-    useEffect(()=>{
-        console.log(`component mounted!`)
-        fetchTaskSet()},[]);
+    const fetchTasks = ()=>{ fetchTaskSet().then(res=> res.json())
+        .then((data)=>{
+            setTaskSet(data)
+            console.log(data)
+        })
+        .catch(err=>{
+            console.log(err)
+        })
+
+    }
+
+    useEffect(()=>{fetchTasks()}, [])
 
   return (<Layout className = "site-layout" style={{ minHeight: '100vh' }}>
             <Header className="ant-layout-header" style={{ padding: 0 }}>
@@ -109,7 +119,7 @@ function App() {
                         <Divider orientation="left">Lesen Sie den Text und beantworten Sie die Fragen</Divider>
                                 <Col span={36}>
                                     <Card title="Maximilian"  bordered={true} size={"small"}>
-                                        Servus! Mein Name ist Maximilian Gruber. Ich komme aus Österreich und wohne in Wien. Ich habe eine Ausbildung zum Mechatroniker gemacht und arbeite jetzt in einer Autowerkstatt. Ich mag Autos! In der Freizeit spiele ich Fußball, fahre Rad und höre Musik. Ein Tag ohne Musik ist kein guter Tag!
+                                        {taskSet.aufgabenBogenId}
                                     </Card>
                                 </Col>
                                 <Col span={36}>

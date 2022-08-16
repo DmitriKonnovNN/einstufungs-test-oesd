@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 
 @Component("webSecurityWithLoginConfig")
 @AllArgsConstructor
-@Order(101)
+@Order(103)
 @Lazy
 public class WebSecurityWithLoginConfig extends WebSecurityConfigurerAdapter {
 
@@ -38,6 +38,7 @@ public class WebSecurityWithLoginConfig extends WebSecurityConfigurerAdapter {
                 .and()*/
                 .authorizeRequests()
                     .antMatchers(RESOURCES).permitAll()
+                    //.antMatchers("api/v*/et_ufzgi/**").permitAll() // Only for test purposes
                     .antMatchers("api/v*/users/**").hasAnyRole("ROOT","SUPERADMIN")
                     .antMatchers("/actuator/**","swagger-ui/**", "/swagger-resources/**","/swagger-ui.html**","/swagger-ui/","/swagger-ui*/**").hasAnyRole("ROOT","SUPERADMIN")
                     .antMatchers("api/v*/constructor/**").hasAnyRole("ROOT", "SUPERADMIN")
