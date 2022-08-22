@@ -1,21 +1,22 @@
 package solutions.dmitrikonnov.einstufungstest;
 
-import com.github.benmanes.caffeine.cache.Caffeine;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.models.ExternalDocumentation;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.cache.caffeine.CaffeineCacheManager;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.Executor;
 
 @Configuration
 @EnableAsync
@@ -27,8 +28,10 @@ import java.util.concurrent.TimeUnit;
 @EnableTransactionManagement
 @EnableConfigurationProperties
 @PropertySource(value = "classpath:etapplication.properties")
+@Slf4j
 public class MainConfig {
 
+    private final int avlblPrccrs = Runtime.getRuntime().availableProcessors();
 /*  @Bean
     public CacheManagerCustomizer<ConcurrentMapCacheManager> cacheManagerCustomizer() {
         return new CacheManagerCustomizer<ConcurrentMapCacheManager>() {
@@ -40,9 +43,18 @@ public class MainConfig {
     }*/
 
 
-
-
-
+    @Bean (name = "taskExecutor")
+    public Executor taskExecutor (){
+        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        executor.setCorePoolSize(avlblPrccrs);
+        executor.setMaxPoolSize(avlblPrccrs*3);
+        executor.setKeepAliveSeconds(45);
+        executor.setQueueCapacity(512);
+        executor.setThreadNamePrefix("MyExecutor-");
+        executor.initialize();
+        log.debug("Notification AsyncExecutor's bean name = taskExecutor, poolSize = " + avlblPrccrs);
+        return executor;
+    }
 
 
     @Bean

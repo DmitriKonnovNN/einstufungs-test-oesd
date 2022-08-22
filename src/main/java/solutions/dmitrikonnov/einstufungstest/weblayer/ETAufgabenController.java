@@ -1,9 +1,6 @@
 package solutions.dmitrikonnov.einstufungstest.weblayer;
 
-import org.apache.tomcat.jni.Time;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationEventPublisher;
@@ -47,6 +44,7 @@ public class ETAufgabenController implements SwitchableController {
 
     @GetMapping
     public ResponseEntity<ETAufgabenBogenDto> getAufgaben (){
+        System.out.println("get Aufgaben REST CONTROLLER THREAD: " +Thread.currentThread().getName());
         if(isEnable){
             var bogen = cache.getPreparedAufgabenbogen();
             publisher.publishEvent(new AufgabenBogenFetchedFromCache(this));
@@ -62,7 +60,7 @@ public class ETAufgabenController implements SwitchableController {
 
     @PostMapping()
     public ResponseEntity<ETEndResultForFE> checkAndGetResults(@RequestBody ETAntwortBogenDto antwortBogen){
-
+        System.out.println("check and get results REST CONTROLLER THREAD: " +Thread.currentThread().getName());
         if(System.currentTimeMillis()- antwortBogen.getCreatedAt()>TIME_FOR_TEST_Millis) {
             throw new TimeForTestExpiredException("Zeit für den Test ist um.");
         }

@@ -24,6 +24,7 @@ public class EmailService implements EmailSender {
     @Override
     @Async
     public void send(String to, String email) {
+        System.out.println("send EMAIL TRHEAD" + Thread.currentThread().getName());
         try {
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper helper= new MimeMessageHelper(mimeMessage,"utf-8");

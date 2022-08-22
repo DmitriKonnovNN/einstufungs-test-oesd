@@ -22,6 +22,8 @@ public class MailgunService implements EmailSender{
     @Override
     @Async
     public void send(String to, String email) {
+        log.debug("email mailgun service THREAD: " + Thread.currentThread().getName());
+        long stime = System.currentTimeMillis();
         MailgunMessagesApi mgmApi = MailgunClient.config(apiKey).createApi(MailgunMessagesApi.class);
 
         Message msg = Message.builder()
@@ -33,10 +35,11 @@ public class MailgunService implements EmailSender{
 
         var response = sendWithResponse(mgmApi, msg);
         log.info("response id = " + response.getId() +" response message = " + response.getMessage());
+        log.debug("Mailgun : message sending time = " + (System.currentTimeMillis()-stime));
 
     }
 
-    public MessageResponse sendWithResponse( MailgunMessagesApi mgmApi, Message msg){
+    private MessageResponse sendWithResponse( MailgunMessagesApi mgmApi, Message msg){
         return mgmApi.sendMessage("mail.dmitrikonnov.solutions", msg);
     }
 }

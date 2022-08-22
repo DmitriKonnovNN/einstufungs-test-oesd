@@ -6,9 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
-import solutions.dmitrikonnov.einstufungstest.domainlayer.ETAufgabenNiveau;
-import solutions.dmitrikonnov.einstufungstest.domainlayer.entities.ETErgebnisse;
 import solutions.dmitrikonnov.einstufungstest.domainlayer.ETErgebnisseDto;
+import solutions.dmitrikonnov.einstufungstest.domainlayer.entities.ETErgebnisse;
 
 import java.util.Map;
 import java.util.concurrent.Future;
@@ -25,6 +24,7 @@ public class ETErgebnisseConverterAndPersister {
     @Timed (value = "et.service.ergconverter-persister")
     public Future<String> convertAndPersist(ETErgebnisseDto ergebnisseDto) {
 
+        System.out.println("convert and persist THREAD: "+ Thread.currentThread().getName());
         ETErgebnisse ergebnisse = ETErgebnisse.builder()
                 .aufgabenBogenHash(ergebnisseDto.getAufgabenBogenHash())
                 .zahlRichtigerAntworten(ergebnisseDto.getZahlRichtigerAntworten())
